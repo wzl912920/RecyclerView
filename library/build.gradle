@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.3"
@@ -18,6 +19,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
@@ -31,4 +35,12 @@ dependencies {
 }
 repositories {
     mavenCentral()
+}
+publish {
+    userOrg = 'wzl912920'      //bintray注册的用户名
+    groupId = 'com.lynn.library'         //compile引用时的第1部分groupId
+    artifactId = 'base'     //compile引用时的第2部分项目名
+    publishVersion = '0.0.1'    //compile引用时的第3部分版本号
+    desc = 'This is a rxbus same of eventbus extend library '
+    website = 'https://github.com/wzl912920/simpleRecyclerView'
 }

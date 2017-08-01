@@ -1,4 +1,4 @@
-package com.lynn.simplerecyclerview.base;
+package com.lynn.library.base;
 
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;

@@ -4,7 +4,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.*
 import android.widget.*
-import com.lynn.simplerecyclerview.base.*
+import com.lynn.library.base.*
 
 import kotlinx.android.synthetic.main.activity_main.*
 
