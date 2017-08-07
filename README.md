@@ -1,0 +1,4 @@
+# simplerecyclerview
+## 一个简化版的recyclerview
+使用时只需要将type和layout注册到adapter，同时实现adapter的bindertools接口，bindertools主要用于根据数据获取数据type以及根据type获取viewholder，
+其他方法和adapter用法一致，点击事件以及数据绑定均在viewholder种实现
