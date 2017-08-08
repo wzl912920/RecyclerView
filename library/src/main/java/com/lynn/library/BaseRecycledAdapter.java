@@ -1,4 +1,4 @@
-    package com.lynn.library;
+package com.lynn.library;
 
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -23,12 +23,11 @@ public class BaseRecycledAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
 
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (null == type2Layout.get(viewType) || null == tools) {
-            return new BaseViewHolder(parent) {
-                @Override
-                public void bind(Object data) {
-                }
-            };
+        if (null == type2Layout.get(viewType)) {
+            throw new RuntimeException("the layout type isn't registered");
+        }
+        if (null == tools) {
+            throw new RuntimeException("the binderTools is not implemented");
         }
         View view = LayoutInflater.from(parent.getContext()).inflate(type2Layout.get(viewType), parent, false);
         return tools.getHolder(view, viewType);
