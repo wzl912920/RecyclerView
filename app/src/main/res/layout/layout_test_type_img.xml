@@ -3,13 +3,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="200dp"
+    android:background="@android:color/holo_green_light"
+    android:gravity="center"
     android:orientation="vertical"
     tools:context="com.lynn.simplerecyclerview.MainActivity">
 
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/image_view"
-        android:layout_width="100dp"
-        android:layout_height="100dp"/>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"/>
 
 </LinearLayout>
