@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-# simpleRecyclerView
-=======
 # simplerecyclerview
 ## 一个简化版的recyclerview
 使用时只需要将type和layout注册到adapter，同时实现adapter的bindertools接口，bindertools主要用于根据数据获取数据type以及根据type获取viewholder，
@@ -43,4 +40,3 @@ class HolderNormal(itemView : View) : BaseViewHolder<DataNormal>(itemView) {
     }
 }
 ```
->>>>>>> fe9e7b7d0450d808884f974823d269bd2f5fe554
