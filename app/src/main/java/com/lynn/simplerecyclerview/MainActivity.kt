@@ -1,9 +1,8 @@
 package com.lynn.simplerecyclerview
 
-import android.content.*
 import android.graphics.*
+import android.os.*
 import android.support.v7.app.AppCompatActivity
-import android.os.Bundle
 import android.support.v7.widget.*
 import android.widget.TextView
 import android.widget.ImageView
@@ -25,7 +24,6 @@ import com.bumptech.glide.request.target.Target
 import org.xml.sax.XMLReader
 import java.util.concurrent.locks.*
 import android.support.v7.widget.LinearLayoutManager
-import java.lang.ref.*
 
 
 class MainActivity : AppCompatActivity() , BinderTools {
@@ -44,9 +42,9 @@ class MainActivity : AppCompatActivity() , BinderTools {
     var deltY : Int = 0
     private fun simpleRecyclerDemo() {
         val adapter : BaseRecycledAdapter<Object> = recycle_view.adapter as BaseRecycledAdapter<Object>
-        recycle_view.addItemDecoration(CenterLargeDecoration())
+        recycle_view.addItemDecoration(TopLargeDecoration())
 
-        recycle_view.addOnScrollListener(CenterScrollListener())
+        recycle_view.addOnScrollListener(TopScrollListener())
         adapter.register(TYPE_NORMAL , R.layout.layout_test_type_normal)
 //        adapter.register(TYPE_A , R.layout.layout_test_type_a)
 //        adapter.register(TYPE_TEXT , R.layout.layout_test_type_text)
@@ -203,22 +201,18 @@ class MainActivity : AppCompatActivity() , BinderTools {
 
             fun onBoldClick() {
                 text?.onBoldClick()
-//                Log.e("AAA" , text?.toHtml())
             }
 
             fun onItalicClick() {
                 text?.onItalicClick()
-//                Log.e("AAA" , text?.toHtml())
             }
 
             fun onStrikeClick() {
                 text?.onStrikeClick()
-//                Log.e("AAA" , text?.toHtml())
             }
 
             fun onNormalClick() {
                 text?.onNormalClick()
-//                Log.e("AAA" , text?.toHtml())
             }
 
         }
@@ -238,8 +232,6 @@ class MainActivity : AppCompatActivity() , BinderTools {
                         img?.setImageBitmap(resource)
                     }
                 })
-                //        var url = "https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=1702098461,2395962392&fm=58&s=52763C728AB05A820B7D86C40200F0A1"
-                //        Glide.with(this).load(url).bitmapTransform(BlurTransformation(this , 20)).into(image_view)
             }
 
         }
