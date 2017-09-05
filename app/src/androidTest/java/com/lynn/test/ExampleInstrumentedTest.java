@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-package com.lynn.simplerecyclerview;
-=======
-package com.lynn.library;
->>>>>>> fe9e7b7d0450d808884f974823d269bd2f5fe554
+package com.lynn.test;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -25,10 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-<<<<<<< HEAD
-        assertEquals("com.lynn.simplerecyclerview.test", appContext.getPackageName());
-=======
-        assertEquals("com.lynn.library.test", appContext.getPackageName());
->>>>>>> fe9e7b7d0450d808884f974823d269bd2f5fe554
+        assertEquals("com.lynn.test", appContext.getPackageName());
     }
 }
