@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.lynn.simplerecyclerview.MainActivity">
 
-    <com.lynn.library.BaseRecycledView
+    <com.lynn.library.recycler.BaseRecycledView
         android:id="@+id/recycle_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

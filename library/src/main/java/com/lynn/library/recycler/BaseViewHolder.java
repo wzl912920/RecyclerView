@@ -1,4 +1,4 @@
-package com.lynn.library;
+package com.lynn.library.recycler;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;

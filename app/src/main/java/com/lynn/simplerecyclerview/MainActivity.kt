@@ -6,9 +6,6 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.*
 import android.widget.TextView
 import android.widget.ImageView
-import com.lynn.library.BaseRecycledAdapter
-import com.lynn.library.BaseViewHolder
-import com.lynn.library.BinderTools
 
 import kotlinx.android.synthetic.main.activity_main.*
 import android.text.Spannable
@@ -22,9 +19,8 @@ import com.bumptech.glide.request.animation.GlideAnimation
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.target.Target
 import org.xml.sax.XMLReader
-import java.util.concurrent.locks.*
 import android.support.v7.widget.LinearLayoutManager
-
+import com.lynn.library.recycler.*
 
 class MainActivity : AppCompatActivity() , BinderTools {
     override fun onCreate(savedInstanceState : Bundle?) {
@@ -34,30 +30,16 @@ class MainActivity : AppCompatActivity() , BinderTools {
         simpleRecyclerDemo()
     }
 
-    fun dp2px(dpValue : Float) : Int {
-        val scale = resources.displayMetrics.density
-        return (dpValue * scale + 0.5f).toInt()
-    }
-
-    var deltY : Int = 0
     private fun simpleRecyclerDemo() {
         val adapter : BaseRecycledAdapter<Object> = recycle_view.adapter as BaseRecycledAdapter<Object>
         recycle_view.addItemDecoration(TopLargeDecoration())
 
         recycle_view.addOnScrollListener(TopScrollListener())
         adapter.register(TYPE_NORMAL , R.layout.layout_test_type_normal)
-//        adapter.register(TYPE_A , R.layout.layout_test_type_a)
-//        adapter.register(TYPE_TEXT , R.layout.layout_test_type_text)
         adapter.register(TYPE_IMG , R.layout.layout_test_type_img)
         adapter.setBinder(this)
         for (i in 0..90) {
-            var x = DataNormal() as Object
-//            adapter.add(x)
-//            x = DataA() as Object
-//            adapter.add(x)
-//            x = DataText() as Object
-//            adapter.add(x)
-            x = DataImg("http://img.juimg.com/tuku/yulantu/120926/219049-12092612154377.jpg") as Object
+            var x = DataImg("http://img.juimg.com/tuku/yulantu/120926/219049-12092612154377.jpg") as Object
             adapter.add(x)
             x = DataImg("http://img1.juimg.com/170409/330818-1F40Z9160774.jpg") as Object
             adapter.add(x)
@@ -78,36 +60,11 @@ class MainActivity : AppCompatActivity() , BinderTools {
         for ((a , b) in map) {
             print(a + "====" + b.toString())
         }
-        val a = A()
-        with(a) {
-            methodA()
-            methodB()
-        }
 
         haha@ for (i in 1..10) {
             continue@haha
             break@haha
         }
-    }
-
-    fun <T> lock(lock : Lock , body : () -> T) : T {
-        lock.lock()
-        try {
-            return body()
-        } finally {
-            lock.unlock()
-        }
-        class B {
-            fun huake() {
-            }
-        }
-    }
-
-    class A {
-        fun methodA() {
-        }
-
-        fun methodB() {}
     }
 
     fun test() {
@@ -121,27 +78,20 @@ class MainActivity : AppCompatActivity() , BinderTools {
     }
 
     override fun getHolder(view : View , type : Int) : BaseViewHolder<*> {
-        return if (type == TYPE_A) HolderA(view) else if (type == TYPE_TEXT) HolderText(view) else if (type == TYPE_IMG) HolderImg(view) else HolderNormal(view)
+        return if (type == TYPE_IMG) HolderImg(view) else HolderNormal(view)
     }
 
     override fun <T : Any?> getType(t : T) : Int {
-        return if (t is DataA) TYPE_A else if (t is DataText) TYPE_TEXT else if (t is DataImg) TYPE_IMG else TYPE_NORMAL
+        return if (t is DataImg) TYPE_IMG else TYPE_NORMAL
     }
 
     companion object {
         val TYPE_NORMAL : Int = 0
-        val TYPE_A : Int = 1
-        val TYPE_TEXT : Int = 2
         val TYPE_IMG : Int = 3
         val maxHeight = ((Utils.getScreenHeight() - Utils.getStatusBarHeight()) / 3).toFloat()
 
 
         class DataNormal
-        class DataText
-        class DataA {
-            var strA : String = "abcd"
-            var strB : Int = 10
-        }
 
         class DataImg(url : String) {
             var url : String = ""
@@ -165,57 +115,6 @@ class MainActivity : AppCompatActivity() , BinderTools {
             }
         }
 
-        class HolderA(itemView : View) : BaseViewHolder<DataA>(itemView) {
-            var tv : TextView? = null
-            var tvb : TextView? = null
-
-            init {
-                val lp = itemView.layoutParams
-                lp.height = maxHeight.toInt()
-                tv = itemView.findViewById(R.id.text_view) as TextView?
-                tvb = itemView.findViewById(R.id.text_view_b) as TextView?
-            }
-
-            override fun bind(data : DataA?) {
-                tv?.text = data?.strA
-                tvb?.text = data?.strB.toString()
-            }
-        }
-
-        class HolderText(itemView : View) : BaseViewHolder<DataText>(itemView) {
-            private var text : StyledEditText? = null
-
-            init {
-                val lp = itemView.layoutParams
-                lp.height = maxHeight.toInt()
-                text = itemView.findViewById(R.id.text) as StyledEditText
-                itemView.findViewById(R.id.bold).setOnClickListener { onBoldClick() }
-                itemView.findViewById(R.id.italic).setOnClickListener { onItalicClick() }
-                itemView.findViewById(R.id.strike).setOnClickListener { onStrikeClick() }
-                itemView.findViewById(R.id.normal).setOnClickListener { onNormalClick() }
-            }
-
-            override fun bind(data : DataText?) {
-                text?.setText(Html.fromHtml("G友咯<i><strike>loo</strike></i><strike>k</strike><strike><b>哦</b></strike><strike>咯</strike>空" , null , MyTagHandler()))
-            }
-
-            fun onBoldClick() {
-                text?.onBoldClick()
-            }
-
-            fun onItalicClick() {
-                text?.onItalicClick()
-            }
-
-            fun onStrikeClick() {
-                text?.onStrikeClick()
-            }
-
-            fun onNormalClick() {
-                text?.onNormalClick()
-            }
-
-        }
 
         class HolderImg(itemView : View) : BaseViewHolder<DataImg>(itemView) {
             var img : ImageView?
@@ -237,7 +136,7 @@ class MainActivity : AppCompatActivity() , BinderTools {
         }
 
         class MyTagHandler : Html.TagHandler {
-
+            //Html.fromHtml("G友咯<i><strike>loo</strike></i><strike>k</strike><strike><b>哦</b></strike><strike>咯</strike>空" , null , MyTagHandler())
             /**
              * 参数：
              * opening：为true时表示某个标签开始解析,为false时表示该标签解析完
@@ -317,7 +216,9 @@ class MainActivity : AppCompatActivity() , BinderTools {
                     val firstViewTop = firstView.top
                     firstView.translationY = -firstViewTop / 2.0f
                 }
-                recyclerView?.invalidateItemDecorations()
+                recyclerView?.apply {
+                    post { invalidateItemDecorations() }
+                }
             }
         }
 
@@ -350,7 +251,9 @@ class MainActivity : AppCompatActivity() , BinderTools {
         class CenterScrollListener : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView : RecyclerView? , dx : Int , dy : Int) {
                 super.onScrolled(recyclerView , dx , dy)
-                recyclerView?.invalidateItemDecorations()
+                recyclerView?.apply {
+                    post { invalidateItemDecorations() }
+                }
             }
         }
     }

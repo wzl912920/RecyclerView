@@ -5,10 +5,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
-import com.lynn.library.BaseRecycledAdapter
-import com.lynn.library.BaseViewHolder
-import com.lynn.library.BinderTools
 import com.lynn.simplerecyclerview.*
+import com.lynn.library.recycler.*
 
 import kotlinx.android.synthetic.main.activity_main.*
 
