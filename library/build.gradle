@@ -1,9 +1,5 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.novoda.bintray-release'
-<<<<<<< HEAD
-=======
-
->>>>>>> fe9e7b7d0450d808884f974823d269bd2f5fe554
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.3"
@@ -37,18 +33,9 @@ dependencies {
     compile 'com.android.support:design:25.3.1'
     testCompile 'junit:junit:4.12'
 }
-<<<<<<< HEAD
 repositories {
     mavenCentral()
 }
-publish {
-    userOrg = 'wzl912920'      //bintray注册的用户名
-    groupId = 'com.lynn.library'         //compile引用时的第1部分groupId
-    artifactId = 'base'     //compile引用时的第2部分项目名
-    publishVersion = '0.0.1'    //compile引用时的第3部分版本号
-    desc = 'This is a rxbus same of eventbus extend library '
-    website = 'https://github.com/wzl912920/simpleRecyclerView'
-=======
 publish {
     userOrg = 'wzl912920'      // bintray注册的用户名
     groupId = 'com.lynn.library'
@@ -56,5 +43,4 @@ publish {
     publishVersion = '0.0.2'
     desc = 'this is a simple recycler-view example'    //描述
     website = 'https://github.com/wzl912920/simplerecyclerview'
->>>>>>> fe9e7b7d0450d808884f974823d269bd2f5fe554
 }

@@ -1,7 +1,3 @@
 <resources>
-<<<<<<< HEAD
-    <string name="app_name">simplerecyclerview</string>
-=======
     <string name="app_name">Library</string>
->>>>>>> fe9e7b7d0450d808884f974823d269bd2f5fe554
 </resources>
