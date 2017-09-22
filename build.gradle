@@ -21,6 +21,9 @@ allprojects {
     repositories {
         jcenter()
         mavenCentral()
+        maven {
+            url("https://dl.bintray.com/wzl912920/maven")
+        }
     }
     tasks.withType(Javadoc) {
         options {

@@ -1,10 +1,8 @@
 package com.lynn.simplerecyclerview
 
 import android.*
-import android.content.*
 import android.graphics.*
 import android.os.*
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.*
 import android.widget.TextView
 import android.widget.ImageView
@@ -68,7 +66,7 @@ class MainActivity : PermissionsActivity() , BinderTools {
             continue@haha
             break@haha
         }
-        askPermission(Manifest.permission.BIND_ACCESSIBILITY_SERVICE , Manifest.permission.READ_EXTERNAL_STORAGE , Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        askPermission(*permissions)
     }
 
     fun test() {
@@ -261,4 +259,8 @@ class MainActivity : PermissionsActivity() , BinderTools {
             }
         }
     }
+
+    val permissions = arrayOf(
+            Manifest.permission.READ_EXTERNAL_STORAGE ,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE)
 }
