@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-package com.lynn.simplerecyclerview;
-=======
 package com.lynn.library;
->>>>>>> fe9e7b7d0450d808884f974823d269bd2f5fe554
 
 import org.junit.Test;
 

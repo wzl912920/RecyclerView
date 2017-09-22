@@ -1,5 +1,7 @@
 package com.lynn.simplerecyclerview
 
+import android.*
+import android.content.*
 import android.graphics.*
 import android.os.*
 import android.support.v7.app.AppCompatActivity
@@ -20,9 +22,10 @@ import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.target.Target
 import org.xml.sax.XMLReader
 import android.support.v7.widget.LinearLayoutManager
+import com.lynn.library.permission.*
 import com.lynn.library.recycler.*
 
-class MainActivity : AppCompatActivity() , BinderTools {
+class MainActivity : PermissionsActivity() , BinderTools {
     override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -31,7 +34,7 @@ class MainActivity : AppCompatActivity() , BinderTools {
     }
 
     private fun simpleRecyclerDemo() {
-        val adapter : BaseRecycledAdapter<Object> = recycle_view.adapter as BaseRecycledAdapter<Object>
+        val adapter : BaseRecycledAdapter<Any> = recycle_view.adapter as BaseRecycledAdapter<Any>
         recycle_view.addItemDecoration(TopLargeDecoration())
 
         recycle_view.addOnScrollListener(TopScrollListener())
@@ -39,17 +42,17 @@ class MainActivity : AppCompatActivity() , BinderTools {
         adapter.register(TYPE_IMG , R.layout.layout_test_type_img)
         adapter.setBinder(this)
         for (i in 0..90) {
-            var x = DataImg("http://img.juimg.com/tuku/yulantu/120926/219049-12092612154377.jpg") as Object
+            var x = DataImg("http://img.juimg.com/tuku/yulantu/120926/219049-12092612154377.jpg")
             adapter.add(x)
-            x = DataImg("http://img1.juimg.com/170409/330818-1F40Z9160774.jpg") as Object
+            x = DataImg("http://img1.juimg.com/170409/330818-1F40Z9160774.jpg")
             adapter.add(x)
-            x = DataImg("http://img1.juimg.com/170630/355861-1F63012563242.jpg") as Object
+            x = DataImg("http://img1.juimg.com/170630/355861-1F63012563242.jpg")
             adapter.add(x)
-            x = DataImg("http://img1.juimg.com/170715/330800-1FG50P12715.jpg") as Object
+            x = DataImg("http://img1.juimg.com/170715/330800-1FG50P12715.jpg")
             adapter.add(x)
-            x = DataImg("http://img1.juimg.com/170715/330800-1FG509312761.jpg") as Object
+            x = DataImg("http://img1.juimg.com/170715/330800-1FG509312761.jpg")
             adapter.add(x)
-            x = DataImg("http://img1.juimg.com/170802/330854-1FP2154R385.jpg") as Object
+            x = DataImg("http://img1.juimg.com/170802/330854-1FP2154R385.jpg")
             adapter.add(x)
         }
         adapter.notifyDataSetChanged()
@@ -65,6 +68,7 @@ class MainActivity : AppCompatActivity() , BinderTools {
             continue@haha
             break@haha
         }
+        askPermission(Manifest.permission.BIND_ACCESSIBILITY_SERVICE , Manifest.permission.READ_EXTERNAL_STORAGE , Manifest.permission.WRITE_EXTERNAL_STORAGE)
     }
 
     fun test() {

@@ -1,12 +1,12 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.novoda.bintray-release'
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    compileSdkVersion 26
+    buildToolsVersion "26.0.1"
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 25
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
 
@@ -30,14 +30,13 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:design:25.3.1'
     testCompile 'junit:junit:4.12'
 }
 publish {
     userOrg = 'wzl912920'      // bintray注册的用户名
     groupId = 'com.lynn.library'
-    artifactId = 'simple-recyclerview'// bintray创建的package
-    publishVersion = '0.0.3'
-    desc = 'this is a simple recycler-view example'    //描述
-    website = 'https://github.com/wzl912920/simplerecyclerview'
+    artifactId = 'permission'// bintray创建的package
+    publishVersion = '0.0.1'
+    desc = 'this is a permission sample'    //描述
+    website = 'https://github.com/wzl912920'
 }

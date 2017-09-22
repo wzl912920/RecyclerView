@@ -1,4 +1,4 @@
-package com.lynn.test;
+package com.lynn.library;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package com.lynn.test;
+package com.lynn.library;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.lynn.test", appContext.getPackageName());
+        assertEquals("com.lynn.library.test", appContext.getPackageName());
     }
 }
