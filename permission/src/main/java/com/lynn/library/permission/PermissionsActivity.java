@@ -30,14 +30,11 @@ public class PermissionsActivity extends AppCompatActivity implements OnRequestP
         this.permissionType = type;
         this.filterPermission(permissions);
         if (this.list != null && !this.list.isEmpty()) {
-            this.askPermission(list.get(0));
+            String[] array = list.toArray(new String[list.size()]);
+            ActivityCompat.requestPermissions(this, array, this.REQUEST_CODE_REQUEST_PERMISSION);
         } else {
             this.onPermissionGranted(this.permissionType);
         }
-    }
-
-    private final void askPermission(String per) {
-        ActivityCompat.requestPermissions(this, new String[]{per}, this.REQUEST_CODE_REQUEST_PERMISSION);
     }
 
     private final void filterPermission(String... permissions) {
@@ -52,6 +49,13 @@ public class PermissionsActivity extends AppCompatActivity implements OnRequestP
     }
 
     protected void onPermissionGranted(int type) {
+    }
+
+    protected void onPermissionDenied(int type, ArrayList<String> permissions) {
+    }
+
+    protected boolean dealSelf() {
+        return false;
     }
 
     protected final boolean hasPermissions(@NonNull String... permissions) {
@@ -69,10 +73,13 @@ public class PermissionsActivity extends AppCompatActivity implements OnRequestP
         Intent i;
         if (this.deniedList.contains(Manifest.permission.BIND_ACCESSIBILITY_SERVICE)) {
             i = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
-        } else {
-            i = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-            i.setData(Uri.fromParts("package", this.getPackageName(), null));
+            this.startActivity(i);
+            if (deniedList.size() == 1) {
+                return;
+            }
         }
+        i = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        i.setData(Uri.fromParts("package", this.getPackageName(), null));
         this.startActivity(i);
     }
 
@@ -92,26 +99,28 @@ public class PermissionsActivity extends AppCompatActivity implements OnRequestP
                 if (deniedList == null || deniedList.size() == 0) {
                     onPermissionGranted(permissionType);
                 } else {
-                    new AlertDialog.Builder(this)
-                            .setTitle("权限缺失")
-                            .setMessage("权限未开启，请在设置中开启权限后再进行该操作")
-                            .setNegativeButton("取消", new OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            })
-                            .setPositiveButton("设置", new OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                    startSettings();
-                                }
-                            })
-                            .create().show();
+                    if (dealSelf()) {
+                        onPermissionDenied(permissionType, deniedList);
+                    } else {
+                        new AlertDialog.Builder(this)
+                                .setTitle("权限缺失")
+                                .setMessage("部分权限未开启，请开启权限后再试")
+                                .setNegativeButton("取消", new OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                })
+                                .setPositiveButton("设置", new OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                        startSettings();
+                                    }
+                                })
+                                .create().show();
+                    }
                 }
-            } else {
-                askPermission(list.get(0));
             }
         }
     }
