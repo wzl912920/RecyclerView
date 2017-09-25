@@ -41,3 +41,25 @@ publish {
     desc = 'this is a simple recycler-view example'    //描述
     website = 'https://github.com/wzl912920/simplerecyclerview'
 }
+//./gradlew clean build bintrayUpload -PbintrayUser=XXX -PbintrayKey=XXX -PdryRun=false --stacktrace --info
+//build.gradle(project)
+//tasks.getByPath(":library:bintrayUpload").enabled = false
+//tasks.getByPath(":permission:bintrayUpload").enabled = false
+//tasks.getByPath(":util:bintrayUpload").enabled = false
+//tasks.getByPath(":util:releaseAndroidJavadocs").enabled = false
+//allprojects {
+//    repositories {
+//        jcenter()
+//        mavenCentral()
+//        maven {
+//            url("https://dl.bintray.com/wzl912920/maven")
+//        }
+//    }
+//    tasks.withType(Javadoc) {
+//        options {
+//            encoding "UTF-8"
+//            charSet 'UTF-8'
+//            links "http://docs.oracle.com/javase/7/docs/api"
+//        }
+//    }
+//}

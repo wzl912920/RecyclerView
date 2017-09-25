@@ -18,8 +18,6 @@ import android.view.*
 import android.widget.*
 import java.io.*
 import com.lynn.util.R
-import com.tencent.mm.opensdk.modelmsg.*
-import com.tencent.mm.opensdk.openapi.*
 import java.lang.ref.*
 import java.math.*
 import java.security.*
@@ -318,48 +316,6 @@ fun Context.putAll(map : Map<String , *>) {
         }
     }
     editor.apply()
-}
-
-private class AppToast(context : Context) : Toast(context) {
-    private lateinit var imageView : ImageView
-    private lateinit var textView : TextView
-    private lateinit var bg : View
-    private val sr = SoftReference(context.applicationContext)
-
-    init {
-        init()
-    }
-
-    private fun init() {
-        val v = LayoutInflater.from(sr.get()).inflate(R.layout.widget_toast , null , false)
-        view = v
-        imageView = v.findViewById<ImageView>(R.id.image_view)
-        textView = v.findViewById<TextView>(R.id.text_view)
-        bg = v.findViewById(R.id.root_view)
-        setGravity(Gravity.FILL_HORIZONTAL or Gravity.TOP , 0 , 0)
-    }
-
-    fun setToastText(text : String) {
-        var text = text
-        if (TextUtils.isEmpty(text)) {
-            text = ""
-        }
-        textView!!.text = text
-        if (textView!!.lineCount == 1) {
-            textView!!.gravity = Gravity.CENTER_VERTICAL
-        }
-        duration = if (text.length > 10) Toast.LENGTH_LONG else Toast.LENGTH_SHORT
-    }
-
-    fun setViewBg(ctx : Context , @ColorRes color : Int) {
-        val up = bg.background
-        val drawableUp = DrawableCompat.wrap(up)
-        DrawableCompat.setTint(drawableUp , ContextCompat.getColor(ctx , color))
-    }
-
-    fun setImageRes(@DrawableRes id : Int) {
-        imageView!!.setImageResource(id)
-    }
 }
 
 //toast utils
@@ -983,35 +939,49 @@ fun Context.getMetaString(key : String) : String {
     return resultData
 }
 
-private var WX_APP_ID = ""
-private val WX_LOCK = "E9AC26BC421E2D6ABEEFAC61F5D65266"
-private var api : IWXAPI? = null
-fun Context.openWechat() {
-    val req = SendAuth.Req()
-    req.scope = "snsapi_userinfo"
-    req.state = "AccountOperation"
-    wxApi?.sendReq(req)
-}
-
-var Context.wxAppId : String
-    get() {
-        return WX_APP_ID
-    }
-    set(value) {
-        WX_APP_ID = value
-    }
-
-val Context.wxApi : IWXAPI
-    get() {
-        if (null == api) {
-            synchronized(WX_LOCK) {
-                api = WXAPIFactory.createWXAPI(this , wxAppId)
-            }
-        }
-        return api!!
-    }
-
 private val TAG = "Utils"
 fun log(s : String) {
     Log.e(TAG , s)
+}
+
+private class AppToast(context : Context) : Toast(context) {
+    private lateinit var imageView : ImageView
+    private lateinit var textView : TextView
+    private lateinit var bg : View
+    private val sr = SoftReference(context.applicationContext)
+
+    init {
+        init()
+    }
+
+    private fun init() {
+        val v = LayoutInflater.from(sr.get()).inflate(R.layout.widget_toast , null , false)
+        view = v
+        imageView = v.findViewById(R.id.image_view) as ImageView
+        textView = v.findViewById(R.id.text_view) as TextView
+        bg = v.findViewById(R.id.root_view)
+        setGravity(Gravity.FILL_HORIZONTAL or Gravity.TOP , 0 , 0)
+    }
+
+    fun setToastText(text : String) {
+        var text = text
+        if (TextUtils.isEmpty(text)) {
+            text = ""
+        }
+        textView!!.text = text
+        if (textView!!.lineCount == 1) {
+            textView!!.gravity = Gravity.CENTER_VERTICAL
+        }
+        duration = if (text.length > 10) Toast.LENGTH_LONG else Toast.LENGTH_SHORT
+    }
+
+    fun setViewBg(ctx : Context , @ColorRes color : Int) {
+        val up = bg.background
+        val drawableUp = DrawableCompat.wrap(up)
+        DrawableCompat.setTint(drawableUp , ContextCompat.getColor(ctx , color))
+    }
+
+    fun setImageRes(@DrawableRes id : Int) {
+        imageView!!.setImageResource(id)
+    }
 }

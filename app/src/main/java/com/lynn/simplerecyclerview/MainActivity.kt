@@ -20,9 +20,9 @@ import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.target.Target
 import org.xml.sax.XMLReader
 import android.support.v7.widget.LinearLayoutManager
-import android.util.*
 import com.lynn.library.permission.*
 import com.lynn.library.recycler.*
+import com.lynn.library.util.*
 
 class MainActivity : PermissionsActivity() , BinderTools {
     override fun onCreate(savedInstanceState : Bundle?) {
@@ -71,6 +71,7 @@ class MainActivity : PermissionsActivity() , BinderTools {
     }
 
     fun test() {
+        log("=====-------------------------------")
         val fruits = listOf("banana" , "avocado" , "apple" , "kiwi")
         with(fruits) {
             filter { it.startsWith("a") }
@@ -92,7 +93,6 @@ class MainActivity : PermissionsActivity() , BinderTools {
         val TYPE_NORMAL : Int = 0
         val TYPE_IMG : Int = 3
         val maxHeight = ((Utils.getScreenHeight() - Utils.getStatusBarHeight()) / 3).toFloat()
-
 
         class DataNormal
 

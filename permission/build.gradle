@@ -1,12 +1,12 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.novoda.bintray-release'
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.3"
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 26
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
 
@@ -38,5 +38,5 @@ publish {
     artifactId = 'permission'// bintray创建的package
     publishVersion = '0.0.2'
     desc = 'this is a permission sample'    //描述
-    website = 'https://github.com/wzl912920'
+    website = 'https://github.com/wzl912920/simplerecyclerview'
 }

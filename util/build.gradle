@@ -3,12 +3,12 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.novoda.bintray-release'
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.3"
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 26
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
         vectorDrawables.useSupportLibrary true
@@ -24,6 +24,9 @@ android {
     lintOptions {
         abortOnError false
     }
+    sourceSets {
+        main.java.srcDirs += 'src/main/java'
+    }
 }
 
 dependencies {
@@ -33,16 +36,15 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.3.1'
     testCompile 'junit:junit:4.12'
-    compile 'org.jetbrains.kotlin:kotlin-stdlib'
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    compile 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
+    testCompile "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
 }
 publish {
     userOrg = 'wzl912920'      // bintray注册的用户名
     groupId = 'com.lynn.library'
     artifactId = 'util-kt'// bintray创建的package
-    publishVersion = '0.0.1'
+    publishVersion = '0.0.2'
     desc = 'this is a kotlin util sample'    //描述
-    website = 'https://github.com/wzl912920'
-    //./gradlew clean build bintrayUpload -PbintrayUser=XXX -PbintrayKey=XXX -PdryRun=false --stacktrace --info
+    website = 'https://github.com/wzl912920/simplerecyclerview'
 }
