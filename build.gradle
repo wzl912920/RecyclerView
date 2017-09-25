@@ -37,3 +37,7 @@ allprojects {
 repositories {
     mavenCentral()
 }
+tasks.getByPath(":library:bintrayUpload").enabled = false
+tasks.getByPath(":permission:bintrayUpload").enabled = false
+tasks.getByPath(":util:bintrayUpload").enabled = true
+tasks.getByPath(":util:releaseAndroidJavadocs").enabled = false

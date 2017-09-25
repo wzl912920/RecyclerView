@@ -1,16 +1,19 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.novoda.bintray-release'
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    compileSdkVersion 26
+    buildToolsVersion "26.0.1"
+
     defaultConfig {
-        applicationId "com.lynn.simplerecyclerview"
         minSdkVersion 14
-        targetSdkVersion 25
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
+        vectorDrawables.useSupportLibrary true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
     }
     buildTypes {
         release {
@@ -24,23 +27,22 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:design:25.3.1'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    testCompile 'junit:junit:4.12'
     compile 'org.jetbrains.kotlin:kotlin-stdlib'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    compile 'com.squareup.okhttp3:okhttp:3.4.1'
-    compile 'com.squareup.okio:okio:1.11.0'
-    compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'jp.wasabeef:glide-transformations:2.0.0'
-    compile 'com.github.bumptech.glide:okhttp3-integration:1.4.0@aar'
-    compile 'org.mod4j.org.apache.commons:lang:2.1.0'
-    compile 'com.lynn.library:permission:0.0.1'
-    compile 'com.lynn.library:simple-recyclerview:0.0.3'
-    compile project(':util')
+    compile 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
+}
+publish {
+    userOrg = 'wzl912920'      // bintray注册的用户名
+    groupId = 'com.lynn.library'
+    artifactId = 'util-kt'// bintray创建的package
+    publishVersion = '0.0.1'
+    desc = 'this is a kotlin util sample'    //描述
+    website = 'https://github.com/wzl912920'
+    //./gradlew clean build bintrayUpload -PbintrayUser=XXX -PbintrayKey=XXX -PdryRun=false --stacktrace --info
 }

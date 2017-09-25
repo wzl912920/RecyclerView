@@ -20,6 +20,7 @@ import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.target.Target
 import org.xml.sax.XMLReader
 import android.support.v7.widget.LinearLayoutManager
+import android.util.*
 import com.lynn.library.permission.*
 import com.lynn.library.recycler.*
 

@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">util</string>
+    <color name="color_warning">#FECB2A</color>
+    <color name="color_error">#FF3A49</color>
+    <color name="color_success">#00D99D</color>
+    <color name="color_FFC105">#FFC105</color>
+    <color name="color_EDEDED">#EDEDED</color>
+    <color name="color_DCDCDC">#DCDCDC</color>
+    <dimen name="dimen_8">8dp</dimen>
+    <dimen name="dimen_15">15dp</dimen>
+    <dimen name="dimen_16">16dp</dimen>
+    <dimen name="dimen_20">20dp</dimen>
+    <dimen name="dimen_24">24dp</dimen>
+</resources>
