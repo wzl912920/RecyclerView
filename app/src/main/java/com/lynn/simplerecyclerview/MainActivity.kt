@@ -70,6 +70,10 @@ class MainActivity : PermissionsActivity() , BinderTools {
         askPermission(*permissions)
     }
 
+    val permissions = arrayOf(
+            Manifest.permission.READ_EXTERNAL_STORAGE ,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE)
+
     fun test() {
         log("=====-------------------------------")
         val fruits = listOf("banana" , "avocado" , "apple" , "kiwi")
@@ -92,7 +96,6 @@ class MainActivity : PermissionsActivity() , BinderTools {
     companion object {
         val TYPE_NORMAL : Int = 0
         val TYPE_IMG : Int = 3
-        val maxHeight = ((Utils.getScreenHeight() - Utils.getStatusBarHeight()) / 3).toFloat()
 
         class DataNormal
 
@@ -105,33 +108,33 @@ class MainActivity : PermissionsActivity() , BinderTools {
         }
 
         class HolderNormal(itemView : View) : BaseViewHolder<DataNormal>(itemView) {
-            var tv : TextView? = null
+            private var tv : TextView
 
             init {
                 val lp = itemView.layoutParams
-                lp.height = maxHeight.toInt()
-                tv = itemView.findViewById(R.id.text_view) as TextView?
+                lp.height = (itemView.context.screenHeight - itemView.context.screenWidth) / 3
+                tv = itemView.findViewById<TextView>(R.id.text_view)
             }
 
             override fun bind(data : DataNormal?) {
-                tv?.text = "111111111111111111111"
+                tv.text = "111111111111111111111"
             }
         }
 
 
         class HolderImg(itemView : View) : BaseViewHolder<DataImg>(itemView) {
-            var img : ImageView?
+            private var img : ImageView
 
             init {
                 val lp = itemView.layoutParams
-                lp.height = maxHeight.toInt()
-                img = itemView.findViewById(R.id.image_view) as ImageView
+                lp.height = (itemView.context.screenHeight - itemView.context.screenWidth) / 3
+                img = itemView.findViewById<ImageView>(R.id.image_view)
             }
 
             override fun bind(data : DataImg?) {
                 Glide.with(itemView?.context?.applicationContext).load(data?.url).asBitmap().diskCacheStrategy(DiskCacheStrategy.ALL).override(Target.SIZE_ORIGINAL , Target.SIZE_ORIGINAL).into(object : SimpleTarget<Bitmap>(Target.SIZE_ORIGINAL , Target.SIZE_ORIGINAL) {
                     override fun onResourceReady(resource : Bitmap , glideAnimation : GlideAnimation<in Bitmap>) {
-                        img?.setImageBitmap(resource)
+                        img.setImageBitmap(resource)
                     }
                 })
             }
@@ -184,7 +187,7 @@ class MainActivity : PermissionsActivity() , BinderTools {
                 val lm : LinearLayoutManager = parent.layoutManager as LinearLayoutManager
                 val first = lm.findFirstVisibleItemPosition()
                 val view = lm.findViewByPosition(first + 1)
-                val max = maxHeight
+                val max = (parent.context.screenHeight - parent.context.screenWidth).toFloat() / 3
                 var top = max
                 if (null != view) {
                     top = view.top.toFloat()
@@ -233,7 +236,7 @@ class MainActivity : PermissionsActivity() , BinderTools {
                 val lm : LinearLayoutManager = parent.layoutManager as LinearLayoutManager
                 val first = lm.findFirstVisibleItemPosition()
                 val view = lm.findViewByPosition(first + 2)
-                val max = maxHeight.toFloat()
+                val max = (parent.context.screenHeight - parent.context.screenWidth).toFloat() / 3
                 var top = max
                 if (null != view) {
                     top = view.top.toFloat()
@@ -260,8 +263,4 @@ class MainActivity : PermissionsActivity() , BinderTools {
             }
         }
     }
-
-    val permissions = arrayOf(
-            Manifest.permission.READ_EXTERNAL_STORAGE ,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE)
 }

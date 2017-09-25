@@ -1,17 +1,15 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.novoda.bintray-release'
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    compileSdkVersion rootProject.versionInfo.compileSdkVersion
+    buildToolsVersion rootProject.versionInfo.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
-
+        minSdkVersion rootProject.versionInfo.minSdkVersion
+        targetSdkVersion rootProject.versionInfo.targetSdkVersion
+        versionCode rootProject.versionInfo.versionCode
+        versionName rootProject.versionInfo.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
     }
     buildTypes {
         release {
@@ -29,9 +27,9 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:design:25.3.1'
-    testCompile 'junit:junit:4.12'
+    testCompile dependencyInfo.junit
+    compile dependencyInfo.appcompat_v7
+    compile dependencyInfo.design
 }
 publish {
     userOrg = 'wzl912920'      // bintray注册的用户名
