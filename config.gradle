@@ -5,7 +5,8 @@ ext.versionInfo = [
         minSdkVersion    : 14,
         targetSdkVersion : 26,
         compileSdkVersion: 26,
-        buildToolsVersion: '26.0.1'
+        buildToolsVersion: '26.0.1',
+        applicationId    : "com.lynn.simplerecyclerview",
 ]
 ext.dependencyInfo = [
         kotlin       : "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version",
@@ -29,7 +30,7 @@ ext.dependencyInfo = [
         comm_lang    : 'org.mod4j.org.apache.commons:lang:2.1.0',
         permission   : 'com.lynn.library:permission:0.0.1',
         recyclerview : 'com.lynn.library:simple-recyclerview:0.0.3',
-        util         : 'com.lynn.library:util-kt:0.0.2',
+        util         : 'com.lynn.library:util-kt:0.0.3',
         conslayout   : 'com.android.support.constraint:constraint-layout:1.0.2',
 //        wechat       : 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
 ]

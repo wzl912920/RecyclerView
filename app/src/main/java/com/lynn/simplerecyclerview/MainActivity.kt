@@ -2,10 +2,10 @@ package com.lynn.simplerecyclerview
 
 import android.*
 import android.graphics.*
+import android.net.*
 import android.os.*
 import android.support.v7.widget.*
 import android.widget.TextView
-import android.widget.ImageView
 
 import kotlinx.android.synthetic.main.activity_main.*
 import android.text.Spannable
@@ -13,13 +13,9 @@ import android.text.style.StrikethroughSpan
 import android.text.Editable
 import android.text.Html
 import android.view.*
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.animation.GlideAnimation
-import com.bumptech.glide.request.target.SimpleTarget
-import com.bumptech.glide.request.target.Target
 import org.xml.sax.XMLReader
 import android.support.v7.widget.LinearLayoutManager
+import com.facebook.drawee.view.*
 import com.lynn.library.permission.*
 import com.lynn.library.recycler.*
 import com.lynn.library.util.*
@@ -30,12 +26,12 @@ class MainActivity : PermissionsActivity() , BinderTools {
         setContentView(R.layout.activity_main)
         supportActionBar?.hide()
         simpleRecyclerDemo()
+        setStatusBarLightMode(Color.WHITE)
     }
 
     private fun simpleRecyclerDemo() {
         val adapter : BaseRecycledAdapter<Any> = recycle_view.adapter as BaseRecycledAdapter<Any>
         recycle_view.addItemDecoration(TopLargeDecoration())
-
         recycle_view.addOnScrollListener(TopScrollListener())
         adapter.register(TYPE_NORMAL , R.layout.layout_test_type_normal)
         adapter.register(TYPE_IMG , R.layout.layout_test_type_img)
@@ -54,7 +50,7 @@ class MainActivity : PermissionsActivity() , BinderTools {
             x = DataImg("http://img1.juimg.com/170802/330854-1FP2154R385.jpg")
             adapter.add(x)
         }
-        adapter.notifyDataSetChanged()
+//        adapter.notifyDataSetChanged()
 
         test()
 
@@ -112,7 +108,7 @@ class MainActivity : PermissionsActivity() , BinderTools {
 
             init {
                 val lp = itemView.layoutParams
-                lp.height = (itemView.context.screenHeight - itemView.context.screenWidth) / 3
+                lp.height = (itemView.context.screenHeight - itemView.context.statusBarHeight) / 3
                 tv = itemView.findViewById<TextView>(R.id.text_view)
             }
 
@@ -123,20 +119,16 @@ class MainActivity : PermissionsActivity() , BinderTools {
 
 
         class HolderImg(itemView : View) : BaseViewHolder<DataImg>(itemView) {
-            private var img : ImageView
+            private var img : SimpleDraweeView
 
             init {
                 val lp = itemView.layoutParams
-                lp.height = (itemView.context.screenHeight - itemView.context.screenWidth) / 3
-                img = itemView.findViewById<ImageView>(R.id.image_view)
+                lp.height = (itemView.context.screenHeight - itemView.context.statusBarHeight) / 3
+                img = itemView.findViewById<SimpleDraweeView>(R.id.image_view)
             }
 
             override fun bind(data : DataImg?) {
-                Glide.with(itemView?.context?.applicationContext).load(data?.url).asBitmap().diskCacheStrategy(DiskCacheStrategy.ALL).override(Target.SIZE_ORIGINAL , Target.SIZE_ORIGINAL).into(object : SimpleTarget<Bitmap>(Target.SIZE_ORIGINAL , Target.SIZE_ORIGINAL) {
-                    override fun onResourceReady(resource : Bitmap , glideAnimation : GlideAnimation<in Bitmap>) {
-                        img.setImageBitmap(resource)
-                    }
-                })
+                data?.let { img.setImageURI(Uri.parse(data?.url)) }
             }
 
         }
@@ -187,7 +179,7 @@ class MainActivity : PermissionsActivity() , BinderTools {
                 val lm : LinearLayoutManager = parent.layoutManager as LinearLayoutManager
                 val first = lm.findFirstVisibleItemPosition()
                 val view = lm.findViewByPosition(first + 1)
-                val max = (parent.context.screenHeight - parent.context.screenWidth).toFloat() / 3
+                val max = (parent.context.screenHeight - parent.context.statusBarHeight).toFloat() / 3
                 var top = max
                 if (null != view) {
                     top = view.top.toFloat()
@@ -236,7 +228,7 @@ class MainActivity : PermissionsActivity() , BinderTools {
                 val lm : LinearLayoutManager = parent.layoutManager as LinearLayoutManager
                 val first = lm.findFirstVisibleItemPosition()
                 val view = lm.findViewByPosition(first + 2)
-                val max = (parent.context.screenHeight - parent.context.screenWidth).toFloat() / 3
+                val max = (parent.context.screenHeight - parent.context.statusBarHeight).toFloat() / 3
                 var top = max
                 if (null != view) {
                     top = view.top.toFloat()

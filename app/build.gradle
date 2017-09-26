@@ -5,7 +5,7 @@ android {
     compileSdkVersion versionInfo.compileSdkVersion
     buildToolsVersion versionInfo.buildToolsVersion
     defaultConfig {
-        applicationId "com.lynn.simplerecyclerview"
+        applicationId versionInfo.applicationId
         minSdkVersion versionInfo.minSdkVersion
         targetSdkVersion versionInfo.targetSdkVersion
         versionCode versionInfo.versionCode
@@ -39,6 +39,7 @@ android {
         compile dependencyInfo.recyclerview
         compile dependencyInfo.util
         compile dependencyInfo.conslayout
+        compile dependencyInfo.fresco
     }
 }
 

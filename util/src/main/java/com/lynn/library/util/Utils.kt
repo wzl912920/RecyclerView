@@ -844,6 +844,44 @@ fun getDayInSimpleChinese(day : Int) : String {
     }
 }
 
+fun Activity.setStatusBarLightMode(@ColorInt color : Int) {
+    if (color == Color.WHITE || color == Color.TRANSPARENT) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.statusBarColor = color
+        }
+        if (isMIUI()) {
+            val clazz = window.javaClass
+            try {
+                var darkModeFlag = 0
+                val layoutParams = Class.forName("android.view.MiuiWindowManager\$LayoutParams")
+                val field = layoutParams.getField("EXTRA_FLAG_STATUS_BAR_DARK_MODE")
+                darkModeFlag = field.getInt(layoutParams)
+                val extraFlagField = clazz.getMethod("setExtraFlags" , kotlin.Int::class.javaPrimitiveType , kotlin.Int::class.javaPrimitiveType)
+                extraFlagField.invoke(window , darkModeFlag , darkModeFlag)
+            } catch (e : Exception) {
+                e.printStackTrace()
+            }
+        } else if (isFlyme()) {
+            val window = window
+            if (window != null) {
+                try {
+                    val lp = window!!.attributes
+                    val darkFlag = WindowManager.LayoutParams::class.java!!.getDeclaredField("MEIZU_FLAG_DARK_STATUS_BAR_ICON")
+                    val meizuFlags = WindowManager.LayoutParams::class.java!!.getDeclaredField("meizuFlags")
+                    darkFlag.isAccessible = true
+                    meizuFlags.isAccessible = true
+                    val bit = darkFlag.getInt(null)
+                    var value = meizuFlags.getInt(lp)
+                    value = value or bit
+                    meizuFlags.setInt(lp , value)
+                    window!!.attributes = lp
+                } catch (e : Exception) {
+                }
+            }
+        }
+    }
+}
+
 private object Config {
     val SMART = "ro.smartisan.version"
     val MIUI_VERSION_NAME = "ro.miui.ui.version.name"
@@ -864,7 +902,7 @@ fun isMIUI() : Boolean {
 /**
  * @return
  */
-fun ifEMUI() : Boolean {
+fun isEMUI() : Boolean {
     return try {
         !TextUtils.isEmpty(getSystemProperty(Config.EMUI_VERSION_CODE))
     } catch (e : Exception) {
@@ -876,7 +914,7 @@ fun ifEMUI() : Boolean {
 /**
  * @return
  */
-fun ifSmartisan() : Boolean {
+fun isSmartisan() : Boolean {
     return try {
         !TextUtils.isEmpty(getSystemProperty(Config.SMART))
     } catch (e : Exception) {
@@ -955,10 +993,10 @@ private class AppToast(context : Context) : Toast(context) {
     }
 
     private fun init() {
-        val v = LayoutInflater.from(sr.get()).inflate(R.layout.widget_toast , null , false)
+        val v : View = LayoutInflater.from(sr.get()).inflate(R.layout.widget_toast , null , false)
         view = v
-        imageView = v.findViewById(R.id.image_view) as ImageView
-        textView = v.findViewById(R.id.text_view) as TextView
+        imageView = v.findViewById<ImageView>(R.id.image_view) as ImageView
+        textView = v.findViewById<ImageView>(R.id.text_view) as TextView
         bg = v.findViewById(R.id.root_view)
         setGravity(Gravity.FILL_HORIZONTAL or Gravity.TOP , 0 , 0)
     }
