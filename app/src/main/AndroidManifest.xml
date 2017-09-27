@@ -23,9 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <meta-data
-            android:name="com.lynn.simplerecyclerview.GlideConfig"
-            android:value="GlideModule"/>
+        <activity android:name=".watermark.ChooseColorActivity"/>
     </application>
 
 </manifest>

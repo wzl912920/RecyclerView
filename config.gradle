@@ -32,5 +32,6 @@ ext.dependencyInfo = [
         recyclerview : 'com.lynn.library:simple-recyclerview:0.0.3',
         util         : 'com.lynn.library:util-kt:0.0.3',
         conslayout   : 'com.android.support.constraint:constraint-layout:1.0.2',
+        pelette      : 'com.android.support:palette-v7:26.0.0-alpha1',
 //        wechat       : 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
 ]

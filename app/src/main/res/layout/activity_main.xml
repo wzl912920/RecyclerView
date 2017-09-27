@@ -11,4 +11,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="50dp"/>
 </RelativeLayout>

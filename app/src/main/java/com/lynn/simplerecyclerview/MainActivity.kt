@@ -1,6 +1,7 @@
 package com.lynn.simplerecyclerview
 
 import android.*
+import android.app.*
 import android.graphics.*
 import android.net.*
 import android.os.*
@@ -16,17 +17,15 @@ import android.view.*
 import org.xml.sax.XMLReader
 import android.support.v7.widget.LinearLayoutManager
 import com.facebook.drawee.view.*
-import com.lynn.library.permission.*
 import com.lynn.library.recycler.*
 import com.lynn.library.util.*
+import com.lynn.simplerecyclerview.watermark.*
 
-class MainActivity : PermissionsActivity() , BinderTools {
+class MainActivity : BaseActivity() , BinderTools {
     override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        supportActionBar?.hide()
         simpleRecyclerDemo()
-        setStatusBarLightMode(Color.WHITE)
     }
 
     private fun simpleRecyclerDemo() {
@@ -37,32 +36,20 @@ class MainActivity : PermissionsActivity() , BinderTools {
         adapter.register(TYPE_IMG , R.layout.layout_test_type_img)
         adapter.setBinder(this)
         for (i in 0..90) {
-            var x = DataImg("http://img.juimg.com/tuku/yulantu/120926/219049-12092612154377.jpg")
+            var x = DataImg("http://img.juimg.com/tuku/yulantu/120926/219049-12092612154377.jpg" , 1)
             adapter.add(x)
-            x = DataImg("http://img1.juimg.com/170409/330818-1F40Z9160774.jpg")
+            x = DataImg("http://img1.juimg.com/170409/330818-1F40Z9160774.jpg" , 2)
             adapter.add(x)
-            x = DataImg("http://img1.juimg.com/170630/355861-1F63012563242.jpg")
+            x = DataImg("http://img1.juimg.com/170630/355861-1F63012563242.jpg" , 3)
             adapter.add(x)
-            x = DataImg("http://img1.juimg.com/170715/330800-1FG50P12715.jpg")
+            x = DataImg("http://img1.juimg.com/170715/330800-1FG50P12715.jpg" , 4)
             adapter.add(x)
-            x = DataImg("http://img1.juimg.com/170715/330800-1FG509312761.jpg")
+            x = DataImg("http://img1.juimg.com/170715/330800-1FG509312761.jpg" , 5)
             adapter.add(x)
-            x = DataImg("http://img1.juimg.com/170802/330854-1FP2154R385.jpg")
+            x = DataImg("http://img1.juimg.com/170802/330854-1FP2154R385.jpg" , 6)
             adapter.add(x)
         }
-//        adapter.notifyDataSetChanged()
-
         test()
-
-        val map = mapOf("a" to 2 , "b" to 3)
-        for ((a , b) in map) {
-            print(a + "====" + b.toString())
-        }
-
-        haha@ for (i in 1..10) {
-            continue@haha
-            break@haha
-        }
         askPermission(*permissions)
     }
 
@@ -71,7 +58,6 @@ class MainActivity : PermissionsActivity() , BinderTools {
             Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
     fun test() {
-        log("=====-------------------------------")
         val fruits = listOf("banana" , "avocado" , "apple" , "kiwi")
         with(fruits) {
             filter { it.startsWith("a") }
@@ -95,12 +81,9 @@ class MainActivity : PermissionsActivity() , BinderTools {
 
         class DataNormal
 
-        class DataImg(url : String) {
-            var url : String = ""
-
-            init {
-                this.url = url
-            }
+        class DataImg(url : String , type : Int) {
+            var url : String = url
+            var type : Int = type
         }
 
         class HolderNormal(itemView : View) : BaseViewHolder<DataNormal>(itemView) {
@@ -120,15 +103,58 @@ class MainActivity : PermissionsActivity() , BinderTools {
 
         class HolderImg(itemView : View) : BaseViewHolder<DataImg>(itemView) {
             private var img : SimpleDraweeView
+            private var txt : TextView
+            private var data : DataImg? = null
 
             init {
                 val lp = itemView.layoutParams
                 lp.height = (itemView.context.screenHeight - itemView.context.statusBarHeight) / 3
                 img = itemView.findViewById<SimpleDraweeView>(R.id.image_view)
+                txt = itemView.findViewById<TextView>(R.id.text_view)
+                itemView.setOnClickListener { onItemClick() }
+            }
+
+            private fun onItemClick() {
+                data?.let {
+                    when (data!!.type) {
+                        1 -> {
+                            ChooseColorActivity.startActivity(itemView.context as Activity)
+                        }
+                        2 -> {
+                        }
+                        3 -> {
+                        }
+                        4 -> {
+                        }
+                        5 -> {
+                        }
+                        else -> {
+                        }
+                    }
+                }
             }
 
             override fun bind(data : DataImg?) {
-                data?.let { img.setImageURI(Uri.parse(data?.url)) }
+                this.data = data
+                data?.let {
+                    img.setImageURI(Uri.parse(data?.url))
+                    txt.text = ""
+                    when (data!!.type) {
+                        1 -> {
+                            txt.text = "颜色选择器"
+                        }
+                        2 -> {
+                        }
+                        3 -> {
+                        }
+                        4 -> {
+                        }
+                        5 -> {
+                        }
+                        else -> {
+                        }
+                    }
+                }
             }
 
         }

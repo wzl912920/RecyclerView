@@ -40,6 +40,6 @@ android {
         compile dependencyInfo.util
         compile dependencyInfo.conslayout
         compile dependencyInfo.fresco
+        compile dependencyInfo.pelette
     }
 }
-
