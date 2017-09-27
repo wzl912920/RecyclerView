@@ -1,4 +1,4 @@
-package com.lynn.simplerecyclerview.watermark
+package com.lynn.simplerecyclerview.colorselector
 
 import android.content.Context
 import android.graphics.*
@@ -10,7 +10,6 @@ import android.util.AttributeSet
 import android.view.*
 import com.lynn.library.util.*
 import java.lang.ref.*
-import android.R.attr.path
 import android.graphics.RectF
 
 

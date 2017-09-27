@@ -19,7 +19,7 @@ import android.support.v7.widget.LinearLayoutManager
 import com.facebook.drawee.view.*
 import com.lynn.library.recycler.*
 import com.lynn.library.util.*
-import com.lynn.simplerecyclerview.watermark.*
+import com.lynn.simplerecyclerview.colorselector.*
 
 class MainActivity : BaseActivity() , BinderTools {
     override fun onCreate(savedInstanceState : Bundle?) {

@@ -1,4 +1,4 @@
-package com.lynn.simplerecyclerview.watermark
+package com.lynn.simplerecyclerview.colorselector
 
 import android.content.Context
 import android.graphics.*

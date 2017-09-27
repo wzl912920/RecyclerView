@@ -23,7 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".watermark.ChooseColorActivity"/>
+        <activity android:name=".colorselector.ChooseColorActivity"/>
     </application>
 
 </manifest>
