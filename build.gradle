@@ -39,6 +39,3 @@ allprojects {
 repositories {
     mavenCentral()
 }
-tasks.getByPath(":util:releaseAndroidJavadocs").enabled = false
-tasks.getByPath(":library:releaseAndroidJavadocs").enabled = false
-tasks.getByPath(":permission:releaseAndroidJavadocs").enabled = false
