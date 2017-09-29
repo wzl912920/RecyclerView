@@ -34,15 +34,14 @@ class MainActivity : BaseActivity() {
         recycle_view.addItemDecoration(TopLargeDecoration())
         recycle_view.addOnScrollListener(TopScrollListener())
         adapter.register(R.layout.layout_test_type_normal , HolderNormal::class.java)
-        adapter.multiRegister(DataImg::class.java , object : MultiTyper {
-            override fun getLayoutId(data : Any) : Int {
+        adapter.multiRegister(object : MultiTyper<DataImg> {
+            override fun getLayoutId(data : DataImg) : Int {
                 return R.layout.layout_test_type_img
             }
 
-            override fun getViewHolder(data : Any) : Class<out BaseViewHolder<*>> {
+            override fun getViewHolder(data : DataImg) : Class<out BaseViewHolder<DataImg>> {
                 return HolderImg::class.java
             }
-
         })
         var x = DataImg("http://img.juimg.com/tuku/yulantu/120926/219049-12092612154377.jpg")
         adapter.list.add(x)

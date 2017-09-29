@@ -39,6 +39,9 @@ android {
         compile dependencyInfo.permission
         compile dependencyInfo.recyclerview
         compile dependencyInfo.util
+//        compile project(':library')
+//        compile project(':permission')
+//        compile project(':util')
         compile dependencyInfo.conslayout
         compile dependencyInfo.fresco
         compile dependencyInfo.pelette

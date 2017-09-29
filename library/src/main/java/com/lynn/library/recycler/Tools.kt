@@ -1,6 +1,7 @@
 package com.lynn.library.recycler
 
 import android.support.annotation.*
+import android.util.*
 import java.lang.reflect.*
 
 /**
@@ -12,6 +13,15 @@ internal object Tools {
     }
 
     internal fun getSuperClazz(clazz : Class<*>) : Class<*> {
+        val it = clazz.genericInterfaces
+        val s = if (it.isNotEmpty()) it[0] else null
+        if (null != s && s is ParameterizedType) {
+            val p = s.actualTypeArguments
+            val s = p[0] as Class<*>
+            if (null != s) {
+                return s
+            }
+        }
         val type = clazz.genericSuperclass
         if (type != null && type is ParameterizedType) {
             val p = type.actualTypeArguments

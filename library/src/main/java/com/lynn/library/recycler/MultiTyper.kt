@@ -5,9 +5,9 @@ import android.support.annotation.*
 /**
  * Created by Lynn.
  */
-interface MultiTyper {
+interface MultiTyper<T> {
     @LayoutRes
-    fun getLayoutId(data : Any) : Int
+    fun getLayoutId(data : T) : Int
 
-    fun getViewHolder(data : Any) : Class<out BaseViewHolder<*>>
+    fun getViewHolder(data : T) : Class<out BaseViewHolder<T>>
 }

@@ -11,7 +11,7 @@ import com.lynn.library.recycler.Tools.getTypeKey
 internal class Binder {
     private val type2Holder = mutableMapOf<Int , Class<out BaseViewHolder<*>>>()
     private val type2Layout = mutableMapOf<Int , Int>()
-    private val class2MultiType = mutableMapOf<Class<*> , MultiTyper>()
+    private val class2MultiType = mutableMapOf<Class<*> , MultiTyper<*>>()
     private val class2Type = mutableMapOf<Class<*> , Int>()
     internal fun getHolderClass(type : Int) : Class<out BaseViewHolder<*>> {
         var returnType = type2Holder[type]
@@ -37,25 +37,28 @@ internal class Binder {
         class2Type.put(superClass , type)
     }
 
-    @Synchronized internal fun multiRegister(data : Class<*> , typer : MultiTyper) {
-        class2MultiType.put(data , typer)
+    @Synchronized internal fun multiRegister(typer : MultiTyper<*>) {
+        class2MultiType.put(getSuperClazz(typer::class.java) , typer)
     }
 
     @Synchronized internal fun getDataType(data : Any) : Int {
-        val multiTyper = class2MultiType[data::class.java]
-        if (null != multiTyper) {
-            val holder = multiTyper.getViewHolder(data)
-            val layoutId = multiTyper.getLayoutId(data)
-            val superClass = getSuperClazz(holder)
-            val typeKey = getTypeKey(layoutId , holder , superClass)
-            val type = layoutId + typeKey.hashCode()
-            if (type2Holder[type] == null) {
-                type2Holder.put(type , holder)
+        val obj = class2MultiType[data::class.java]
+        if (obj is MultiTyper) {
+            val multiTyper = obj as MultiTyper<Any>
+            if (null != multiTyper) {
+                val holder = multiTyper.getViewHolder(data)
+                val layoutId = multiTyper.getLayoutId(data)
+                val superClass = getSuperClazz(holder)
+                val typeKey = getTypeKey(layoutId , holder , superClass)
+                val type = layoutId + typeKey.hashCode()
+                if (type2Holder[type] == null) {
+                    type2Holder.put(type , holder)
+                }
+                if (type2Layout[type] == null) {
+                    type2Layout.put(type , layoutId)
+                }
+                return type
             }
-            if (type2Layout[type] == null) {
-                type2Layout.put(type , layoutId)
-            }
-            return type
         }
         return class2Type[data::class.java]!!
     }

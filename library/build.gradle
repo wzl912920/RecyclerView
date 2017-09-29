@@ -39,16 +39,18 @@ publish {
     userOrg = 'wzl912920'      // bintray注册的用户名
     groupId = 'com.lynn.library'
     artifactId = 'simple-recyclerview'// bintray创建的package
-    publishVersion = '0.0.5'
+    publishVersion = '0.0.7'
     desc = 'this is a simple recycler-view example'    //描述
     website = 'https://github.com/wzl912920/simplerecyclerview'
 }
 //./gradlew clean build bintrayUpload -PbintrayUser=XXX -PbintrayKey=XXX -PdryRun=false --stacktrace --info
 //build.gradle(project)
+//tasks.getByPath(":util:bintrayUpload").enabled = false
 //tasks.getByPath(":library:bintrayUpload").enabled = false
 //tasks.getByPath(":permission:bintrayUpload").enabled = false
-//tasks.getByPath(":util:bintrayUpload").enabled = false
 //tasks.getByPath(":util:releaseAndroidJavadocs").enabled = false
+//tasks.getByPath(":library:releaseAndroidJavadocs").enabled = false
+//tasks.getByPath(":permission:releaseAndroidJavadocs").enabled = false
 //allprojects {
 //    tasks.withType(Javadoc) {
 //        options {

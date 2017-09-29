@@ -29,8 +29,8 @@ class BaseRecycledAdapter : RecyclerView.Adapter<BaseViewHolder<Any>>() {
         tools.register(layoutId , clazz)
     }
 
-    fun multiRegister(data : Class<*> , typer : MultiTyper) {
-        tools.multiRegister(data , typer)
+    fun multiRegister(typer : MultiTyper<out Any>) {
+        tools.multiRegister(typer)
     }
 
     override fun getItemViewType(position : Int) : Int {
