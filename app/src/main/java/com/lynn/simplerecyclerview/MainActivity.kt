@@ -34,7 +34,16 @@ class MainActivity : BaseActivity() {
         recycle_view.addItemDecoration(TopLargeDecoration())
         recycle_view.addOnScrollListener(TopScrollListener())
         adapter.register(R.layout.layout_test_type_normal , HolderNormal::class.java)
-        adapter.register(R.layout.layout_test_type_img , HolderImg::class.java)
+        adapter.multiRegister(DataImg::class.java , object : MultiTyper {
+            override fun getLayoutId(data : Any) : Int {
+                return R.layout.layout_test_type_img
+            }
+
+            override fun getViewHolder(data : Any) : Class<out BaseViewHolder<*>> {
+                return HolderImg::class.java
+            }
+
+        })
         var x = DataImg("http://img.juimg.com/tuku/yulantu/120926/219049-12092612154377.jpg")
         adapter.list.add(x)
         x = DataImg("http://img1.juimg.com/170409/330818-1F40Z9160774.jpg")
@@ -47,6 +56,8 @@ class MainActivity : BaseActivity() {
         adapter.list.add(x)
         x = DataImg("http://img1.juimg.com/170802/330854-1FP2154R385.jpg")
         adapter.list.add(x)
+        val n = DataNormal()
+        adapter.list.add(n)
         test()
         askPermission(*permissions)
     }
