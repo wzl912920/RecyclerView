@@ -19,9 +19,10 @@ import android.support.v7.widget.LinearLayoutManager
 import com.facebook.drawee.view.*
 import com.lynn.library.recycler.*
 import com.lynn.library.util.*
+import com.lynn.simplerecyclerview.base.*
 import com.lynn.simplerecyclerview.colorselector.*
 
-class MainActivity : BaseActivity() , BinderTools {
+class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -29,26 +30,23 @@ class MainActivity : BaseActivity() , BinderTools {
     }
 
     private fun simpleRecyclerDemo() {
-        val adapter : BaseRecycledAdapter<Any> = recycle_view.adapter as BaseRecycledAdapter<Any>
+        val adapter : BaseRecycledAdapter = recycle_view.adapter as BaseRecycledAdapter
         recycle_view.addItemDecoration(TopLargeDecoration())
         recycle_view.addOnScrollListener(TopScrollListener())
-        adapter.register(TYPE_NORMAL , R.layout.layout_test_type_normal)
-        adapter.register(TYPE_IMG , R.layout.layout_test_type_img)
-        adapter.setBinder(this)
-        for (i in 0..90) {
-            var x = DataImg("http://img.juimg.com/tuku/yulantu/120926/219049-12092612154377.jpg" , 1)
-            adapter.add(x)
-            x = DataImg("http://img1.juimg.com/170409/330818-1F40Z9160774.jpg" , 2)
-            adapter.add(x)
-            x = DataImg("http://img1.juimg.com/170630/355861-1F63012563242.jpg" , 3)
-            adapter.add(x)
-            x = DataImg("http://img1.juimg.com/170715/330800-1FG50P12715.jpg" , 4)
-            adapter.add(x)
-            x = DataImg("http://img1.juimg.com/170715/330800-1FG509312761.jpg" , 5)
-            adapter.add(x)
-            x = DataImg("http://img1.juimg.com/170802/330854-1FP2154R385.jpg" , 6)
-            adapter.add(x)
-        }
+        adapter.register(R.layout.layout_test_type_normal , HolderNormal::class.java)
+        adapter.register(R.layout.layout_test_type_img , HolderImg::class.java)
+        var x = DataImg("http://img.juimg.com/tuku/yulantu/120926/219049-12092612154377.jpg")
+        adapter.list.add(x)
+        x = DataImg("http://img1.juimg.com/170409/330818-1F40Z9160774.jpg")
+        adapter.list.add(x)
+        x = DataImg("http://img1.juimg.com/170630/355861-1F63012563242.jpg")
+        adapter.list.add(x)
+        x = DataImg("http://img1.juimg.com/170715/330800-1FG50P12715.jpg")
+        adapter.list.add(x)
+        x = DataImg("http://img1.juimg.com/170715/330800-1FG509312761.jpg")
+        adapter.list.add(x)
+        x = DataImg("http://img1.juimg.com/170802/330854-1FP2154R385.jpg")
+        adapter.list.add(x)
         test()
         askPermission(*permissions)
     }
@@ -67,23 +65,11 @@ class MainActivity : BaseActivity() , BinderTools {
         }
     }
 
-    override fun getHolder(view : View , type : Int) : BaseViewHolder<*> {
-        return if (type == TYPE_IMG) HolderImg(view) else HolderNormal(view)
-    }
-
-    override fun <T : Any?> getType(t : T) : Int {
-        return if (t is DataImg) TYPE_IMG else TYPE_NORMAL
-    }
-
     companion object {
-        val TYPE_NORMAL : Int = 0
-        val TYPE_IMG : Int = 3
-
         class DataNormal
 
-        class DataImg(url : String , type : Int) {
+        class DataImg(url : String) {
             var url : String = url
-            var type : Int = type
         }
 
         class HolderNormal(itemView : View) : BaseViewHolder<DataNormal>(itemView) {
@@ -95,7 +81,7 @@ class MainActivity : BaseActivity() , BinderTools {
                 tv = itemView.findViewById<TextView>(R.id.text_view)
             }
 
-            override fun bind(data : DataNormal?) {
+            override fun bind(data : DataNormal) {
                 tv.text = "111111111111111111111"
             }
         }
@@ -115,44 +101,44 @@ class MainActivity : BaseActivity() , BinderTools {
             }
 
             private fun onItemClick() {
-                data?.let {
-                    when (data!!.type) {
-                        1 -> {
-                            ChooseColorActivity.startActivity(itemView.context as Activity)
-                        }
-                        2 -> {
-                        }
-                        3 -> {
-                        }
-                        4 -> {
-                        }
-                        5 -> {
-                        }
-                        else -> {
-                        }
+                when (adapterPosition) {
+                    0 -> {
+                        ChooseColorActivity.startActivity(itemView.context as Activity)
+                    }
+                    1 -> {
+                    }
+                    2 -> {
+                    }
+                    3 -> {
+                    }
+                    4 -> {
+                    }
+                    5 -> {
+                    }
+                    else -> {
                     }
                 }
             }
 
-            override fun bind(data : DataImg?) {
+            override fun bind(data : DataImg) {
                 this.data = data
-                data?.let {
-                    img.setImageURI(Uri.parse(data?.url))
-                    txt.text = ""
-                    when (data!!.type) {
-                        1 -> {
-                            txt.text = "颜色选择器"
-                        }
-                        2 -> {
-                        }
-                        3 -> {
-                        }
-                        4 -> {
-                        }
-                        5 -> {
-                        }
-                        else -> {
-                        }
+                img.setImageURI(Uri.parse(data?.url))
+                txt.text = ""
+                when (adapterPosition) {
+                    0 -> {
+                        txt.text = "颜色选择器"
+                    }
+                    1 -> {
+                    }
+                    2 -> {
+                    }
+                    3 -> {
+                    }
+                    4 -> {
+                    }
+                    5 -> {
+                    }
+                    else -> {
                     }
                 }
             }

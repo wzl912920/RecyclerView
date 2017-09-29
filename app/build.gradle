@@ -10,6 +10,7 @@ android {
         targetSdkVersion versionInfo.targetSdkVersion
         versionCode versionInfo.versionCode
         versionName versionInfo.versionName
+        vectorDrawables.useSupportLibrary true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

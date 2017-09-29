@@ -1,4 +1,4 @@
-package com.lynn.simplerecyclerview
+package com.lynn.simplerecyclerview.base
 
 import android.app.Application
 

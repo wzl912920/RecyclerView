@@ -6,6 +6,7 @@ import android.os.*
 import android.support.v7.graphics.*
 import android.view.*
 import com.lynn.simplerecyclerview.*
+import com.lynn.simplerecyclerview.base.*
 import kotlinx.android.synthetic.main.activity_add_water_mark.*
 
 

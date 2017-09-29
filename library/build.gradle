@@ -1,4 +1,6 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.novoda.bintray-release'
 android {
     compileSdkVersion rootProject.versionInfo.compileSdkVersion
@@ -28,14 +30,16 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     testCompile dependencyInfo.junit
-    compile dependencyInfo.appcompat_v7
     compile dependencyInfo.design
+    compile dependencyInfo.appcompat_v7
+    compile dependencyInfo.kotlin
+    compile dependencyInfo.kotlin_jre
 }
 publish {
     userOrg = 'wzl912920'      // bintray注册的用户名
     groupId = 'com.lynn.library'
     artifactId = 'simple-recyclerview'// bintray创建的package
-    publishVersion = '0.0.3'
+    publishVersion = '0.0.5'
     desc = 'this is a simple recycler-view example'    //描述
     website = 'https://github.com/wzl912920/simplerecyclerview'
 }
@@ -46,13 +50,6 @@ publish {
 //tasks.getByPath(":util:bintrayUpload").enabled = false
 //tasks.getByPath(":util:releaseAndroidJavadocs").enabled = false
 //allprojects {
-//    repositories {
-//        jcenter()
-//        mavenCentral()
-//        maven {
-//            url("https://dl.bintray.com/wzl912920/maven")
-//        }
-//    }
 //    tasks.withType(Javadoc) {
 //        options {
 //            encoding "UTF-8"

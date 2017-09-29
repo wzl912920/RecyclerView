@@ -1,10 +1,8 @@
-package com.lynn.simplerecyclerview
+package com.lynn.simplerecyclerview.common
 
 import android.content.Context
 import android.graphics.Typeface
 import android.support.v7.widget.AppCompatEditText
-import android.support.v7.widget.RecyclerView
-import android.text.Editable
 import android.text.Html
 import android.text.Spanned
 import android.text.style.StrikethroughSpan

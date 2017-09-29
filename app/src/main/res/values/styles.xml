@@ -8,4 +8,20 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="DialogFullScreen" parent="android:style/Theme.Dialog">
+        <item name="android:textColor">@color/color_272D2F</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:textCursorDrawable">@drawable/shape_text_cursor_blue</item>
+        <item name="colorControlActivated">@color/color_0076FF</item>
+        <item name="android:screenOrientation">portrait</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowEnterAnimation">@anim/activity_anim_bottom_to_top</item>
+        <item name="android:windowExitAnimation">@anim/activity_anim_top_to_bottom</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
 </resources>

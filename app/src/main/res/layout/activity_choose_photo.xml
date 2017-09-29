@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.lynn.simplerecyclerview.MainActivity">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/head_img"
+        android:layout_width="@dimen/dimen_90"
+        android:layout_height="@dimen/dimen_90"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dimen_50"
+        android:background="@drawable/svg_select_user_head_img_default_img"
+        fresco:roundAsCircle="true"/>
+
+    <android.support.v7.widget.AppCompatImageView
+        android:layout_width="@dimen/dimen_27"
+        android:layout_height="@dimen/dimen_27"
+        android:layout_below="@+id/head_img"
+        android:layout_marginLeft="-25dp"
+        android:layout_marginTop="-29dp"
+        android:layout_toRightOf="@+id/head_img"
+        app:srcCompat="@drawable/svg_select_user_head_img_camera"/>
+
+    <View
+        android:id="@+id/touch_area"
+        android:layout_width="@dimen/dimen_90"
+        android:layout_height="@dimen/dimen_90"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dimen_50"/>
+</RelativeLayout>

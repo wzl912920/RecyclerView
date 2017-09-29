@@ -1,4 +1,6 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.novoda.bintray-release'
 android {
     compileSdkVersion rootProject.versionInfo.compileSdkVersion
@@ -29,12 +31,14 @@ dependencies {
     })
     testCompile dependencyInfo.junit
     compile dependencyInfo.appcompat_v7
+    compile dependencyInfo.kotlin
+    compile dependencyInfo.kotlin_jre
 }
 publish {
     userOrg = 'wzl912920'      // bintray注册的用户名
     groupId = 'com.lynn.library'
     artifactId = 'permission'// bintray创建的package
-    publishVersion = '0.0.2'
+    publishVersion = '0.0.5'
     desc = 'this is a permission sample'    //描述
     website = 'https://github.com/wzl912920/simplerecyclerview'
 }

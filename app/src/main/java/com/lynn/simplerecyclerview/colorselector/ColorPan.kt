@@ -49,12 +49,12 @@ class ColorPan : View , View.OnTouchListener {
     override fun onTouch(v : View? , event : MotionEvent?) : Boolean {
         if (v != null && event != null) {
             val location = IntArray(2)
-            getLocationOnScreen(location)
+            getLocationInWindow(location)
             if (threadLock.isLocked) {
                 try {
                     queueLock.lock()
                     queue.poll()
-                    queue.add(newThread(location , event))
+                    queue.put(newThread(location , event))
                 } finally {
                     queueLock.unlock()
                 }
