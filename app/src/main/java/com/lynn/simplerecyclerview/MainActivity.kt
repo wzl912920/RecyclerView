@@ -23,6 +23,7 @@ class MainActivity : BaseActivity() {
 
     private fun simpleRecyclerDemo() {
         val adapter : BaseRecycledAdapter = recycle_view.adapter as BaseRecycledAdapter
+        //多类型注册方式
         adapter.multiRegister(object : MultiTyper<DataNormal> {
             override fun getLayoutId(data : DataNormal) : Int {
                 return R.layout.layout_test_type_normal
@@ -36,23 +37,9 @@ class MainActivity : BaseActivity() {
             }
 
         })
-        adapter.multiRegister(object : MultiTyper<DataImg> {
-            override fun getLayoutId(data : DataImg) : Int {
-                if (data.url?.isEmpty()) {
-                    return R.layout.layout_test_type_img
-                } else {
-                    return R.layout.layout_test_type_img
-                }
-            }
-
-            override fun getViewHolder(data : DataImg) : Class<out BaseViewHolder<DataImg>> {
-                if (data.url?.isEmpty()) {
-                    return HolderImg::class.java
-                } else {
-                    return HolderImg::class.java
-                }
-            }
-        })
+        //唯一类型注册方式
+        adapter.register(R.layout.layout_test_type_img , HolderImg::class.java)
+        //HolderImg自己单独处理点击事件
         adapter.registerGlobalClickEvent(object : ItemClickEvent {
             override fun onItemClick(view : View , potision : Int) {
                 if (view.id == R.id.text_view) {
@@ -84,8 +71,20 @@ class MainActivity : BaseActivity() {
         n.type = 0
         adapter.list.add(n)
         test()
+        //权限申请示例,回回调到onPermissionGranted
         askPermission(*permissions)
         showSuccess("Thank you for syncing😊!!!")
+    }
+
+    //如果该值返回true，申请权限被拒绝时，会回调到onPermissionDenied
+    override fun dealSelf() : Boolean {
+        return super.dealSelf()
+    }
+
+    override fun onPermissionGranted(type : Int) {
+    }
+
+    override fun onPermissionDenied(type : Int , permissions : MutableList<String>) {
     }
 
     val permissions = arrayOf(
@@ -93,13 +92,6 @@ class MainActivity : BaseActivity() {
             Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
     fun test() {
-        val fruits = listOf("banana" , "avocado" , "apple" , "kiwi")
-        with(fruits) {
-            filter { it.startsWith("a") }
-            sortedBy { it }
-            map { it.toUpperCase() }
-            forEach { println(it) }
-        }
     }
 
     companion object {
@@ -144,6 +136,10 @@ class MainActivity : BaseActivity() {
                 img = itemView.findViewById<SimpleDraweeView>(R.id.image_view)
                 txt = itemView.findViewById<TextView>(R.id.text_view)
                 itemView.setOnClickListener { onItemClick() }
+            }
+
+            override fun overrideGlobalClickEvent() : Boolean {
+                return true
             }
 
             private fun onItemClick() {

@@ -47,11 +47,11 @@ open class PermissionsActivity : AppCompatActivity() , OnRequestPermissionsResul
         }
     }
 
-    protected fun onPermissionGranted(type : Int) {}
+    protected open fun onPermissionGranted(type : Int) {}
 
-    protected fun onPermissionDenied(type : Int , permissions : MutableList<String>) {}
+    protected open fun onPermissionDenied(type : Int , permissions : MutableList<String>) {}
 
-    protected fun dealSelf() : Boolean {
+    protected open fun dealSelf() : Boolean {
         return false
     }
 
