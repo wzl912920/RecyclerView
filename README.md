@@ -30,8 +30,7 @@ adapter.multiRegister(object : MultiTyper<DataModule> {
         })
 ```
 
-#### 2、由于省略了type类型，只需要继承BaseViewHolder实现自己的ViewHolder就可以了,当然点击事件什么的都是和viewholder绑定的，自己设置就好了，
-下一个版本会考虑统一点击事件的设置
+#### 2、由于省略了type类型，只需要继承BaseViewHolder实现自己的ViewHolder就可以了
 ```Java
       class HolderNormal(act:Activity,itemView : View) : BaseViewHolder<DataNormal>(itemView) {
             private var tv : TextView
@@ -48,3 +47,26 @@ adapter.multiRegister(object : MultiTyper<DataModule> {
             }
         }
 ```
+#### 3、添加全局点击事件
+```Java
+//可以传数个你需要绑定的viewId，无论有没有传viewId，该点击事件都会同时注册到item上
+adapter.registerGlobalClickEvent(object : ItemClickEvent {
+            override fun onItemClick(view : View , potision : Int) {
+                if (view.id == R.id.text_view) {
+                    showWarning("✅✅✅✅")
+                } else {
+                    showError("xxxxxxxx")
+                }
+            }
+        } , R.id.text_view)
+//长按事件调用registerGlobalLongClickEvent其他一致
+
+//如果你有配置了全局的点击事件，同时还想要某个ViewHolder有自己的一套处理逻辑，可以在viewholder里单独设置点击事件，同时重写overrideGlobalClickEvent方法，返回true即可
+override fun overrideGlobalClickEvent() : Boolean {
+    return true
+}
+```
+
+
+
+
