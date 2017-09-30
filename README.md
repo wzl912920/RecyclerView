@@ -15,18 +15,29 @@ compile 'com.lynn.library:util-kt:0.0.7'//工具类，该工具类为kotlin代�
 #### 1、  不再需要关注viewType，使用时仅需将layout和viewholder的class类型注册进adapter即可，对于同一种数据类型有不同布局时，需要实现MultiTyper接口
 如下所示
 ```Java
-//一种数据类型对应一种布局／viewholder
-adapter.register(layoutId , DataModule::class.java)
-//一种数据类型对应多种布局／viewholder
-adapter.multiRegister(object : MultiTyper<DataModule> {
-            override fun getLayoutId(data : DataModule) : Int {
-                return layoutId
+        //一种数据类型对应一种布局／viewholder
+        adapter.register(layoutId , DataModule::class.java)
+        //一种数据类型对应多种布局／viewholder(如下两种方式均可)
+        //方式1
+        adapter.register(R.layout.layout_test_type_normal , NormalHolderB::class.java)
+        adapter.register(R.layout.layout_test_type_normal , NormalHolderA::class.java)
+        //方式2
+        adapter.multiRegister(object : MultiTyper<DataNormal> {
+            override fun getLayoutId(data : DataNormal) : Int {
+                return R.layout.layout_test_type_normal
             }
 
-            override fun getViewHolder(data : DataModule) : Class<out BaseViewHolder<DataModule>> {
-                return ImgViewHolder::class.java
+            override fun getViewHolder(data : DataNormal) : Class<out BaseViewHolder<DataNormal>> {
+                if (data.type == 1) {
+                    return NormalHolderA::class.java
+                }
+                return NormalHolderB::class.java
             }
+
         })
+//
+        
+        
 ```
 
 #### 2、由于省略了type类型，只需要继承BaseViewHolder实现自己的ViewHolder就可以了
