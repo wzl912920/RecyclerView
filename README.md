@@ -6,7 +6,7 @@
 compile 'com.lynn.library:simple-recyclerview:0.0.7'
 ```
 
-//同时新增了两个模块
+同时新增了两个模块
 ```gradle
 compile 'com.lynn.library:permission:0.0.7'//主要用于临时权限申请
 compile 'com.lynn.library:util-kt:0.0.7'//工具类，该工具类为kotlin代码，非kotlin代码无法使用
@@ -17,15 +17,15 @@ compile 'com.lynn.library:util-kt:0.0.7'//工具类，该工具类为kotlin代�
 如下所示
 ```Java
 //一种数据类型对应一种布局／viewholder
-adapter.register(@layoutId , @DataModule::class.java)
+adapter.register(layoutId , DataModule::class.java)
 //一种数据类型对应多种布局／viewholder
-adapter.multiRegister(object : MultiTyper<`@DataModule`> {
+adapter.multiRegister(object : MultiTyper<DataModule> {
             override fun getLayoutId(data : DataModule) : Int {
-                return @layoutId
+                return layoutId
             }
 
-            override fun getViewHolder(data : @DataModule) : Class<out BaseViewHolder<@DataModule>> {
-                return @HolderImg::class.java
+            override fun getViewHolder(data : DataModule) : Class<out BaseViewHolder<DataModule>> {
+                return ImgViewHolder::class.java
             }
         })
 ```
