@@ -29,7 +29,7 @@ ext.dependencyInfo = [
         glide_okhttp : 'com.github.bumptech.glide:okhttp3-integration:1.4.0@aar',
         comm_lang    : 'org.mod4j.org.apache.commons:lang:2.1.0',
         permission   : 'com.lynn.library:permission:0.0.7',
-        recyclerview : 'com.lynn.library:simple-recyclerview:0.0.8',
+        recyclerview : 'com.lynn.library:simple-recyclerview:0.0.9',
         util         : 'com.lynn.library:util-kt:0.0.7',
         conslayout   : 'com.android.support.constraint:constraint-layout:1.0.2',
         pelette      : 'com.android.support:palette-v7:26.0.0-alpha1',
