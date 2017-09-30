@@ -3,7 +3,7 @@
 
 ### Dependency
 ```gradle
-compile 'com.lynn.library:simple-recyclerview:0.0.7'
+compile 'com.lynn.library:simple-recyclerview:0.0.9'
 ```
 
 同时新增了两个模块
