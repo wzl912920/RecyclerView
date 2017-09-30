@@ -37,9 +37,9 @@ android {
         compile dependencyInfo.glide_okhttp
         compile dependencyInfo.comm_lang
         compile dependencyInfo.permission
-        compile dependencyInfo.recyclerview
+//        compile dependencyInfo.recyclerview
         compile dependencyInfo.util
-//        compile project(':library')
+        compile project(':library')
 //        compile project(':permission')
 //        compile project(':util')
         compile dependencyInfo.conslayout

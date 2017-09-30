@@ -2,10 +2,8 @@ package com.lynn.simplerecyclerview
 
 import android.*
 import android.app.*
-import android.graphics.*
 import android.net.*
 import android.os.*
-import android.support.v7.widget.*
 import android.widget.TextView
 
 import kotlinx.android.synthetic.main.activity_main.*
@@ -35,6 +33,15 @@ class MainActivity : BaseActivity() {
                 return HolderImg::class.java
             }
         })
+        adapter.registerGlobalClickEvent(object : ItemClickEvent {
+            override fun onItemClick(view : View , potision : Int) {
+                if (view.id == R.id.text_view) {
+                    showWarning("✅✅✅✅")
+                } else {
+                    showError("xxxxxxxx")
+                }
+            }
+        } , R.id.text_view)
         var x = DataImg("http://img.juimg.com/tuku/yulantu/120926/219049-12092612154377.jpg")
         adapter.list.add(x)
         x = DataImg("http://img1.juimg.com/170409/330818-1F40Z9160774.jpg")

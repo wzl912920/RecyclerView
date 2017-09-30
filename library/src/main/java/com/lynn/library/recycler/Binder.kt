@@ -3,6 +3,7 @@ package com.lynn.library.recycler
 import android.support.annotation.*
 import com.lynn.library.recycler.Tools.getSuperClazz
 import com.lynn.library.recycler.Tools.getTypeKey
+import java.lang.ref.*
 
 
 /**
@@ -13,12 +14,47 @@ internal class Binder {
     private val type2Layout = mutableMapOf<Int , Int>()
     private val class2MultiType = mutableMapOf<Class<*> , MultiTyper<*>>()
     private val class2Type = mutableMapOf<Class<*> , Int>()
+    private val clickIds = mutableListOf<Int>()
+    private val longClickIds = mutableListOf<Int>()
+    private var srClickEvent : ItemClickEvent? = null
+    private var srLongClickEvent : ItemLongClickEvent? = null
+
+    internal fun getClickEvent() : ItemClickEvent? {
+        return srClickEvent
+    }
+
+    internal fun getLongClickEvent() : ItemLongClickEvent? {
+        return srLongClickEvent
+    }
+
+    internal fun getClickEventIds() : MutableList<Int> {
+        return clickIds
+    }
+
+    internal fun getLongClickEventIds() : MutableList<Int> {
+        return longClickIds
+    }
+
     internal fun getHolderClass(type : Int) : Class<out BaseViewHolder<*>> {
         var returnType = type2Holder[type]
         if (returnType != null) {
             return returnType
         }
         throw NullPointerException("you havenot register this type")
+    }
+
+    @Synchronized internal fun registerClickEvent(event : ItemClickEvent , @IdRes vararg viewId : Int) {
+        srClickEvent = event
+        for (i in viewId) {
+            clickIds.add(i)
+        }
+    }
+
+    @Synchronized internal fun registerLongClickEvent(event : ItemLongClickEvent , @IdRes vararg viewId : Int) {
+        srLongClickEvent = event
+        for (i in viewId) {
+            longClickIds.add(i)
+        }
     }
 
     internal fun getLayoutId(type : Int) : Int {
@@ -68,5 +104,8 @@ internal class Binder {
         type2Layout.clear()
         class2Type.clear()
         class2MultiType.clear()
+        clickIds.clear()
+        longClickIds.clear()
+        srClickEvent = null
     }
 }

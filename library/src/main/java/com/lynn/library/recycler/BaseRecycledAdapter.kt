@@ -1,6 +1,6 @@
 package com.lynn.library.recycler
 
-import android.support.annotation.LayoutRes
+import android.support.annotation.*
 import android.support.v7.widget.RecyclerView
 import android.view.*
 
@@ -18,11 +18,22 @@ class BaseRecycledAdapter : RecyclerView.Adapter<BaseViewHolder<Any>>() {
         val view = LayoutInflater.from(parent.context).inflate(tools.getLayoutId(viewType) , parent , false)
         val clazz = tools.getHolderClass(viewType)
         val constructor = clazz.getConstructor(View::class.java)
-        return constructor.newInstance(view) as BaseViewHolder<Any>
+        val holder = constructor.newInstance(view) as BaseViewHolder<Any>
+        holder.bindClickEvent(tools.getClickEvent() , tools.getClickEventIds())
+        holder.bindLongClickEvent(tools.getLongClickEvent() , tools.getLongClickEventIds())
+        return holder
     }
 
     fun release() {
         tools.release()
+    }
+
+    fun registerGlobalClickEvent(event : ItemClickEvent , @IdRes vararg viewIds : Int) {
+        tools.registerClickEvent(event , *viewIds)
+    }
+
+    fun registerGlobalLongClickEvent(event : ItemLongClickEvent , @IdRes vararg viewIds : Int) {
+        tools.registerLongClickEvent(event , *viewIds)
     }
 
     fun register(@LayoutRes layoutId : Int , clazz : Class<out BaseViewHolder<out Any>>) {

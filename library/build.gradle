@@ -39,7 +39,7 @@ publish {
     userOrg = 'wzl912920'      // bintray注册的用户名
     groupId = 'com.lynn.library'
     artifactId = 'simple-recyclerview'// bintray创建的package
-    publishVersion = '0.0.7'
+    publishVersion = '0.0.8'
     desc = 'this is a simple recycler-view example'    //描述
     website = 'https://github.com/wzl912920/simplerecyclerview'
 }
