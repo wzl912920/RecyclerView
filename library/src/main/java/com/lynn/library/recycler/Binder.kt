@@ -107,5 +107,6 @@ internal class Binder {
         clickIds.clear()
         longClickIds.clear()
         srClickEvent = null
+        srLongClickEvent = null
     }
 }

@@ -30,7 +30,7 @@ allprojects {
     }
 }
 //tasks.getByPath(":util:bintrayUpload").enabled = false
-//tasks.getByPath(":library:bintrayUpload").enabled = false
+//tasks.getByPath(":library:bintrayUpload").enabled = true
 //tasks.getByPath(":permission:bintrayUpload").enabled = false
 //tasks.getByPath(":util:releaseAndroidJavadocs").enabled = false
 //tasks.getByPath(":library:releaseAndroidJavadocs").enabled = false

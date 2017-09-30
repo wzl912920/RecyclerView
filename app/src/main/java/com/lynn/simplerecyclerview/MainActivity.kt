@@ -62,7 +62,7 @@ class MainActivity : BaseActivity() {
         adapter.list.add(n)
         test()
         askPermission(*permissions)
-        showSuccess("Thank you😊!!!")
+        showSuccess("Thank you for syncing😊!!!")
     }
 
     val permissions = arrayOf(
