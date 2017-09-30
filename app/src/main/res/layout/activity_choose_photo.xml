@@ -10,8 +10,8 @@
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/head_img"
-        android:layout_width="@dimen/dimen_90"
-        android:layout_height="@dimen/dimen_90"
+        android:layout_width="@dimen/dimen_200"
+        android:layout_height="@dimen/dimen_200"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/dimen_50"
         android:background="@drawable/svg_select_user_head_img_default_img"

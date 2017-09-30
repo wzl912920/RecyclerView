@@ -4,15 +4,14 @@ import android.app.Dialog
 import android.content.*
 import android.graphics.*
 import android.os.*
-import android.support.v7.widget.*
 import android.view.*
 import android.support.v7.widget.RecyclerView
+import android.widget.*
 import com.lynn.library.recycler.*
 import com.lynn.library.util.*
 import com.lynn.simplerecyclerview.*
 import com.lynn.simplerecyclerview.base.*
 import kotlinx.android.synthetic.main.widget_menu_dialog.*
-import kotlinx.android.synthetic.main.widget_menu_dialog_list_item.view.*
 
 
 /**
@@ -29,11 +28,13 @@ class MenuDialog : Dialog {
     private fun init() {
         val v = LayoutInflater.from(context).inflate(R.layout.widget_menu_dialog , null , false)
         setContentView(v)
-        recycler_view.layoutManager = LinearLayoutManager(context)
         adapter = recycler_view.adapter as BaseRecycledAdapter
-        adapter.apply {
-            register(R.layout.widget_menu_dialog_list_item , ItemType::class.java)
-        }
+        adapter.register(R.layout.widget_menu_dialog_list_item , ItemHolder::class.java)
+        adapter.registerGlobalClickEvent(object : ItemClickEvent {
+            override fun onItemClick(view : View , potision : Int) {
+                listener?.onItemClick(potision)
+            }
+        })
         recycler_view.addItemDecoration(Decoration())
     }
 
@@ -57,10 +58,10 @@ class MenuDialog : Dialog {
     }
 
     companion object {
-        private class ItemType(containerView : View) : BaseViewHolder<String>(containerView) {
-            private val textView = containerView.text
-            override fun bind(p0 : String) {
-                textView.text = p0
+        private class ItemHolder(itemView : View) : BaseViewHolder<String>(itemView) {
+            private val textView = itemView.findViewById<TextView>(R.id.text)
+            override fun bind(data : String) {
+                textView.text = data
             }
         }
 

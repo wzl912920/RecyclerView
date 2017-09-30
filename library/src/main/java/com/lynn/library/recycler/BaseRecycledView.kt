@@ -16,9 +16,4 @@ class BaseRecycledView @JvmOverloads constructor(context : Context , attrs : Att
         setAdapter(adapter)
         layoutManager = LinearLayoutManager(context)
     }
-
-    override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
-        adapter.release()
-    }
 }

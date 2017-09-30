@@ -1,9 +1,11 @@
 package com.lynn.library.recycler
 
 import android.support.annotation.*
+import android.view.*
 import com.lynn.library.recycler.Tools.getSuperClazz
 import com.lynn.library.recycler.Tools.getTypeKey
 import java.lang.ref.*
+import java.lang.reflect.*
 
 
 /**
@@ -35,10 +37,12 @@ internal class Binder {
         return longClickIds
     }
 
-    internal fun getHolderClass(type : Int) : Class<out BaseViewHolder<*>> {
+    internal fun getConstructor(type : Int) : Constructor<*> {
         var returnType = type2Holder[type]
         if (returnType != null) {
-            return returnType
+            val cons = returnType.getDeclaredConstructor(View::class.java)
+            cons.isAccessible = true
+            return cons
         }
         throw NullPointerException("you havenot register this type")
     }
@@ -79,7 +83,7 @@ internal class Binder {
 
     @Synchronized internal fun getDataType(data : Any) : Int {
         val obj = class2MultiType[data::class.java]
-        if (obj is MultiTyper) {
+        if (null != obj && obj is MultiTyper) {
             val multiTyper = obj as MultiTyper<Any>
             if (null != multiTyper) {
                 val holder = multiTyper.getViewHolder(data)
@@ -97,16 +101,5 @@ internal class Binder {
             }
         }
         return class2Type[data::class.java]!!
-    }
-
-    internal fun release() {
-        type2Holder.clear()
-        type2Layout.clear()
-        class2Type.clear()
-        class2MultiType.clear()
-        clickIds.clear()
-        longClickIds.clear()
-        srClickEvent = null
-        srLongClickEvent = null
     }
 }

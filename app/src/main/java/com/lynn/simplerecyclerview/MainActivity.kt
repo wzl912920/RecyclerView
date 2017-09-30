@@ -13,6 +13,7 @@ import com.lynn.library.recycler.*
 import com.lynn.library.util.*
 import com.lynn.simplerecyclerview.base.*
 import com.lynn.simplerecyclerview.colorselector.*
+import com.lynn.simplerecyclerview.photocrop.*
 
 class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState : Bundle?) {
@@ -148,6 +149,7 @@ class MainActivity : BaseActivity() {
                         ChooseColorActivity.startActivity(itemView.context as Activity)
                     }
                     1 -> {
+                        ChoosePhotoActivity.startActivity(itemView.context as Activity)
                     }
                     2 -> {
                     }
@@ -171,6 +173,7 @@ class MainActivity : BaseActivity() {
                         txt.text = "颜色选择器"
                     }
                     1 -> {
+                        txt.text = "图片裁剪demo"
                     }
                     2 -> {
                     }

@@ -25,6 +25,7 @@
         </activity>
         <activity android:name=".colorselector.ChooseColorActivity"/>
         <activity android:name=".photocrop.ChoosePhotoActivity"/>
+        <activity android:name=".photocrop.CropImageActivity"/>
     </application>
 
 </manifest>
