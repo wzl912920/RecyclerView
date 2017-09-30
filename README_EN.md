@@ -16,17 +16,25 @@ compile 'com.lynn.library:util-kt:0.0.7'//a kotlin util, only kotlin project is 
 #### 1、No need to pay attention on viewType,just register the layoutId and the class of the DataModule to adapter
 如下所示
 ```Java
-//one DataMudle to one layout／viewholder
-adapter.register(layoutId , DataModule::class.java)
-//one DataModule to many layout／viewholder
-adapter.multiRegister(object : MultiTyper<DataModule> {
-            override fun getLayoutId(data : DataModule) : Int {
-                return layoutId
+        //one DataMudle to one layout／viewholder
+        adapter.register(layoutId , DataModule::class.java)
+        //one DataModule to many layout／viewholder
+        //the first way
+        adapter.register(R.layout.layout_test_type_normal , NormalHolderB::class.java)
+        adapter.register(R.layout.layout_test_type_normal , NormalHolderA::class.java)
+        //the second way
+        adapter.multiRegister(object : MultiTyper<DataNormal> {
+            override fun getLayoutId(data : DataNormal) : Int {
+                return R.layout.layout_test_type_normal
             }
 
-            override fun getViewHolder(data : DataModule) : Class<out BaseViewHolder<DataModule>> {
-                return ImgViewHolder::class.java
+            override fun getViewHolder(data : DataNormal) : Class<out BaseViewHolder<DataNormal>> {
+                if (data.type == 1) {
+                    return NormalHolderA::class.java
+                }
+                return NormalHolderB::class.java
             }
+
         })
 ```
 
