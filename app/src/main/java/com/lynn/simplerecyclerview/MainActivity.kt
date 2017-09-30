@@ -35,8 +35,6 @@ class MainActivity : BaseActivity() {
                 return HolderImg::class.java
             }
         })
-        val n = DataNormal()
-        adapter.list.add(n)
         var x = DataImg("http://img.juimg.com/tuku/yulantu/120926/219049-12092612154377.jpg")
         adapter.list.add(x)
         x = DataImg("http://img1.juimg.com/170409/330818-1F40Z9160774.jpg")
@@ -49,6 +47,12 @@ class MainActivity : BaseActivity() {
         adapter.list.add(x)
         x = DataImg("http://img1.juimg.com/170802/330854-1FP2154R385.jpg")
         adapter.list.add(x)
+        var n = DataNormal()
+        adapter.list.add(n)
+        n = DataNormal()
+        adapter.list.add(n)
+        n = DataNormal()
+        adapter.list.add(n)
         test()
         askPermission(*permissions)
         showSuccess("Thank you😊!!!")
