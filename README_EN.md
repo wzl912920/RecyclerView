@@ -19,10 +19,6 @@ compile 'com.lynn.library:util-kt:0.0.7'//a kotlin util, only kotlin project is 
         //one DataMudle to one layout／viewholder
         adapter.register(layoutId , DataModule::class.java)
         //one DataModule to many layout／viewholder
-        //the first way
-        adapter.register(R.layout.layout_test_type_normal , NormalHolderB::class.java)
-        adapter.register(R.layout.layout_test_type_normal , NormalHolderA::class.java)
-        //the second way
         adapter.multiRegister(object : MultiTyper<DataNormal> {
             override fun getLayoutId(data : DataNormal) : Int {
                 return R.layout.layout_test_type_normal

@@ -18,10 +18,6 @@ compile 'com.lynn.library:util-kt:0.0.7'//工具类，该工具类为kotlin代�
         //一种数据类型对应一种布局／viewholder
         adapter.register(layoutId , DataModule::class.java)
         //一种数据类型对应多种布局／viewholder(如下两种方式均可)
-        //方式1
-        adapter.register(R.layout.layout_test_type_normal , NormalHolderB::class.java)
-        adapter.register(R.layout.layout_test_type_normal , NormalHolderA::class.java)
-        //方式2
         adapter.multiRegister(object : MultiTyper<DataNormal> {
             override fun getLayoutId(data : DataNormal) : Int {
                 return R.layout.layout_test_type_normal

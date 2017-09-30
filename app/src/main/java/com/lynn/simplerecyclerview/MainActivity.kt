@@ -23,14 +23,34 @@ class MainActivity : BaseActivity() {
 
     private fun simpleRecyclerDemo() {
         val adapter : BaseRecycledAdapter = recycle_view.adapter as BaseRecycledAdapter
-        adapter.register(R.layout.layout_test_type_normal , HolderNormal::class.java)
+        adapter.multiRegister(object : MultiTyper<DataNormal> {
+            override fun getLayoutId(data : DataNormal) : Int {
+                return R.layout.layout_test_type_normal
+            }
+
+            override fun getViewHolder(data : DataNormal) : Class<out BaseViewHolder<DataNormal>> {
+                if (data.type == 1) {
+                    return NormalHolderA::class.java
+                }
+                return NormalHolderB::class.java
+            }
+
+        })
         adapter.multiRegister(object : MultiTyper<DataImg> {
             override fun getLayoutId(data : DataImg) : Int {
-                return R.layout.layout_test_type_img
+                if (data.url?.isEmpty()) {
+                    return R.layout.layout_test_type_img
+                } else {
+                    return R.layout.layout_test_type_img
+                }
             }
 
             override fun getViewHolder(data : DataImg) : Class<out BaseViewHolder<DataImg>> {
-                return HolderImg::class.java
+                if (data.url?.isEmpty()) {
+                    return HolderImg::class.java
+                } else {
+                    return HolderImg::class.java
+                }
             }
         })
         adapter.registerGlobalClickEvent(object : ItemClickEvent {
@@ -60,6 +80,9 @@ class MainActivity : BaseActivity() {
         adapter.list.add(n)
         n = DataNormal()
         adapter.list.add(n)
+        n = DataNormal()
+        n.type = 0
+        adapter.list.add(n)
         test()
         askPermission(*permissions)
         showSuccess("Thank you for syncing😊!!!")
@@ -80,13 +103,22 @@ class MainActivity : BaseActivity() {
     }
 
     companion object {
-        class DataNormal
+        class DataNormal {
+            var type = 1
+        }
 
         class DataImg(url : String) {
             var url : String = url
         }
 
-        class HolderNormal(itemView : View) : BaseViewHolder<DataNormal>(itemView) {
+        class NormalHolderA(itemView : View) : BaseViewHolder<DataNormal>(itemView) {
+            private var tv : TextView = itemView.findViewById(R.id.text_view)
+            override fun bind(data : DataNormal) {
+                tv.text = "AAAAAAAAAAAAAAAAAAAA"
+            }
+        }
+
+        class NormalHolderB(itemView : View) : BaseViewHolder<DataNormal>(itemView) {
             private var tv : TextView
 
             init {
@@ -96,7 +128,7 @@ class MainActivity : BaseActivity() {
             }
 
             override fun bind(data : DataNormal) {
-                tv.text = "111111111111111111111"
+                tv.text = "BBBBBBBBBBB"
             }
         }
 
