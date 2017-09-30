@@ -1,5 +1,4 @@
 # simplerecyclerview
-## 由于第一个版本使用起来有点复杂，更新了一下使用方式
 
 ### Dependency
 ```gradle
