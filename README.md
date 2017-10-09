@@ -8,7 +8,7 @@ compile 'com.lynn.library:simple-recyclerview:0.0.9'
 同时新增了两个模块
 ```gradle
 compile 'com.lynn.library:permission:0.0.7'//主要用于临时权限申请
-compile 'com.lynn.library:util-kt:0.0.7'//工具类，该工具类为kotlin代码，非kotlin代码无法使用
+compile 'com.lynn.library:util-kt:0.0.8'//工具类，该工具类为kotlin代码，非kotlin代码无法使用
 ```
 
 ### example

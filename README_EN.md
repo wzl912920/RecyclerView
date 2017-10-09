@@ -9,7 +9,7 @@ compile 'com.lynn.library:simple-recyclerview:0.0.9'
 Add two new module
 ```gradle
 compile 'com.lynn.library:permission:0.0.7'//Uses In Requesting Permissions
-compile 'com.lynn.library:util-kt:0.0.7'//a kotlin util, only kotlin project is available
+compile 'com.lynn.library:util-kt:0.0.8'//a kotlin util, only kotlin project is available
 ```
 
 ### example
