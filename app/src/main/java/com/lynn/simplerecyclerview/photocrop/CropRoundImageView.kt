@@ -32,10 +32,11 @@ class CropRoundImageView @JvmOverloads constructor(context : Context , attrs : A
     private var oldDistance : Float = 0f
 
     private val margin : Int = context.dp2px(70f).toInt()
-    private val windowLeft = margin / 2
-    private val windowWidth = context.screenWidth - margin
-    private val windowTop = context.screenHeight / 4 - windowWidth / 4
-    private val windowHeight = windowWidth
+    private val circleLeft = margin / 2
+    private val circleWidth = context.screenWidth - margin
+    private val circleRadius = circleWidth / 2
+    private val circleTop = (context.screenHeight - circleWidth) / 4
+    private val circleHeight = circleWidth
 
     init {
         init()
@@ -83,7 +84,7 @@ class CropRoundImageView @JvmOverloads constructor(context : Context , attrs : A
                 m.set(imageMatrix)
                 m.mapRect(rectF)
                 val scaledBmp = Bitmap.createScaledBitmap(bitmap , (rectF.width() * scaleX).toInt() , (rectF.height() * scaleY).toInt() , true)
-                val bmp = Bitmap.createBitmap(scaledBmp , (windowLeft - rectF.left).toInt() , (windowTop - rectF.top).toInt() , windowWidth , windowHeight)
+                val bmp = Bitmap.createBitmap(scaledBmp , (circleLeft - rectF.left).toInt() , (circleTop - rectF.top).toInt() , circleWidth , circleHeight)
                 val path = context.externalImgDir + "/" + fileName
                 bitmapToFile(bmp , path)
                 scaledBmp.recycle()
@@ -102,14 +103,14 @@ class CropRoundImageView @JvmOverloads constructor(context : Context , attrs : A
 
     override fun draw(canvas : Canvas) {
         val w = this.width / 2
-        val h = (this.height + context.statusBarHeight) / 2
+        val h = circleTop + circleRadius
         super.draw(canvas)
         path.reset()
         path.addRect(0f , 0f , width.toFloat() , height.toFloat() , Path.Direction.CW)
-        path.addCircle(w.toFloat() , ((h + windowWidth / 2) / 2).toFloat() , (windowWidth / 2).toFloat() , Path.Direction.CW)
+        path.addCircle(w.toFloat() , h.toFloat() , (circleWidth / 2).toFloat() , Path.Direction.CW)
         path.fillType = Path.FillType.EVEN_ODD
         canvas.drawPath(path , bgPaint)
-        canvas.drawCircle(w.toFloat() , ((h + windowWidth / 2) / 2).toFloat() , (windowWidth / 2).toFloat() , paint)
+        canvas.drawCircle(w.toFloat() , h.toFloat() , (circleWidth / 2).toFloat() , paint)
     }
 
     override fun onTouch(v : View , event : MotionEvent) : Boolean {
@@ -159,10 +160,10 @@ class CropRoundImageView @JvmOverloads constructor(context : Context , attrs : A
 
     private fun tou(time : Long) {
         var time = time
-        val eventD = MotionEvent.obtain(time , time , MotionEvent.ACTION_DOWN , windowWidth.toFloat() , windowHeight.toFloat() , 0)
+        val eventD = MotionEvent.obtain(time , time , MotionEvent.ACTION_DOWN , circleWidth.toFloat() , circleHeight.toFloat() , 0)
         onTouch(this , eventD)
         time += 10
-        val eventU = MotionEvent.obtain(time , time , MotionEvent.ACTION_UP , windowWidth.toFloat() , windowHeight.toFloat() , 0)
+        val eventU = MotionEvent.obtain(time , time , MotionEvent.ACTION_UP , circleWidth.toFloat() , circleHeight.toFloat() , 0)
         onTouch(this , eventU)
         eventD.recycle()
         eventU.recycle()
@@ -186,14 +187,14 @@ class CropRoundImageView @JvmOverloads constructor(context : Context , attrs : A
         var height = rect.height()
         var width = rect.width()
         var needReInit = false
-        if (width / windowWidth >= height / windowHeight) {
-            if (height < windowHeight) {
-                originalMatrix.postScale(windowHeight / height , windowHeight / height , midPoint.x , midPoint.y)
+        if (width / circleWidth >= height / circleHeight) {
+            if (height < circleHeight) {
+                originalMatrix.postScale(circleHeight / height , circleHeight / height , midPoint.x , midPoint.y)
                 needReInit = true
             }
         } else {
-            if (width < windowWidth) {
-                originalMatrix.postScale(windowWidth / width , windowWidth / width , midPoint.x , midPoint.y)
+            if (width < circleWidth) {
+                originalMatrix.postScale(circleWidth / width , circleWidth / width , midPoint.x , midPoint.y)
                 needReInit = true
             }
         }
@@ -209,25 +210,25 @@ class CropRoundImageView @JvmOverloads constructor(context : Context , attrs : A
         var deltaY = 0f
 
         when {
-            height < windowHeight -> {
-                deltaY = windowHeight - height
+            height < circleHeight -> {
+                deltaY = circleHeight - height
             }
-            rect.top > windowTop -> {
-                deltaY = windowTop - rect.top
+            rect.top > circleTop -> {
+                deltaY = circleTop - rect.top
             }
-            rect.bottom < windowTop + windowHeight -> {
-                deltaY = windowTop + windowHeight - rect.bottom
+            rect.bottom < circleTop + circleHeight -> {
+                deltaY = circleTop + circleHeight - rect.bottom
             }
         }
         when {
-            width < windowWidth -> {
-                deltaX = windowWidth - width
+            width < circleWidth -> {
+                deltaX = circleWidth - width
             }
-            rect.left > windowLeft -> {
-                deltaX = windowLeft - rect.left
+            rect.left > circleLeft -> {
+                deltaX = circleLeft - rect.left
             }
-            rect.right < windowLeft + windowWidth -> {
-                deltaX = windowLeft + windowWidth - rect.right
+            rect.right < circleLeft + circleWidth -> {
+                deltaX = circleLeft + circleWidth - rect.right
             }
         }
         originalMatrix.postTranslate(deltaX , deltaY)
