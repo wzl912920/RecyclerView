@@ -27,6 +27,8 @@ android {
         androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
             exclude group: 'com.android.support', module: 'support-annotations'
         })
+        debugCompile dependencyInfo.leakdebug
+        releaseCompile dependencyInfo.leakrelease
         testCompile dependencyInfo.junit
         compile dependencyInfo.appcompat_v7
         compile dependencyInfo.design

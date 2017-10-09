@@ -54,6 +54,7 @@ class ChoosePhotoActivity : BaseActivity() , MenuDialog.Companion.IOnItemClickLi
     }
 
     override fun onItemClick(position : Int) {
+        chooseDialog.dismiss()
         when (position) {
             0 -> {
                 var file : File
@@ -85,7 +86,6 @@ class ChoosePhotoActivity : BaseActivity() , MenuDialog.Companion.IOnItemClickLi
                 overridePendingTransition(R.anim.activity_anim_bottom_to_top , R.anim.activity_anim_not_change)
             }
         }
-        chooseDialog?.dismiss()
     }
 
     override fun onActivityResult(requestCode : Int , resultCode : Int , data : Intent?) {

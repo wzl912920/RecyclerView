@@ -355,7 +355,7 @@ private fun Context.initToast() {
     if (toast == null) {
         synchronized(String::class.java) {
             if (toast == null) {
-                toast = AppToast(this)
+                toast = AppToast(applicationContext)
             }
         }
     }

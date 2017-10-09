@@ -30,8 +30,10 @@ ext.dependencyInfo = [
         comm_lang    : 'org.mod4j.org.apache.commons:lang:2.1.0',
         permission   : 'com.lynn.library:permission:0.0.8',
         recyclerview : 'com.lynn.library:simple-recyclerview:0.1.0',
-        util         : 'com.lynn.library:util-kt:0.0.7',
+        util         : 'com.lynn.library:util-kt:0.0.8',
         conslayout   : 'com.android.support.constraint:constraint-layout:1.0.2',
         pelette      : 'com.android.support:palette-v7:26.0.0-alpha1',
+        leakdebug    : 'com.squareup.leakcanary:leakcanary-android:1.5',
+        leakrelease  : 'com.squareup.leakcanary:leakcanary-android-no-op:1.5',
 //        wechat       : 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
 ]
