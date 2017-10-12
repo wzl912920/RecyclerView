@@ -13,9 +13,19 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/dimen_50"
+        android:layout_height="@dimen/dimen_50"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_margin="50dp"/>
+        android:layout_marginBottom="@dimen/dimen_50"
+        android:layout_marginRight="@dimen/dimen_50"/>
+
+    <com.lynn.simplerecyclerview.loading.MaterialLoadingBar
+        android:id="@+id/loading"
+        android:layout_width="@dimen/dimen_50"
+        android:layout_height="@dimen/dimen_50"
+        android:layout_above="@+id/fab"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/dimen_50"
+        android:layout_marginRight="@dimen/dimen_50"/>
 </RelativeLayout>

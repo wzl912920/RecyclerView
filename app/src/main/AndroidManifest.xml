@@ -26,6 +26,20 @@
         <activity android:name=".colorselector.ChooseColorActivity"/>
         <activity android:name=".photocrop.ChoosePhotoActivity"/>
         <activity android:name=".photocrop.CropImageActivity"/>
+        <activity android:name=".loading.LoadingActivity"/>
+        <activity android:name=".drag.TestDrag"/>
+
+        <service android:name=".serviceExample.TestService"/>
+        <receiver android:name=".serviceExample.TestBroadCast"/>
+        <provider
+            android:name=".provider.FileProviderAndroidN"
+            android:authorities="com.lynn.simplerecyclerview"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_path"/>
+        </provider>
     </application>
 
 </manifest>

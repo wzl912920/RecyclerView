@@ -2,6 +2,8 @@ package com.lynn.simplerecyclerview
 
 import android.*
 import android.app.*
+import android.content.*
+import android.graphics.*
 import android.net.*
 import android.os.*
 import android.widget.TextView
@@ -13,13 +15,21 @@ import com.lynn.library.recycler.*
 import com.lynn.library.util.*
 import com.lynn.simplerecyclerview.base.*
 import com.lynn.simplerecyclerview.colorselector.*
+import com.lynn.simplerecyclerview.loading.*
 import com.lynn.simplerecyclerview.photocrop.*
+import com.lynn.simplerecyclerview.serviceExample.*
 
 class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        fab.setOnClickListener { binder?.getService() }
+        loading.setOnClickListener {
+            //TestDrag.startActivity(this)
+            LoadingActivity.startActivity(this)
+        }
         simpleRecyclerDemo()
+        bindService()
     }
 
     private fun simpleRecyclerDemo() {
@@ -71,10 +81,38 @@ class MainActivity : BaseActivity() {
         n = DataNormal()
         n.type = 0
         adapter.list.add(n)
-        test()
         //权限申请示例,回回调到onPermissionGranted
         askPermission(*permissions)
         showSuccess("Thank you for syncing😊!!!")
+        test()
+    }
+
+    fun test() {
+    }
+
+    val permissions = arrayOf(
+            Manifest.permission.READ_EXTERNAL_STORAGE ,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE)
+
+    private var binder : TestService.Companion.MyBinder? = null
+    private var conn : ServiceConnection? = null
+    private fun bindService() {
+        val i = Intent(this , TestService::class.java)
+        conn = object : ServiceConnection {
+            override fun onServiceDisconnected(name : ComponentName?) {
+                binder = null
+            }
+
+            override fun onServiceConnected(name : ComponentName? , service : IBinder?) {
+                binder = service as TestService.Companion.MyBinder
+            }
+        }
+        bindService(i , conn , Context.BIND_AUTO_CREATE)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        conn?.apply { unbindService(conn) }
     }
 
     //如果该值返回true，申请权限被拒绝时，会回调到onPermissionDenied
@@ -86,13 +124,6 @@ class MainActivity : BaseActivity() {
     }
 
     override fun onPermissionDenied(type : Int , permissions : MutableList<String>) {
-    }
-
-    val permissions = arrayOf(
-            Manifest.permission.READ_EXTERNAL_STORAGE ,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE)
-
-    fun test() {
     }
 
     companion object {
