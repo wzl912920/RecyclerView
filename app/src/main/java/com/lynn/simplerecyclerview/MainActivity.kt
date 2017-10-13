@@ -3,7 +3,6 @@ package com.lynn.simplerecyclerview
 import android.*
 import android.app.*
 import android.content.*
-import android.graphics.*
 import android.net.*
 import android.os.*
 import android.widget.TextView
@@ -15,6 +14,7 @@ import com.lynn.library.recycler.*
 import com.lynn.library.util.*
 import com.lynn.simplerecyclerview.base.*
 import com.lynn.simplerecyclerview.colorselector.*
+import com.lynn.simplerecyclerview.drag.*
 import com.lynn.simplerecyclerview.loading.*
 import com.lynn.simplerecyclerview.photocrop.*
 import com.lynn.simplerecyclerview.serviceExample.*
@@ -25,7 +25,6 @@ class MainActivity : BaseActivity() {
         setContentView(R.layout.activity_main)
         fab.setOnClickListener { binder?.getService() }
         loading.setOnClickListener {
-            //TestDrag.startActivity(this)
             LoadingActivity.startActivity(this)
         }
         simpleRecyclerDemo()
@@ -183,6 +182,7 @@ class MainActivity : BaseActivity() {
                         ChoosePhotoActivity.startActivity(itemView.context as Activity)
                     }
                     2 -> {
+                        DragActivity.startActivity(itemView.context as Activity)
                     }
                     3 -> {
                     }
@@ -207,6 +207,7 @@ class MainActivity : BaseActivity() {
                         txt.text = "图片裁剪demo"
                     }
                     2 -> {
+                        txt.text = "Drag Demo"
                     }
                     3 -> {
                     }

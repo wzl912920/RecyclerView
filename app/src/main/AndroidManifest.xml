@@ -27,7 +27,8 @@
         <activity android:name=".photocrop.ChoosePhotoActivity"/>
         <activity android:name=".photocrop.CropImageActivity"/>
         <activity android:name=".loading.LoadingActivity"/>
-        <activity android:name=".drag.TestDrag"/>
+        <activity android:name=".drag.ViewDragHelperActivity"/>
+        <activity android:name=".drag.DragActivity"/>
 
         <service android:name=".serviceExample.TestService"/>
         <receiver android:name=".serviceExample.TestBroadCast"/>
