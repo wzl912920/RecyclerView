@@ -28,6 +28,7 @@ class TestService : Service() {
         p.recycle()
         bd.putByteArray("C" , t)
         bd.putInt("D" , 10)
+        /**Android 7.0 PendingIntent存在parcelable和serializable跨进程数据传递的bug，直接将bundle作为参数传递可以避免出现该问题*/
         i.putExtra("E" , bd)
 
         val pi = PendingIntent.getBroadcast(baseContext , Math.random().toInt() , i , PendingIntent.FLAG_ONE_SHOT)
