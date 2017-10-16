@@ -73,7 +73,7 @@ override fun overrideGlobalClickEvent() : Boolean {
 #### 0.1.1版本新增了局部刷新-使用方式同Adapter
 ```Java
 //调用方式同adapter原生方式，实现移到viewholder中
-        recycle_view.adapter.notifyItemChanged(1 , TestObject("xxxx.jpg"))
+        recycle_view.adapter.notifyItemChanged(1 , Temp("xxxx.jpg"))
 //实现BaseViewHolder的如下方法
         override fun bind(data : DataImg , payLoads : MutableList<Any>) {
                 val t = payLoads[0] as Temp
