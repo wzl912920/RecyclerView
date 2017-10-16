@@ -3,7 +3,7 @@
 
 ### Dependency
 ```gradle
-compile 'com.lynn.library:simple-recyclerview:0.0.9'
+compile 'com.lynn.library:simple-recyclerview:0.1.1'
 ```
 
 Add two new module
@@ -70,6 +70,22 @@ override fun overrideGlobalClickEvent() : Boolean {
     return true
 }
 ```
+#### version 0.1.1 add local refresh
+```Java
+//the same usages as adapter,only the bind data part move to viewHolder
+        recycle_view.adapter.notifyItemChanged(1 , TestObject("xxxx.jpg"))
+//override baseviewholder's bind method
+        override fun bind(data : DataImg , payLoads : MutableList<Any>) {
+                val t = payLoads[0] as Temp
+                image_view.setImageURI(Uri.parse(t.img))
+                text_view.text = t.s.s
+        }
+```
+
+
+
+
+
 
 
 
