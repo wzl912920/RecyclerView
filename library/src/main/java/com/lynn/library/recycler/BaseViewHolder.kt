@@ -2,15 +2,20 @@ package com.lynn.library.recycler
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import kotlinx.android.extensions.LayoutContainer
 
 /**
  * Created by Lynn.
  */
 
-abstract class BaseViewHolder<T>(itemView : View) : RecyclerView.ViewHolder(itemView) {
+abstract class BaseViewHolder<T>(override val containerView : View) : RecyclerView.ViewHolder(containerView) , LayoutContainer {
     private var srClick : ItemClickEvent? = null
     private var srLongClick : ItemLongClickEvent? = null
-    abstract fun bind(data : T)
+    abstract open fun bind(data : T)
+    open fun bind(data : T , payLoads : MutableList<Any>) {
+        bind(data)
+    }
+
     open protected fun overrideGlobalClickEvent() : Boolean {
         return false
     }

@@ -47,6 +47,14 @@ class BaseRecycledAdapter : RecyclerView.Adapter<BaseViewHolder<Any>>() {
         holder.bind(list[position])
     }
 
+    override fun onBindViewHolder(holder : BaseViewHolder<Any> , position : Int , payloads : MutableList<Any>?) {
+        if (payloads?.isEmpty() != true) {
+            holder.bind(list[position] , payloads!!)
+        } else {
+            onBindViewHolder(holder , position)
+        }
+    }
+
     override fun getItemCount() : Int {
         return list.size
     }

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:theme="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/a"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_100"
+        android:background="@color/color_3A7BF7"
+        android:gravity="center"
+        android:text="AAA"
+        android:textColor="@color/color_333333"
+        android:textSize="@dimen/dimen_20"
+        theme:themeEnabled="true"/>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/b"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_100"
+        android:background="@color/color_error"
+        android:gravity="center"
+        android:text="BBB"
+        android:textColor="@color/color_333333"
+        android:textSize="@dimen/dimen_20"
+        theme:themeEnabled="true"/>
+
+    <com.lynn.simplerecyclerview.theme.UserDefinedTextView
+        android:id="@+id/c"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_100"
+        android:background="@color/colorRipple"
+        android:gravity="center"
+        android:text="CCC"
+        android:textColor="@color/color_333333"
+        android:textSize="@dimen/dimen_20"
+        theme:themeEnabled="true"/>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_100"
+        android:gravity="center"
+        android:text="DDDDD"/>
+
+</LinearLayout>

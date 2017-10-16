@@ -22,6 +22,14 @@ android {
     lintOptions {
         abortOnError false
     }
+    //Kotlin新版本中，Android Extensions已经引入了一些新的有趣的功能：任何类中的缓存（有趣的包括ViewHolder）和一个新的@Parcelize注释。还有一种方法可以自定义生成的缓存。
+//    稍后，我们会看到它们，但你需要知道这些功能并不是最终的版本，所以你需要将它们添加到build.gradle中来启动它们：
+//    androidExtensions {
+//        experimental = true
+//    }
+    androidExtensions {
+        experimental = true
+    }
 }
 
 dependencies {
@@ -39,7 +47,7 @@ publish {
     userOrg = 'wzl912920'      // bintray注册的用户名
     groupId = 'com.lynn.library'
     artifactId = 'simple-recyclerview'// bintray创建的package
-    publishVersion = '0.1.0'
+    publishVersion = '0.1.1'
     desc = 'this is a simple recycler-view example'    //描述
     website = 'https://github.com/wzl912920/simplerecyclerview'
 }

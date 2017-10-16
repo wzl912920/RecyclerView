@@ -22,30 +22,34 @@ android {
     lintOptions {
         abortOnError false
     }
-    dependencies {
-        compile fileTree(include: ['*.jar'], dir: 'libs')
-        androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-            exclude group: 'com.android.support', module: 'support-annotations'
-        })
-        debugCompile dependencyInfo.leakdebug
-        releaseCompile dependencyInfo.leakrelease
-        testCompile dependencyInfo.junit
-        compile dependencyInfo.appcompat_v7
-        compile dependencyInfo.design
-        compile dependencyInfo.kotlin_jre
-        compile dependencyInfo.okhttp
-        compile dependencyInfo.okio
-        compile dependencyInfo.glide
-        compile dependencyInfo.glide_okhttp
-        compile dependencyInfo.comm_lang
-        compile dependencyInfo.permission
+    androidExtensions {
+        experimental = true
+    }
+}
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    debugCompile dependencyInfo.leakdebug
+    releaseCompile dependencyInfo.leakrelease
+    testCompile dependencyInfo.junit
+    compile dependencyInfo.appcompat_v7
+    compile dependencyInfo.design
+    compile dependencyInfo.kotlin_jre
+    compile dependencyInfo.okhttp
+    compile dependencyInfo.okio
+    compile dependencyInfo.glide
+    compile dependencyInfo.glide_okhttp
+    compile dependencyInfo.comm_lang
+    compile dependencyInfo.permission
         compile dependencyInfo.recyclerview
-        compile dependencyInfo.util
-//        compile project(':library')
+    compile dependencyInfo.util
+//    compile project(':library')
 //        compile project(':permission')
 //        compile project(':util')
-        compile dependencyInfo.conslayout
-        compile dependencyInfo.fresco
-        compile dependencyInfo.pelette
-    }
+    compile dependencyInfo.conslayout
+    compile dependencyInfo.fresco
+    compile dependencyInfo.pelette
+    compile project(':theme')
 }

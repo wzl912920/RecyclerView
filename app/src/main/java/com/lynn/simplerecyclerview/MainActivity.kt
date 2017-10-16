@@ -5,11 +5,9 @@ import android.app.*
 import android.content.*
 import android.net.*
 import android.os.*
-import android.widget.TextView
 
 import kotlinx.android.synthetic.main.activity_main.*
 import android.view.*
-import com.facebook.drawee.view.*
 import com.lynn.library.recycler.*
 import com.lynn.library.util.*
 import com.lynn.simplerecyclerview.base.*
@@ -18,12 +16,17 @@ import com.lynn.simplerecyclerview.drag.*
 import com.lynn.simplerecyclerview.loading.*
 import com.lynn.simplerecyclerview.photocrop.*
 import com.lynn.simplerecyclerview.serviceExample.*
+import com.lynn.simplerecyclerview.theme.*
+import kotlinx.android.synthetic.main.layout_test_type_img.*
 
 class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        fab.setOnClickListener { binder?.getService() }
+        fab.setOnClickListener {
+            binder?.getService()
+            recycle_view.adapter.notifyItemChanged(1 , Temp("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1508726298&di=416d8ad060c01fabe5f1696b5cd42e04&imgtype=jpg&er=1&src=http%3A%2F%2Fd.hiphotos.baidu.com%2Fzhidao%2Fpic%2Fitem%2F72f082025aafa40fe871b36bad64034f79f019d4.jpg" , 6))
+        }
         loading.setOnClickListener {
             LoadingActivity.startActivity(this)
         }
@@ -45,7 +48,6 @@ class MainActivity : BaseActivity() {
                 }
                 return NormalHolderB::class.java
             }
-
         })
         //唯一类型注册方式
         adapter.register(R.layout.layout_test_type_img , HolderImg::class.java)
@@ -130,42 +132,41 @@ class MainActivity : BaseActivity() {
             var type = 1
         }
 
+        class Temp(s : String , t : Int = 2) {
+            val img = s
+            val s = TempObj(s)
+        }
+
+        class TempObj(str : String) {
+            val s = str
+        }
+
         class DataImg(url : String) {
             var url : String = url
         }
 
-        class NormalHolderA(itemView : View) : BaseViewHolder<DataNormal>(itemView) {
-            private var tv : TextView = itemView.findViewById(R.id.text_view)
+        class NormalHolderA(containerView : View) : BaseViewHolder<DataNormal>(containerView) {
             override fun bind(data : DataNormal) {
-                tv.text = "AAAAAAAAAAAAAAAAAAAA"
+                text_view.text = "AAAAAAAAAAAAAAAAAAAA"
             }
         }
 
-        class NormalHolderB(itemView : View) : BaseViewHolder<DataNormal>(itemView) {
-            private var tv : TextView
-
+        class NormalHolderB(containerView : View) : BaseViewHolder<DataNormal>(containerView) {
             init {
                 val lp = itemView.layoutParams
                 lp.height = (itemView.context.screenHeight - itemView.context.statusBarHeight) / 3
-                tv = itemView.findViewById<TextView>(R.id.text_view)
             }
 
             override fun bind(data : DataNormal) {
-                tv.text = "BBBBBBBBBBB"
+                text_view.text = "BBBBBBBBBBB"
             }
         }
 
 
-        class HolderImg(itemView : View) : BaseViewHolder<DataImg>(itemView) {
-            private var img : SimpleDraweeView
-            private var txt : TextView
-            private var data : DataImg? = null
-
+        class HolderImg(containerView : View) : BaseViewHolder<DataImg>(containerView) {
             init {
                 val lp = itemView.layoutParams
                 lp.height = (itemView.context.screenHeight - itemView.context.statusBarHeight) / 3
-                img = itemView.findViewById<SimpleDraweeView>(R.id.image_view)
-                txt = itemView.findViewById<TextView>(R.id.text_view)
                 itemView.setOnClickListener { onItemClick() }
             }
 
@@ -185,6 +186,7 @@ class MainActivity : BaseActivity() {
                         DragActivity.startActivity(itemView.context as Activity)
                     }
                     3 -> {
+                        ThemeTestActivity.startActivity(itemView.context as Activity)
                     }
                     4 -> {
                     }
@@ -196,20 +198,20 @@ class MainActivity : BaseActivity() {
             }
 
             override fun bind(data : DataImg) {
-                this.data = data
-                img.setImageURI(Uri.parse(data?.url))
-                txt.text = ""
+                image_view.setImageURI(Uri.parse(data?.url))
+                text_view.text = ""
                 when (adapterPosition) {
                     0 -> {
-                        txt.text = "颜色选择器"
+                        text_view.text = "颜色选择器"
                     }
                     1 -> {
-                        txt.text = "图片裁剪demo"
+                        text_view.text = "图片裁剪demo"
                     }
                     2 -> {
-                        txt.text = "Drag Demo"
+                        text_view.text = "Drag Demo"
                     }
                     3 -> {
+                        text_view.text = "主题换色"
                     }
                     4 -> {
                     }
@@ -220,6 +222,12 @@ class MainActivity : BaseActivity() {
                 }
             }
 
+            //局部刷新
+            override fun bind(data : DataImg , payLoads : MutableList<Any>) {
+                val t = payLoads[0] as Temp
+                image_view.setImageURI(Uri.parse(t.img))
+                text_view.text = t.s.s
+            }
         }
     }
 }

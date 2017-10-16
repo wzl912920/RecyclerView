@@ -1,6 +1,7 @@
 package com.lynn.simplerecyclerview.base
 
 import android.app.Application
+import android.content.res.*
 
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.squareup.leakcanary.*

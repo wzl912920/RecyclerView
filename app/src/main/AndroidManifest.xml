@@ -29,6 +29,7 @@
         <activity android:name=".loading.LoadingActivity"/>
         <activity android:name=".drag.ViewDragHelperActivity"/>
         <activity android:name=".drag.DragActivity"/>
+        <activity android:name=".theme.ThemeTestActivity"/>
 
         <service android:name=".serviceExample.TestService"/>
         <receiver android:name=".serviceExample.TestBroadCast"/>
