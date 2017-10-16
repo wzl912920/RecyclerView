@@ -73,7 +73,7 @@ override fun overrideGlobalClickEvent() : Boolean {
 #### version 0.1.1 add local refresh
 ```Java
 //the same usages as adapter,only the bind data part move to viewHolder
-        recycle_view.adapter.notifyItemChanged(1 , TestObject("xxxx.jpg"))
+        recycle_view.adapter.notifyItemChanged(1 , Temp("xxxx.jpg"))
 //override baseviewholder's bind method
         override fun bind(data : DataImg , payLoads : MutableList<Any>) {
                 val t = payLoads[0] as Temp
