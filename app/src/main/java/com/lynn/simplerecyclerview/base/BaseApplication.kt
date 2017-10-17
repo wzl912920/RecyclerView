@@ -1,9 +1,12 @@
 package com.lynn.simplerecyclerview.base
 
 import android.app.Application
+import android.content.*
 import android.content.res.*
 
 import com.facebook.drawee.backends.pipeline.Fresco
+import com.lynn.library.theme.*
+import com.lynn.library.util.*
 import com.squareup.leakcanary.*
 
 /**
@@ -17,6 +20,18 @@ class BaseApplication : Application() {
         instance = this
         Fresco.initialize(this)
         LeakCanary.install(this)
+        ThemeConfig.init(this).setAutoThemeView(true)
+    }
+
+    override fun getApplicationContext() : Context {
+        val s = super.getApplicationContext()
+        log("----------getApplicationContextCalled----------")
+        return s
+    }
+
+    override fun getResources() : Resources {
+        log("----------getResourcesCalled----------")
+        return super.getResources()
     }
 
     companion object {

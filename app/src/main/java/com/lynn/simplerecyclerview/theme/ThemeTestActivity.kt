@@ -3,26 +3,25 @@ package com.lynn.simplerecyclerview.theme
 import android.app.*
 import android.content.*
 import android.os.*
-import android.support.v7.app.*
 import com.lynn.library.theme.*
 import com.lynn.simplerecyclerview.*
+import com.lynn.simplerecyclerview.base.*
 import kotlinx.android.synthetic.main.activity_theme_test.*
 
 /**
  * Created by Lynn.
  */
 
-class ThemeTestActivity : BaseThemeActivity() {
+class ThemeTestActivity : BaseActivity() {
     override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_theme_test)
         a.setOnClickListener {
-            ThemeConfig.registerSkinPath(this , "/mnt/sdcard/test.apk")
-            applyTheme()
+            //the apk is in the app folder
+            ThemeConfig.registerSkinPath(this , "/mnt/sdcard/test.skin")
         }
         b.setOnClickListener {
             ThemeConfig.registerSkinPath(this , "")
-            applyTheme()
         }
     }
 

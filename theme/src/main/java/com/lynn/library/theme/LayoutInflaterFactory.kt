@@ -1,5 +1,6 @@
 package com.lynn.library.theme
 
+import android.app.*
 import android.content.*
 import android.content.res.*
 import android.support.v4.view.LayoutInflaterFactory
@@ -16,7 +17,7 @@ import java.lang.ref.*
  */
 
 internal class LayoutInflaterFactory : LayoutInflaterFactory {
-    private val map = mutableMapOf<String , MutableMap<String , String>>()
+    private val attrMap = mutableMapOf<String , MutableMap<String , String>>()
     private val views = mutableMapOf<String , SoftReference<View?>>()
     override fun onCreateView(parent : View? , name : String? , context : Context? , attrs : AttributeSet?) : View? {
         if (null == context || null == attrs || context !is AppCompatActivity || null == name) {
@@ -32,7 +33,6 @@ internal class LayoutInflaterFactory : LayoutInflaterFactory {
         }
         var view : View? = null
         val type = context.obtainStyledAttributes(attrs , R.styleable.theme)
-
         if (ThemeConfig.isAllViewsThemeEnable()) {
             try {
                 val themeEnabled = type.getBoolean(0 , true)
@@ -54,21 +54,21 @@ internal class LayoutInflaterFactory : LayoutInflaterFactory {
         return view
     }
 
-    private fun addNewAttr(parent : View? , context : Context , name : String , attrs : AttributeSet , attributes : MutableMap<String , String>) : View? {
+    private fun addNewAttr(parent : View? , context : Activity , name : String , attrs : AttributeSet , attributes : MutableMap<String , String>) : View? {
         if (null == parent) {
-            map.clear()
+            attrMap.clear()
             views.clear()
             return null
         }
-        val view = ThemeUtils.createView(context , name , attrs)
+        val view = ThemeUtils.createView(parent , context , name , attrs)
         view?.let {
             if (!attributes.isEmpty()) {
                 val key = "${getViewId(view)}"
-                map.put(key , attributes)
+                attrMap.put(key , attributes)
                 views.put(key , SoftReference(view))
                 val wrapper = AssertUtils.PKGWrapper()
                 var res = getResource(context , wrapper)
-                initAttr(context , res , wrapper.pkgName , view , name)
+                applyAttr(context , res , wrapper.pkgName , view , name)
             }
         }
         return view
@@ -85,25 +85,25 @@ internal class LayoutInflaterFactory : LayoutInflaterFactory {
         return "${view::class.java}${if (s.indexOf("#") == -1) view.id else s.substring(s.indexOf("#") , s.length)}"
     }
 
-    private fun initAttr(context : Context , res : Resources , pkgName : String , view : View , name : String = "") {
-        val attributes = map["${getViewId(view)}"]
+    private fun applyAttr(context : Context , res : Resources , pkgName : String , view : View , name : String = "") {
+        val attributes = attrMap["${getViewId(view)}"]
         if (null == attributes || attributes.isEmpty()) {
             return
         }
-        attributes.forEach continu@ { item ->
+        attributes.forEach NEXT@ { item ->
             val key = item.key
             val value = item.value
             if (value.isEmpty() || value.length <= 1) {
-                return@continu
+                return@NEXT
             }
             var id = Integer.parseInt(value.substring(1))
             val entryName = context.resources.getResourceEntryName(id)
             val typeName = context.resources.getResourceTypeName(id)
             val resId = res.getIdentifier(entryName , typeName , pkgName)
             if (resId == 0) {
-                return@continu
+                return@NEXT
             }
-            Log.e("$pkgName" , "$name---$entryName---$typeName")
+//            Log.e("$pkgName" , "$name---$entryName---$typeName")
             when (key) {
                 TEXT_COLOR -> {
                     if (view is TextView) {
@@ -138,9 +138,11 @@ internal class LayoutInflaterFactory : LayoutInflaterFactory {
                         }
                     }
                 }
-                TEXT_HIGH_LIGHT -> {
-                }
                 TEXT_COLOR_HINT -> {
+                    if (view is TextView) {
+                        val value = res.getColor(resId)
+                        view.setHintTextColor(value)
+                    }
                 }
                 else -> {
                 }
@@ -153,7 +155,7 @@ internal class LayoutInflaterFactory : LayoutInflaterFactory {
         val res = getResource(context , wrapper)
         views.forEach { item ->
             val view = item.value.get()
-            view?.let { initAttr(context , res , wrapper.pkgName , view) }
+            view?.let { applyAttr(context , res , wrapper.pkgName , view) }
         }
     }
 
@@ -176,8 +178,7 @@ internal class LayoutInflaterFactory : LayoutInflaterFactory {
         val SRC_COMPAT = "srcCompat"
         val TEXT_COLOR = "textColor"
         val BACK_GROUND = "background"
-        val TEXT_HIGH_LIGHT = "textColorHighlight"
         val TEXT_COLOR_HINT = "textColorHint"
-        val collectList = arrayListOf(SRC , SRC_COMPAT , BACK_GROUND , TEXT_COLOR , TEXT_HIGH_LIGHT , TEXT_COLOR_HINT)
+        val collectList = arrayListOf(SRC , SRC_COMPAT , BACK_GROUND , TEXT_COLOR , TEXT_COLOR_HINT)
     }
 }

@@ -45,7 +45,10 @@ internal object AssertUtils {
 //            throw NullPointerException(
 //                    "package not found in AndroidManifest.xml [\$path]")
 //        }
-        pkgWrapper?.pkgName = packageName ?: context.packageName
+        if (packageName == null || packageName.isEmpty()) {
+            packageName = context.packageName
+        }
+        pkgWrapper?.pkgName = packageName!!
         val superRes = context.resources
         rl = Resources(am , superRes.displayMetrics ,
                        superRes.configuration)

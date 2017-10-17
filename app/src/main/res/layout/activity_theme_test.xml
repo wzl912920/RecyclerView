@@ -47,14 +47,27 @@
         <android.support.v7.widget.AppCompatImageView
             android:layout_width="@dimen/dimen_200"
             android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
             theme:srcCompat="@drawable/aa"
             theme:themeEnabled="true"/>
 
         <android.support.v7.widget.AppCompatImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
             android:background="@mipmap/ic_launcher"
+            theme:themeEnabled="true"/>
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/svg_select_user_head_img_default_img"
             theme:themeEnabled="true"/>
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/x"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"></LinearLayout>
 </LinearLayout>
