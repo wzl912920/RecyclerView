@@ -30,6 +30,7 @@ class MainActivity : BaseActivity() {
         loading.setOnClickListener {
             LoadingActivity.startActivity(this)
         }
+
         simpleRecyclerDemo()
         bindService()
     }

@@ -10,10 +10,10 @@
         android:id="@+id/a"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_100"
-        android:background="@color/color_3A7BF7"
+        android:background="@color/color_bg_a"
         android:gravity="center"
-        android:text="AAA"
-        android:textColor="@color/color_333333"
+        android:text="点击切换主题"
+        android:textColor="@color/color_a"
         android:textSize="@dimen/dimen_20"
         theme:themeEnabled="true"/>
 
@@ -21,10 +21,10 @@
         android:id="@+id/b"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_100"
-        android:background="@color/color_error"
+        android:background="@color/color_bg_b"
         android:gravity="center"
-        android:text="BBB"
-        android:textColor="@color/color_333333"
+        android:text="点击恢复默认主题"
+        android:textColor="@color/color_b"
         android:textSize="@dimen/dimen_20"
         theme:themeEnabled="true"/>
 
@@ -32,17 +32,29 @@
         android:id="@+id/c"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_100"
-        android:background="@color/colorRipple"
+        android:background="@color/color_bg_c"
         android:gravity="center"
         android:text="CCC"
-        android:textColor="@color/color_333333"
+        android:textColor="@color/color_c"
         android:textSize="@dimen/dimen_20"
         theme:themeEnabled="true"/>
 
-    <android.support.v7.widget.AppCompatTextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_100"
-        android:gravity="center"
-        android:text="DDDDD"/>
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="@dimen/dimen_200"
+            android:layout_height="wrap_content"
+            theme:srcCompat="@drawable/aa"
+            theme:themeEnabled="true"/>
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/ic_launcher"
+            theme:themeEnabled="true"/>
+    </LinearLayout>
 
 </LinearLayout>

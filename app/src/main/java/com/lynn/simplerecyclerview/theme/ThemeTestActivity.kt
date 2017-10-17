@@ -17,12 +17,12 @@ class ThemeTestActivity : BaseThemeActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_theme_test)
         a.setOnClickListener {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            recreate()
+            ThemeConfig.registerSkinPath(this , "/mnt/sdcard/test.apk")
+            applyTheme()
         }
         b.setOnClickListener {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            recreate()
+            ThemeConfig.registerSkinPath(this , "")
+            applyTheme()
         }
     }
 
