@@ -55,4 +55,5 @@ dependencies {
     compile dependencyInfo.pelette
     compile project(':theme')
     compile project(':net')
+    compile project(':db_example')
 }
