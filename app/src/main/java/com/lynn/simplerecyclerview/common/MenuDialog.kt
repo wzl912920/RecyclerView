@@ -28,14 +28,14 @@ class MenuDialog : Dialog {
     private fun init() {
         val v = LayoutInflater.from(context).inflate(R.layout.widget_menu_dialog , null , false)
         setContentView(v)
-        adapter = recycler_view.adapter as BaseRecycledAdapter
+        adapter = recycle_view.adapter as BaseRecycledAdapter
         adapter.register(R.layout.widget_menu_dialog_list_item , ItemHolder::class.java)
         adapter.registerGlobalClickEvent(object : ItemClickEvent {
             override fun onItemClick(view : View , potision : Int) {
                 listener?.onItemClick(potision)
             }
         })
-        recycler_view.addItemDecoration(Decoration())
+        recycle_view.addItemDecoration(Decoration())
     }
 
     fun setData(list : MutableList<String>) {

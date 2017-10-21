@@ -33,7 +33,7 @@ internal class LayoutInflaterFactory : LayoutInflaterFactory {
         }
         var view : View? = null
         val type = context.obtainStyledAttributes(attrs , R.styleable.theme)
-        if (ThemeConfig.isAllViewsThemeEnable()) {
+        if (ThemeConfig.getInstance().isAllViewsThemeEnable()) {
             try {
                 val themeEnabled = type.getBoolean(0 , true)
                 if (themeEnabled) {
@@ -66,9 +66,7 @@ internal class LayoutInflaterFactory : LayoutInflaterFactory {
                 val key = "${getViewId(view)}"
                 attrMap.put(key , attributes)
                 views.put(key , SoftReference(view))
-                val wrapper = AssertUtils.PKGWrapper()
-                var res = getResource(context , wrapper)
-                applyAttr(context , res , wrapper.pkgName , view , name)
+                applyAttr(view)
             }
         }
         return view
@@ -85,7 +83,7 @@ internal class LayoutInflaterFactory : LayoutInflaterFactory {
         return "${view::class.java}${if (s.indexOf("#") == -1) view.id else s.substring(s.indexOf("#") , s.length)}"
     }
 
-    private fun applyAttr(context : Context , res : Resources , pkgName : String , view : View , name : String = "") {
+    private fun applyAttr(view : View) {
         val attributes = attrMap["${getViewId(view)}"]
         if (null == attributes || attributes.isEmpty()) {
             return
@@ -97,31 +95,26 @@ internal class LayoutInflaterFactory : LayoutInflaterFactory {
                 return@NEXT
             }
             var id = Integer.parseInt(value.substring(1))
-            val entryName = context.resources.getResourceEntryName(id)
-            val typeName = context.resources.getResourceTypeName(id)
-            val resId = res.getIdentifier(entryName , typeName , pkgName)
-            if (resId == 0) {
-                return@NEXT
-            }
 //            Log.e("$pkgName" , "$name---$entryName---$typeName")
+            val typeName = ThemeConfig.getInstance().getTypeName(id)
             when (key) {
                 TEXT_COLOR -> {
                     if (view is TextView) {
-                        view.setTextColor(res.getColor(resId))
+                        view.setTextColor(ThemeConfig.getInstance().getColor(id))
                     }
                 }
                 BACK_GROUND -> {
                     when (typeName) {
                         TYPE_COLOR -> {
-                            val value = res.getColor(resId)
+                            val value = ThemeConfig.getInstance().getColor(id)
                             view.setBackgroundColor(value)
                         }
                         TYPE_DRAWABLE -> {
-                            val value = res.getDrawable(resId)
+                            val value = ThemeConfig.getInstance().getDrawable(id)
                             view.setBackgroundDrawable(value)
                         }
                         TYPE_MIPMAP -> {
-                            val value = res.getDrawable(resId)
+                            val value = ThemeConfig.getInstance().getDrawable(id)
                             view.setBackgroundDrawable(value)
                         }
                     }
@@ -129,18 +122,18 @@ internal class LayoutInflaterFactory : LayoutInflaterFactory {
                 SRC , SRC_COMPAT -> {
                     when (typeName) {
                         TYPE_DRAWABLE -> {
-                            val value = res.getDrawable(resId)
+                            val value = ThemeConfig.getInstance().getDrawable(id)
                             (view as ImageView).setImageDrawable(value)
                         }
                         TYPE_MIPMAP -> {
-                            val value = res.getDrawable(resId)
+                            val value = ThemeConfig.getInstance().getDrawable(id)
                             (view as ImageView).setImageDrawable(value)
                         }
                     }
                 }
                 TEXT_COLOR_HINT -> {
                     if (view is TextView) {
-                        val value = res.getColor(resId)
+                        val value = ThemeConfig.getInstance().getColor(id)
                         view.setHintTextColor(value)
                     }
                 }
@@ -150,35 +143,26 @@ internal class LayoutInflaterFactory : LayoutInflaterFactory {
         }
     }
 
-    internal fun applySkin(context : Context) {
-        val wrapper = AssertUtils.PKGWrapper()
-        val res = getResource(context , wrapper)
-        views.forEach { item ->
-            val view = item.value.get()
-            view?.let { applyAttr(context , res , wrapper.pkgName , view) }
-        }
-    }
-
-    private fun getResource(context : Context , wrapper : AssertUtils.PKGWrapper) : Resources {
-        return if (ThemeConfig.isDefaultTheme()) {
-            wrapper.pkgName = context.packageName
-            context.resources
-        } else {
-            AssertUtils.getPlugInResource(context , ThemeConfig.getThemePath() , wrapper)
+    internal fun applySkin() {
+        views.forEach {
+            val view = it.value.get()
+            view?.let {
+                applyAttr(view)
+            }
         }
     }
 
     companion object {
-        val TYPE_COLOR = "color"
-        val TYPE_DIMEN = "dimen"
-        val TYPE_DRAWABLE = "drawable"
-        val TYPE_MIPMAP = "mipmap"
+        private val TYPE_COLOR = "color"
+        private val TYPE_DIMEN = "dimen"
+        private val TYPE_DRAWABLE = "drawable"
+        private val TYPE_MIPMAP = "mipmap"
 
-        val SRC = "src"
-        val SRC_COMPAT = "srcCompat"
-        val TEXT_COLOR = "textColor"
-        val BACK_GROUND = "background"
-        val TEXT_COLOR_HINT = "textColorHint"
-        val collectList = arrayListOf(SRC , SRC_COMPAT , BACK_GROUND , TEXT_COLOR , TEXT_COLOR_HINT)
+        private val SRC = "src"
+        private val SRC_COMPAT = "srcCompat"
+        private val TEXT_COLOR = "textColor"
+        private val BACK_GROUND = "background"
+        private val TEXT_COLOR_HINT = "textColorHint"
+        private val collectList = arrayListOf(SRC , SRC_COMPAT , BACK_GROUND , TEXT_COLOR , TEXT_COLOR_HINT)
     }
 }

@@ -16,7 +16,7 @@ internal object AssertUtils {
     internal fun getPlugInResource(context : Context , apkPath : String , pkgWrapper : PKGWrapper? = null) : Resources {
         val rl : Resources
         val path = File(apkPath)
-        if (!path.isFile || ThemeConfig.isDefaultTheme()) {
+        if (!path.isFile || ThemeConfig.getInstance().isDefaultTheme()) {
             pkgWrapper?.pkgName = context.packageName
             return context.resources
         }
@@ -26,7 +26,6 @@ internal object AssertUtils {
         am.javaClass.getMethod("addAssetPath" , String::class.java)
                 .invoke(am , path.absolutePath)
 
-        // parse packageName from AndroidManifest.xml
         var packageName : String? = null
 
         val xml = am.openXmlResourceParser("AndroidManifest.xml")
@@ -41,10 +40,6 @@ internal object AssertUtils {
             eventType = xml.nextToken()
         }
         xml.close()
-//        if (packageName == null) {
-//            throw NullPointerException(
-//                    "package not found in AndroidManifest.xml [\$path]")
-//        }
         if (packageName == null || packageName.isEmpty()) {
             packageName = context.packageName
         }

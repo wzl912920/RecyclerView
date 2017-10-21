@@ -5,6 +5,7 @@ import android.content.*
 import android.content.res.*
 
 import com.facebook.drawee.backends.pipeline.Fresco
+import com.lynn.library.net.*
 import com.lynn.library.theme.*
 import com.lynn.library.util.*
 import com.squareup.leakcanary.*
@@ -20,7 +21,7 @@ class BaseApplication : Application() {
         instance = this
         Fresco.initialize(this)
         LeakCanary.install(this)
-        ThemeConfig.init(this).setAutoThemeView(true)
+        ThemeConfig.getInstance().init(this).setAutoThemeView(true)
     }
 
     override fun getApplicationContext() : Context {

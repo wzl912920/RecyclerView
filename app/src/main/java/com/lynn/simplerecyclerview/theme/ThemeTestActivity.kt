@@ -18,10 +18,10 @@ class ThemeTestActivity : BaseActivity() {
         setContentView(R.layout.activity_theme_test)
         a.setOnClickListener {
             //the apk is in the app folder
-            ThemeConfig.registerSkinPath(this , "/mnt/sdcard/test.skin")
+            ThemeConfig.getInstance().registerSkinPath(this , "/mnt/sdcard/test.skin")
         }
         b.setOnClickListener {
-            ThemeConfig.registerSkinPath(this , "")
+            ThemeConfig.getInstance().registerSkinPath(this , "")
         }
     }
 

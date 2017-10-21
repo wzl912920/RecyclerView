@@ -1,1 +1,1 @@
-include ':app', ':library', ':util', ':permission', ':theme'
+include ':app', ':library', ':util', ':permission', ':theme', ':net'

@@ -6,7 +6,7 @@
 
 
     <com.lynn.library.recycler.BaseRecycledView
-        android:id="@+id/recycler_view"
+        android:id="@+id/recycle_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"></com.lynn.library.recycler.BaseRecycledView>

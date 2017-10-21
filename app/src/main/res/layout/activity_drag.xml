@@ -15,7 +15,7 @@
         android:textSize="@dimen/dimen_20"/>
 
     <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/recycler_view"
+        android:id="@+id/recycle_view"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_100"
         android:gravity="center"

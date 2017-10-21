@@ -13,11 +13,13 @@ import com.lynn.library.util.*
 import com.lynn.simplerecyclerview.base.*
 import com.lynn.simplerecyclerview.colorselector.*
 import com.lynn.simplerecyclerview.drag.*
+import com.lynn.simplerecyclerview.express.*
 import com.lynn.simplerecyclerview.loading.*
 import com.lynn.simplerecyclerview.photocrop.*
 import com.lynn.simplerecyclerview.serviceExample.*
 import com.lynn.simplerecyclerview.theme.*
 import kotlinx.android.synthetic.main.layout_test_type_img.*
+import java.io.Serializable
 
 class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState : Bundle?) {
@@ -89,9 +91,6 @@ class MainActivity : BaseActivity() {
         test()
     }
 
-    fun test() {
-    }
-
     val permissions = arrayOf(
             Manifest.permission.READ_EXTERNAL_STORAGE ,
             Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -128,7 +127,14 @@ class MainActivity : BaseActivity() {
     override fun onPermissionDenied(type : Int , permissions : MutableList<String>) {
     }
 
+    fun test() {
+    }
+
     companion object {
+        class ResponseData : Serializable {
+
+        }
+
         class DataNormal {
             var type = 1
         }
@@ -190,6 +196,7 @@ class MainActivity : BaseActivity() {
                         ThemeTestActivity.startActivity(itemView.context as Activity)
                     }
                     4 -> {
+                        ExpressActivity.startActivity(itemView.context as Activity)
                     }
                     5 -> {
                     }
@@ -215,6 +222,7 @@ class MainActivity : BaseActivity() {
                         text_view.text = "主题换色"
                     }
                     4 -> {
+                        text_view.text = "快递查询"
                     }
                     5 -> {
                     }

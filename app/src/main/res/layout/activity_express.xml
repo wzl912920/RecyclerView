@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dimen_14"
+            android:text="快递公司:"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimen_16"/>
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/dimen_14"
+            android:text="顺丰 ⬇️"
+            android:textColor="@color/color_error"
+            android:textSize="@dimen/dimen_16"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dimen_14"
+            android:text="快递单号:"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimen_16"/>
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/order_num"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dimen_24"
+            android:gravity="center_vertical"
+            android:hint="快递单号"
+            android:maxLines="1"
+            android:padding="@dimen/dimen_14"
+            android:textColor="@color/color_error"
+            android:textSize="@dimen/dimen_16"/>
+    </LinearLayout>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="查询"/>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="信息来源于网络，可能与实际信息有偏差"
+        android:textColor="@color/color_9B9B9B"/>
+
+    <com.lynn.library.recycler.BaseRecycledView
+        android:id="@+id/recycle_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/dimen_15"
+        android:paddingRight="@dimen/dimen_15"></com.lynn.library.recycler.BaseRecycledView>
+
+</LinearLayout>
