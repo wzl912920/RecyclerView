@@ -504,7 +504,9 @@ val Context.APP_VERSION_CODE : Int
  * @return return the compressed file(output file) bytes
  */
 fun compressImg(srcImagePath : String , outImagePath : String , outWidth : Int , outHeight : Int , maxFileSize : Int) : ByteArray? {
-    if (Looper.getMainLooper() == Looper.myLooper()) throw IllegalStateException("cannot run in ui thread")
+    if (Looper.getMainLooper() == Looper.myLooper()) {
+        log("cannot run in ui thread")
+    }
     val options = BitmapFactory.Options()
     options.inJustDecodeBounds = true
     BitmapFactory.decodeFile(srcImagePath , options)
@@ -616,10 +618,26 @@ fun computeSampleSize(options : BitmapFactory.Options , reqWidth : Float , reqHe
  * @return
  */
 fun bitmapToBytes(bitmap : Bitmap) : ByteArray {
-    if (Looper.getMainLooper() == Looper.myLooper()) throw IllegalStateException("cannot run in ui thread")
+    if (Looper.getMainLooper() == Looper.myLooper()) {
+        log("cannot run in ui thread")
+    }
     val stream = ByteArrayOutputStream()
     bitmap.compress(Bitmap.CompressFormat.PNG , 100 , stream)
     return stream.toByteArray()
+}
+
+fun fileToBitmap(filePath : String) : Bitmap {
+    val opts = BitmapFactory.Options()
+    opts.inPreferredConfig = Bitmap.Config.RGB_565
+    opts.inJustDecodeBounds = true
+    BitmapFactory.decodeFile(filePath , opts)
+    //设置位图缩放比例 width，hight设为原来的四分一（该参数请使用2的整数倍）
+    // 这也减小了位图占用的内存大小；例如，一张分辨率为2048*1536px的图像使用inSampleSize值为4的设置来解码，产生的Bitmap大小约为512*384px。相较于完整图片占用12M的内存，这种方式只需0.75M内存(假设Bitmap配置为ARGB_8888)。
+    opts.inSampleSize = computeSampleSize(opts , 1024f , 1024f)
+    //设置解码位图的尺寸信息
+    opts.inInputShareable = true
+    opts.inJustDecodeBounds = false
+    return BitmapFactory.decodeFile(filePath , opts)
 }
 
 /**
@@ -627,7 +645,9 @@ fun bitmapToBytes(bitmap : Bitmap) : ByteArray {
  * convert bitmap to file
  */
 fun bitmapToFile(bitmap : Bitmap , path : String) {
-    if (Looper.getMainLooper() == Looper.myLooper()) throw IllegalStateException("cannot run in ui thread")
+    if (Looper.getMainLooper() == Looper.myLooper()) {
+        log("cannot run in ui thread")
+    }
     if (path.isEmpty()) throw NullPointerException("invalid output path")
     val file = File(path)
     try {
@@ -656,7 +676,9 @@ fun bitmapToFile(bitmap : Bitmap , path : String) {
  * convert view to bitmap
  */
 fun viewToBitmap(view : View , width : Float , height : Float , scroll : Boolean , config : Bitmap.Config) : Bitmap {
-    if (Looper.getMainLooper() == Looper.myLooper()) throw IllegalStateException("cannot run in ui thread")
+    if (Looper.getMainLooper() == Looper.myLooper()) {
+        log("cannot run in ui thread")
+    }
     if (!view.isDrawingCacheEnabled) {
         view.isDrawingCacheEnabled = true
     }
@@ -689,7 +711,9 @@ fun viewToBitmap(view : View , width : Float , height : Float , scroll : Boolean
  * merge two bitmap to one
  */
 private fun add2Bitmap(first : Bitmap , second : Bitmap , isHorizontal : Boolean) : Bitmap {
-    if (Looper.getMainLooper() == Looper.myLooper()) throw IllegalStateException("cannot run in ui thread")
+    if (Looper.getMainLooper() == Looper.myLooper()) {
+        log("cannot run in ui thread")
+    }
     val width : Int
     val height : Int
     if (isHorizontal) {
