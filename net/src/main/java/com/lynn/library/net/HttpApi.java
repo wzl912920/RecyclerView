@@ -6,12 +6,15 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import java.io.File;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cache;
 import okhttp3.Call;
+import okhttp3.Headers;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -22,7 +25,10 @@ import okhttp3.RequestBody;
 class HttpApi {
     private static OkHttpClient okHttpClient;
     private static HttpApi instance;
-    private static final MediaType JSON = MediaType.parse("application/json");
+    private static final String CONTENT_TYPE = "Content-Type";
+    private static final String APPLICATION_JSON = "application/json";
+    private static final String MULTIPART = "multipart/form-data";
+    private static final MediaType JSON = MediaType.parse(APPLICATION_JSON + ";charset=utf-8");
     private static final String TAG = "Request";
 
     private HttpApi() {
@@ -64,18 +70,35 @@ class HttpApi {
         if (TextUtils.isEmpty(callBack.getUrl())) {
             throw new NullPointerException("url is null");
         }
-        String json = Config.GSON.toJson(callBack.getParams());
-        log(Config.URL + callBack.getUrl() + " === " + json);
-        RequestBody jsonBody = RequestBody.create(JSON, json);
-        Request.Builder builder = new Request.Builder()
-                .url(callBack.getUrl().startsWith("http") ? callBack.getUrl() : Config.URL + callBack.getUrl()).post(jsonBody);
+        Request.Builder builder = new Request.Builder();
         if (null != callBack.getHeaders()) {
             Map<String, String> headers = callBack.getHeaders();
             for (Map.Entry<String, String> set : headers.entrySet()) {
                 builder.addHeader(set.getKey(), set.getValue());
             }
         }
-        builder.addHeader("Content-Type", "application/json");
+        List<FileParams> files = callBack.getFiles();
+        Map<String, Object> params = callBack.getParams();
+        String json = Config.GSON.toJson(params);
+        log(Config.URL + callBack.getUrl() + " === " + json);
+        RequestBody body;
+        if (null == files || files.size() == 0) {
+            builder.addHeader(CONTENT_TYPE, APPLICATION_JSON);
+            body = RequestBody.create(JSON, json);
+        } else {
+            builder.addHeader(CONTENT_TYPE, MULTIPART);
+            MultipartBody.Builder mpb = new MultipartBody.Builder();
+            mpb.setType(MultipartBody.FORM);
+            for (Map.Entry<String, Object> item : params.entrySet()) {
+                mpb.addFormDataPart(item.getKey(), String.valueOf(item.getValue()));
+            }
+            for (int i = 0; i < files.size(); i++) {
+                FileParams item = files.get(i);
+                mpb.addFormDataPart(item.key, item.fileName, RequestBody.create(MediaType.parse(item.mediaType), item.bytes));
+            }
+            body = mpb.build();
+        }
+        builder.url(callBack.getUrl().startsWith("http") ? callBack.getUrl() : Config.URL + callBack.getUrl()).post(body);
         builder.tag(Config.toMd5(callBack.getUrl()));
         Request request = builder.build();
         Call call = null;

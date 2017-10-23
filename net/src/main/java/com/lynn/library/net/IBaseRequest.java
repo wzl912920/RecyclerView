@@ -3,6 +3,8 @@ package com.lynn.library.net;
 import android.app.Activity;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
@@ -12,8 +14,10 @@ import java.io.Serializable;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.Call;
@@ -29,6 +33,7 @@ abstract class IBaseRequest<T, K extends Serializable> implements Callback {
     private final Handler handler;
     private final Map<String, Object> params;
     private final Map<String, String> headers;
+    private final List<FileParams> files;
     private String responseString;
     private static final String TAG = "Response";
 
@@ -37,6 +42,7 @@ abstract class IBaseRequest<T, K extends Serializable> implements Callback {
         handler = new Handler(Looper.getMainLooper());
         params = new LinkedHashMap<>();
         headers = new HashMap<>();
+        files = new ArrayList<>();
     }
 
     protected final T getMainObject() {
@@ -120,20 +126,32 @@ abstract class IBaseRequest<T, K extends Serializable> implements Callback {
         headers.putAll(map);
     }
 
+    protected final Map<String, String> getHeaders() {
+        return headers;
+    }
+
     protected final void addParam(String k, Object value) {
         params.put(k, value);
+    }
+
+    protected final Map<String, Object> getParams() {
+        return params;
     }
 
     protected final void addParams(Map<String, String> map) {
         params.putAll(map);
     }
 
-    protected final Map<String, String> getHeaders() {
-        return headers;
+    protected final void addFile(@NonNull String key, @Nullable String fileName, @NonNull String mediaType, @NonNull byte[] bytes) {
+        files.add(new FileParams(key, fileName, mediaType, bytes));
     }
 
-    protected final Map<String, Object> getParams() {
-        return params;
+    protected final void addFiles(List<FileParams> list) {
+        files.addAll(list);
+    }
+
+    protected final List<FileParams> getFiles() {
+        return files;
     }
 
     private boolean checkNull() {

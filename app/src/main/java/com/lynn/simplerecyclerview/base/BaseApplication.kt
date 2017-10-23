@@ -22,6 +22,7 @@ class BaseApplication : Application() {
         Fresco.initialize(this)
         LeakCanary.install(this)
         ThemeConfig.getInstance().init(this).setAutoThemeView(true)
+        HttpUtils.init(this , "" , "").setDebugMode(true)
     }
 
     override fun getApplicationContext() : Context {

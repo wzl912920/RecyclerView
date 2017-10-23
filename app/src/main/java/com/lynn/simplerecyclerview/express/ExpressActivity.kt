@@ -12,8 +12,7 @@ import com.lynn.simplerecyclerview.*
 import com.lynn.simplerecyclerview.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_express.*
 import kotlinx.android.synthetic.main.layout_express_list_item.*
-import kotlinx.android.synthetic.main.layout_express_list_item.view.*
-import java.io.Serializable
+import java.io.*
 
 /**
  * Created by Lynn.
