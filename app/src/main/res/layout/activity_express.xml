@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <LinearLayout
@@ -26,7 +27,7 @@
             android:gravity="center"
             android:padding="@dimen/dimen_14"
             android:text="顺丰 ⬇️"
-            android:textColor="@color/color_error"
+            android:textColor="@color/color_FF3049"
             android:textSize="@dimen/dimen_16"/>
     </LinearLayout>
 
@@ -53,7 +54,7 @@
             android:hint="快递单号"
             android:maxLines="1"
             android:padding="@dimen/dimen_14"
-            android:textColor="@color/color_error"
+            android:textColor="@color/color_FF3049"
             android:textSize="@dimen/dimen_16"/>
     </LinearLayout>
 

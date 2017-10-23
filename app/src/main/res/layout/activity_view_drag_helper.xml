@@ -2,7 +2,8 @@
 <com.lynn.simplerecyclerview.drag.NSScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <com.lynn.simplerecyclerview.drag.DragContainer
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -30,7 +31,7 @@
             android:layout_marginLeft="@dimen/dimen_25"
             android:layout_marginRight="@dimen/dimen_25"
             android:layout_marginTop="@dimen/dimen_10"
-            android:background="@color/color_error"
+            android:background="@color/color_FF3049"
             android:gravity="center"
             android:text="BBB"
             android:textColor="@color/white"/>

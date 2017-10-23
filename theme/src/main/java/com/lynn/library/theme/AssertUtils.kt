@@ -22,7 +22,6 @@ internal object AssertUtils {
         }
 
         val am = AssetManager::class.java.newInstance() as AssetManager
-
         am.javaClass.getMethod("addAssetPath" , String::class.java)
                 .invoke(am , path.absolutePath)
 

@@ -4,7 +4,7 @@
     android:id="@+id/root_view"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@color/color_FFFFFF">
+    android:background="@color/white">
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/time"
@@ -33,11 +33,11 @@
         android:gravity="center"
         android:padding="@dimen/dimen_8"
         android:text="america"
-        android:textColor="@color/color_error"
+        android:textColor="@color/color_FF3049"
         android:textStyle="bold"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_0_5"
-        android:background="@color/divider"/>
+        android:background="@color/color_DCDCDC"/>
 </RelativeLayout>
