@@ -14,10 +14,9 @@
         <TextView
             android:id="@+id/a"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_100"
+            android:layout_height="@dimen/dimen_50"
             android:layout_marginLeft="@dimen/dimen_25"
             android:layout_marginRight="@dimen/dimen_25"
-            android:layout_marginTop="@dimen/dimen_10"
             android:background="@color/color_4A4A4A"
             android:gravity="center"
             android:text="AAA"
@@ -30,7 +29,6 @@
             android:layout_below="@+id/a"
             android:layout_marginLeft="@dimen/dimen_25"
             android:layout_marginRight="@dimen/dimen_25"
-            android:layout_marginTop="@dimen/dimen_10"
             android:background="@color/color_FF3049"
             android:gravity="center"
             android:text="BBB"
@@ -39,11 +37,10 @@
         <TextView
             android:id="@+id/c"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_100"
+            android:layout_height="@dimen/dimen_150"
             android:layout_below="@+id/b"
             android:layout_marginLeft="@dimen/dimen_25"
             android:layout_marginRight="@dimen/dimen_25"
-            android:layout_marginTop="@dimen/dimen_10"
             android:background="@color/colorPrimary"
             android:gravity="center"
             android:text="CCC"
@@ -52,11 +49,10 @@
         <TextView
             android:id="@+id/d"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_100"
+            android:layout_height="@dimen/dimen_200"
             android:layout_below="@+id/c"
             android:layout_marginLeft="@dimen/dimen_25"
             android:layout_marginRight="@dimen/dimen_25"
-            android:layout_marginTop="@dimen/dimen_10"
             android:background="@color/color_ECF0F1"
             android:gravity="center"
             android:text="DDD"
@@ -65,131 +61,13 @@
         <TextView
             android:id="@+id/e"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_100"
+            android:layout_height="@dimen/dimen_280"
             android:layout_below="@+id/d"
             android:layout_marginLeft="@dimen/dimen_25"
             android:layout_marginRight="@dimen/dimen_25"
-            android:layout_marginTop="@dimen/dimen_10"
             android:background="@color/color_54CB63"
             android:gravity="center"
             android:text="EEE"
-            android:textColor="@color/white"/>
-
-        <TextView
-            android:id="@+id/f"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_100"
-            android:layout_below="@+id/e"
-            android:layout_marginLeft="@dimen/dimen_25"
-            android:layout_marginRight="@dimen/dimen_25"
-            android:layout_marginTop="@dimen/dimen_10"
-            android:background="@color/color_54CB63"
-            android:gravity="center"
-            android:text="FFF"
-            android:textColor="@color/white"/>
-
-        <TextView
-            android:id="@+id/g"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_100"
-            android:layout_below="@+id/f"
-            android:layout_marginLeft="@dimen/dimen_25"
-            android:layout_marginRight="@dimen/dimen_25"
-            android:layout_marginTop="@dimen/dimen_10"
-            android:background="@color/color_54CB63"
-            android:gravity="center"
-            android:text="GGG"
-            android:textColor="@color/white"/>
-
-        <TextView
-            android:id="@+id/h"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_100"
-            android:layout_below="@+id/g"
-            android:layout_marginLeft="@dimen/dimen_25"
-            android:layout_marginRight="@dimen/dimen_25"
-            android:layout_marginTop="@dimen/dimen_10"
-            android:background="@color/color_54CB63"
-            android:gravity="center"
-            android:text="HHH"
-            android:textColor="@color/white"/>
-
-        <TextView
-            android:id="@+id/i"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_100"
-            android:layout_below="@+id/h"
-            android:layout_marginLeft="@dimen/dimen_25"
-            android:layout_marginRight="@dimen/dimen_25"
-            android:layout_marginTop="@dimen/dimen_10"
-            android:background="@color/color_54CB63"
-            android:gravity="center"
-            android:text="III"
-            android:textColor="@color/white"/>
-
-        <TextView
-            android:id="@+id/j"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_100"
-            android:layout_below="@+id/i"
-            android:layout_marginLeft="@dimen/dimen_25"
-            android:layout_marginRight="@dimen/dimen_25"
-            android:layout_marginTop="@dimen/dimen_10"
-            android:background="@color/color_54CB63"
-            android:gravity="center"
-            android:text="JJJ"
-            android:textColor="@color/white"/>
-
-        <TextView
-            android:id="@+id/k"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_100"
-            android:layout_below="@+id/j"
-            android:layout_marginLeft="@dimen/dimen_25"
-            android:layout_marginRight="@dimen/dimen_25"
-            android:layout_marginTop="@dimen/dimen_10"
-            android:background="@color/color_54CB63"
-            android:gravity="center"
-            android:text="KKK"
-            android:textColor="@color/white"/>
-
-        <TextView
-            android:id="@+id/l"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_100"
-            android:layout_below="@+id/k"
-            android:layout_marginLeft="@dimen/dimen_25"
-            android:layout_marginRight="@dimen/dimen_25"
-            android:layout_marginTop="@dimen/dimen_10"
-            android:background="@color/color_54CB63"
-            android:gravity="center"
-            android:text="LLL"
-            android:textColor="@color/white"/>
-
-        <TextView
-            android:id="@+id/m"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_100"
-            android:layout_below="@+id/l"
-            android:layout_marginLeft="@dimen/dimen_25"
-            android:layout_marginRight="@dimen/dimen_25"
-            android:layout_marginTop="@dimen/dimen_10"
-            android:background="@color/color_54CB63"
-            android:gravity="center"
-            android:text="MMM"
-            android:textColor="@color/white"/>
-
-        <TextView
-            android:id="@+id/n"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_100"
-            android:layout_below="@+id/m"
-            android:layout_marginLeft="@dimen/dimen_25"
-            android:layout_marginRight="@dimen/dimen_25"
-            android:layout_marginTop="@dimen/dimen_10"
-            android:background="@color/color_54CB63"
-            android:gravity="center"
-            android:text="NNN"
             android:textColor="@color/white"/>
 
     </com.lynn.simplerecyclerview.drag.DragContainer>

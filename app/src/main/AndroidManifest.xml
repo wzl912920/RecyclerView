@@ -31,6 +31,7 @@
         <activity android:name=".drag.DragActivity"/>
         <activity android:name=".theme.ThemeTestActivity"/>
         <activity android:name=".express.ExpressActivity"/>
+        <activity android:name=".drag.RecyclerDragActivity"/>
 
         <service android:name=".serviceExample.TestService"/>
         <receiver android:name=".serviceExample.TestBroadCast"/>

@@ -16,6 +16,7 @@ class DragActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_drag)
         view_drag_hp.setOnClickListener { ViewDragHelperActivity.startActivity(this) }
+        recycle_view.setOnClickListener { RecyclerDragActivity.startActivity(this) }
     }
 
     companion object {

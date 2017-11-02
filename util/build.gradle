@@ -11,6 +11,7 @@ android {
         targetSdkVersion rootProject.versionInfo.targetSdkVersion
         versionCode rootProject.versionInfo.versionCode
         versionName rootProject.versionInfo.versionName
+        vectorDrawables.useSupportLibrary true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -41,7 +42,7 @@ publish {
     userOrg = 'wzl912920'      // bintray注册的用户名
     groupId = 'com.lynn.library'
     artifactId = 'util-kt'// bintray创建的package
-    publishVersion = '0.0.9'
+    publishVersion = '0.1.0'
     desc = 'this is a kotlin util sample'    //描述
     website = 'https://github.com/wzl912920/simplerecyclerview'
 }
