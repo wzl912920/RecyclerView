@@ -73,7 +73,7 @@ class DragContainer : RelativeLayout {
 
         private class ViewDragCallback(container : DragContainer) : ViewDragHelper.Callback() {
             private val sr = SoftReference(container)
-            private var dragView : View? = null
+            private var current : View? = null
             private var originalHeight = 0
             private var fixedHeight = container.context.dp2px(50f)
             override fun tryCaptureView(child : View , pointerId : Int) : Boolean {
@@ -81,8 +81,8 @@ class DragContainer : RelativeLayout {
                     val dc = sr.get()!!
                     for (i in 0 until dc.childCount) {
                         if (dc.getChildAt(i) === child) {
-                            dragView = child
-                            originalPosition = dc.indexOfChild(dragView)
+                            current = child
+                            originalPosition = dc.indexOfChild(current)
                             smallDragedView()
                             return true
                         }
@@ -103,10 +103,10 @@ class DragContainer : RelativeLayout {
 
             private fun smallDragedView() {
                 isDragging = true
-                if (null == dragView) return
-                dragView!!.bringToFront()
-                originalHeight = dragView!!.height
-                val anim = ObjectAnimator.ofInt(ObjAnim(dragView!!) , "animValue" , dragView!!.layoutParams.height , fixedHeight.toInt()).setDuration(50)
+                if (null == current) return
+                current!!.bringToFront()
+                originalHeight = current!!.height
+                val anim = ObjectAnimator.ofInt(ObjAnim(current!!) , "animValue" , current!!.layoutParams.height , fixedHeight.toInt()).setDuration(50)
                 anim.start()
                 anim.addListener(AnimListener(this))
 //                val p = dragView!!.layoutParams
@@ -116,8 +116,8 @@ class DragContainer : RelativeLayout {
 
             private fun largeDragedView() {
                 isDragging = false
-                if (null == dragView || originalHeight == 0) return
-                val anim = ObjectAnimator.ofInt(ObjAnim(dragView!!) , "animValue" , dragView!!.layoutParams.height , originalHeight).setDuration(50)
+                if (null == current || originalHeight == 0) return
+                val anim = ObjectAnimator.ofInt(ObjAnim(current!!) , "animValue" , current!!.layoutParams.height , originalHeight).setDuration(50)
                 anim.start()
                 anim.addListener(AnimListener(this))
                 originalHeight = 0
@@ -148,120 +148,96 @@ class DragContainer : RelativeLayout {
 
             //before pre this next after
             private fun adjustPosition(thisView : View , dc : DragContainer) {
-                if (dragView == null) return
-                var first : View? = null
-                var second : View? = null
-                var third : View? = null
-                var fourth : View? = null
-                var last = dc.childCount - 1
-                var currentPosition = dc.indexOfChild(thisView)
-                if (currentPosition > 1) {
-                    first = dc.getChildAt(currentPosition - 2)
-                    second = dc.getChildAt(currentPosition - 1)
-                } else if (currentPosition > 0) {
-                    second = dc.getChildAt(currentPosition - 1)
-                }
-                if (currentPosition + 2 <= last) {
-                    fourth = dc.getChildAt(currentPosition + 2)
-                } else if (currentPosition + 1 <= last) {
-                    third = dc.getChildAt(currentPosition + 1)
-                }
-                second?.let {
+                val thisTopMargin = (thisView.layoutParams as LayoutParams).topMargin
+                if (originalPosition == 0) {
+                    if (dc.childCount > 1) {
+                        //down
+                        val next = dc.getChildAt(0)
+                        if (thisView.top + thisView.height / 2 > next.top + next.height / 2 + (next.layoutParams as LayoutParams).topMargin * 2) {
+                            log("down ------ 1")
+                            var p = thisView.layoutParams as LayoutParams
+                            p.addRule(BELOW , next.id)
+                            thisView.layoutParams = p
 
-                }
+                            p = next.layoutParams as LayoutParams
+                            p.addRule(BELOW , 0)
+                            next.layoutParams = p
 
-                if (true) {
-//                val thisTopMargin = (thisView.layoutParams as LayoutParams).topMargin
-//                if (originalPosition == 0) {
-//                    if (dc.childCount > 1) {
-//                        //down
-//                        val next = dc.getChildAt(0)
-//                        if (thisView.top + thisView.height / 2 > next.top + next.height / 2 + (next.layoutParams as LayoutParams).topMargin * 2) {
-//                            log("down ------ 1")
-//                            var p = thisView.layoutParams as LayoutParams
-//                            p.addRule(BELOW , next.id)
-//                            thisView.layoutParams = p
-//
-//                            p = next.layoutParams as LayoutParams
-//                            p.addRule(BELOW , 0)
-//                            next.layoutParams = p
-//
-//                            if (dc.childCount > 2) {
-//                                val after = dc.getChildAt(1)
-//                                p = after.layoutParams as LayoutParams
-//                                p.addRule(BELOW , thisView.id)
-//                                after.layoutParams = p
-//                            }
-//                            originalPosition += 1
-//                        }
-//                    }
-//                } else if (originalPosition == dc.childCount - 1) {
-//                    val pre = dc.getChildAt(originalPosition - 1)
-//                    if (thisView.top + thisView.height / 2 + thisTopMargin * 2 < pre.top + pre.height / 2) {
-//                        log("up ------ 2")
-//                        var p = pre.layoutParams as LayoutParams
-//                        p.addRule(BELOW , thisView.id)
-//                        pre.layoutParams = p
-//                        p = thisView.layoutParams as LayoutParams
-//                        if (dc.childCount > 2) {
-//                            val before = dc.getChildAt(originalPosition - 2)
-//                            p.addRule(BELOW , before.id)
-//                        } else {
-//                            p.addRule(BELOW , 0)
-//                        }
-//                        thisView.layoutParams = p
-//                        originalPosition -= 1
-//                    }
-//                } else {
-//                    val pre = dc.getChildAt(originalPosition - 1)
-//                    if (thisView.top + thisView.height / 2 + thisTopMargin * 2 < pre.top + pre.height / 2) {
-//                        log("up ------ 3")
-//                        var beforeId = 0
-//                        if (originalPosition - 2 >= 0) {
-//                            beforeId = dc.getChildAt(originalPosition - 2).id
-//                        }
-//                        var p = thisView.layoutParams as LayoutParams
-//                        p.addRule(BELOW , beforeId)
-//                        thisView.layoutParams = p
-//
-//                        p = pre.layoutParams as LayoutParams
-//                        p.addRule(BELOW , thisView.id)
-//                        pre.layoutParams = p
-//
-//                        if (originalPosition < dc.childCount - 1) {
-//                            val next = dc.getChildAt(originalPosition)
-//                            p = next.layoutParams as LayoutParams
-//                            p.addRule(BELOW , pre.id)
-//                        }
-//                        originalPosition -= 1
-//                    } else {
-//                        //down
-//                        val next = dc.getChildAt(originalPosition)
-//                        if (thisView.top + thisView.height / 2 > next.top + next.height / 2 + (next.layoutParams as LayoutParams).topMargin * 2) {
-//                            log("down ------ 4")
-//                            log("A=${thisView.top + thisView.height / 2} B=${next.top + next.height / 2}")
-//                            var preId = 0
-//                            if (originalPosition > 0) {
-//                                preId = dc.getChildAt(originalPosition - 1).id
-//                            }
-//                            var p = thisView.layoutParams as LayoutParams
-//                            p.addRule(BELOW , next.id)
-//                            thisView.layoutParams = p
-//
-//                            p = next.layoutParams as LayoutParams
-//                            p.addRule(BELOW , preId)
-//                            next.layoutParams = p
-//
-//                            if (originalPosition < dc.childCount - 1 && originalPosition + 1 != dc.childCount - 1) {
-//                                val after = dc.getChildAt(originalPosition + 1)
-//                                p = after.layoutParams as LayoutParams
-//                                p.addRule(BELOW , thisView.id)
-//                                after.layoutParams = p
-//                            }
-//                            originalPosition += 1
-//                        }
-//                    }
-//                }
+                            if (dc.childCount > 2) {
+                                val after = dc.getChildAt(1)
+                                p = after.layoutParams as LayoutParams
+                                p.addRule(BELOW , thisView.id)
+                                after.layoutParams = p
+                            }
+                            originalPosition += 1
+                        }
+                    }
+                } else if (originalPosition == dc.childCount - 1) {
+                    val pre = dc.getChildAt(originalPosition - 1)
+                    if (thisView.top + thisView.height / 2 + thisTopMargin * 2 < pre.top + pre.height / 2) {
+                        log("up ------ 2")
+                        var p = pre.layoutParams as LayoutParams
+                        p.addRule(BELOW , thisView.id)
+                        pre.layoutParams = p
+                        p = thisView.layoutParams as LayoutParams
+                        if (dc.childCount > 2) {
+                            val before = dc.getChildAt(originalPosition - 2)
+                            p.addRule(BELOW , before.id)
+                        } else {
+                            p.addRule(BELOW , 0)
+                        }
+                        thisView.layoutParams = p
+                        originalPosition -= 1
+                    }
+                } else {
+                    val pre = dc.getChildAt(originalPosition - 1)
+                    if (thisView.top + thisView.height / 2 + thisTopMargin * 2 < pre.top + pre.height / 2) {
+                        log("up ------ 3")
+                        var beforeId = 0
+                        if (originalPosition - 2 >= 0) {
+                            beforeId = dc.getChildAt(originalPosition - 2).id
+                        }
+                        var p = thisView.layoutParams as LayoutParams
+                        p.addRule(BELOW , beforeId)
+                        thisView.layoutParams = p
+
+                        p = pre.layoutParams as LayoutParams
+                        p.addRule(BELOW , thisView.id)
+                        pre.layoutParams = p
+
+                        if (originalPosition < dc.childCount - 1) {
+                            val next = dc.getChildAt(originalPosition)
+                            p = next.layoutParams as LayoutParams
+                            p.addRule(BELOW , pre.id)
+                        }
+                        originalPosition -= 1
+                    } else {
+                        //down
+                        val next = dc.getChildAt(originalPosition)
+                        if (thisView.top + thisView.height / 2 > next.top + next.height / 2 + (next.layoutParams as LayoutParams).topMargin * 2) {
+                            log("down ------ 4")
+                            log("A=${thisView.top + thisView.height / 2} B=${next.top + next.height / 2}")
+                            var preId = 0
+                            if (originalPosition > 0) {
+                                preId = dc.getChildAt(originalPosition - 1).id
+                            }
+                            var p = thisView.layoutParams as LayoutParams
+                            p.addRule(BELOW , next.id)
+                            thisView.layoutParams = p
+
+                            p = next.layoutParams as LayoutParams
+                            p.addRule(BELOW , preId)
+                            next.layoutParams = p
+
+                            if (originalPosition < dc.childCount - 1 && originalPosition + 1 != dc.childCount - 1) {
+                                val after = dc.getChildAt(originalPosition + 1)
+                                p = after.layoutParams as LayoutParams
+                                p.addRule(BELOW , thisView.id)
+                                after.layoutParams = p
+                            }
+                            originalPosition += 1
+                        }
+                    }
                 }
             }
 
@@ -282,8 +258,8 @@ class DragContainer : RelativeLayout {
 //                log("release")
                 largeDragedView()
 
-                dc.removeView(dragView)
-                dc.addView(dragView , originalPosition)
+                dc.removeView(current)
+                dc.addView(current , originalPosition)
             }
         }
 

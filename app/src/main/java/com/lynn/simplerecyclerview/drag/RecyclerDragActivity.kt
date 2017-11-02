@@ -1,5 +1,6 @@
 package com.lynn.simplerecyclerview.drag
 
+import android.animation.*
 import android.app.*
 import android.content.*
 import android.graphics.*
@@ -13,6 +14,7 @@ import com.lynn.simplerecyclerview.*
 import com.lynn.simplerecyclerview.base.*
 import kotlinx.android.synthetic.main.activity_recycler_drag.*
 import kotlinx.android.synthetic.main.layout_recycler_drag_item.*
+import java.lang.ref.*
 import java.util.*
 
 /**
@@ -26,7 +28,8 @@ class RecyclerDragActivity : BaseActivity() {
         setContentView(R.layout.activity_recycler_drag)
         adapter = recycle_view.adapter as BaseRecycledAdapter
         recycle_view.addItemDecoration(DividerDecoration(dp2px(8f).toInt()))
-        val helper = ItemTouchHelper(ItemTouchHelperCallback())
+        val height = dp2px(40f).toInt()
+        val helper = ItemTouchHelper(ItemTouchHelperCallback(height))
         helper.attachToRecyclerView(recycle_view)
         adapter.register(R.layout.layout_recycler_drag_item , DragItem::class.java)
         adapter.list.add(Color.RED)
@@ -68,8 +71,8 @@ class RecyclerDragActivity : BaseActivity() {
             }
         }
 
-        private class ItemTouchHelperCallback() : ItemTouchHelper.Callback() {
-
+        private class ItemTouchHelperCallback(val minHeight : Int) : ItemTouchHelper.Callback() {
+            private var originalHeight = 0
             override fun getMovementFlags(recyclerView : RecyclerView , viewHolder : RecyclerView.ViewHolder) : Int {
                 val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN
                 return ItemTouchHelper.Callback.makeMovementFlags(dragFlags , 0)
@@ -89,13 +92,46 @@ class RecyclerDragActivity : BaseActivity() {
                 return true
             }
 
+            private var dragView : SoftReference<View?> = SoftReference(null)
             override fun onSelectedChanged(viewHolder : RecyclerView.ViewHolder? , actionState : Int) {
                 super.onSelectedChanged(viewHolder , actionState)
-                if (null == viewHolder) {
+                when (actionState) {
+                    ItemTouchHelper.ACTION_STATE_DRAG -> {
+                        viewHolder?.let { dragView = SoftReference(viewHolder.itemView) }
+                        smallDragedView()
+                    }
+                    ItemTouchHelper.ACTION_STATE_IDLE -> {
+                        largeDragedView()
+                    }
+                    else -> {
+                    }
                 }
             }
 
+            private fun smallDragedView() {
+                if (null == dragView.get()) return
+                originalHeight = dragView!!.get()!!.height
+                val anim = ObjectAnimator.ofInt(ObjAnim(dragView) , "animValue" , dragView.get()!!.layoutParams.height , minHeight).setDuration(50)
+                anim.start()
+            }
+
+            private fun largeDragedView() {
+                if (null == dragView || originalHeight == 0) return
+                val anim = ObjectAnimator.ofInt(ObjAnim(dragView) , "animValue" , dragView.get()!!.layoutParams.height , originalHeight).setDuration(50)
+                anim.start()
+                originalHeight = 0
+            }
+
             override fun onSwiped(viewHolder : RecyclerView.ViewHolder , direction : Int) {}
+        }
+
+        private class ObjAnim(view : SoftReference<View?>) {
+            private val sr = view
+            fun setAnimValue(x : Int) {
+                val p = sr.get()?.layoutParams ?: return
+                p.height = x
+                sr.get()?.layoutParams = p
+            }
         }
     }
 }
