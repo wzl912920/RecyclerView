@@ -2,14 +2,15 @@ package com.lynn.simplerecyclerview.drag
 
 import android.animation.*
 import android.content.Context
-import android.os.Build
+import android.os.*
 import android.support.annotation.RequiresApi
-import android.support.v4.widget.ViewDragHelper
-import android.util.AttributeSet
+import android.support.v4.widget.*
 import android.view.*
 import android.widget.*
 import com.lynn.library.util.*
 import java.lang.ref.*
+import android.view.MotionEvent
+import android.util.*
 
 
 /**
@@ -20,6 +21,7 @@ class DragContainer : RelativeLayout {
 
     private var helper : ViewDragHelper? = null
     private val vdc = ViewDragCallback(this)
+    private val fixedOffset : Int = context.dp2px(40f).toInt()
 
     @JvmOverloads constructor(context : Context , attrs : AttributeSet? = null , defStyleAttr : Int = 0) : super(context , attrs , defStyleAttr) {
     }
@@ -47,30 +49,22 @@ class DragContainer : RelativeLayout {
 
     private fun onDragChanged(top : Int , height : Int , dy : Int) {
         val p = parent as NSScrollView
-        if (top < p.scrollY) {
-            p.smoothScrollBy(0 , -height / 2)
-        } else if (top + height > p.scrollY + p.height) {
-            p.smoothScrollBy(0 , height / 2)
+        if (top < p.scrollY + fixedOffset) {
+            if (dy < 0) {
+                p.smoothScrollBy(0 , dy)
+            }
+        } else if (top + height > p.scrollY + p.height - fixedOffset) {
+            if (dy > 0) {
+                p.smoothScrollBy(0 , dy)
+            }
         }
     }
 
-    override fun addView(child : View?) {
-        super.addView(child)
+    override fun onViewAdded(child : View?) {
+        super.onViewAdded(child)
     }
 
     companion object {
-        val mapList = mutableMapOf<String , Int>()
-
-//        interface Callback {
-//            fun onPullStart(view : View)
-//
-//            fun onPull(view : View , progress : Float)
-//
-//            fun onPullCancel(view : View)
-//
-//            fun onPullComplete(view : View)
-//        }
-
         private class ViewDragCallback(container : DragContainer) : ViewDragHelper.Callback() {
             private val sr = SoftReference(container)
             private var current : View? = null
@@ -79,14 +73,10 @@ class DragContainer : RelativeLayout {
             override fun tryCaptureView(child : View , pointerId : Int) : Boolean {
                 if (null != sr.get()) {
                     val dc = sr.get()!!
-                    for (i in 0 until dc.childCount) {
-                        if (dc.getChildAt(i) === child) {
-                            current = child
-                            originalPosition = dc.indexOfChild(current)
-                            smallDragedView()
-                            return true
-                        }
-                    }
+                    current = child
+                    originalPosition = dc.indexOfChild(current)
+                    smallDragedView()
+                    return true
                 }
                 return false
             }
@@ -97,33 +87,22 @@ class DragContainer : RelativeLayout {
             }
 
             private var originalPosition = 0
-            fun end() {
-
-            }
 
             private fun smallDragedView() {
-                isDragging = true
                 if (null == current) return
+                isDragging = true
                 current!!.bringToFront()
                 originalHeight = current!!.height
                 val anim = ObjectAnimator.ofInt(ObjAnim(current!!) , "animValue" , current!!.layoutParams.height , fixedHeight.toInt()).setDuration(50)
                 anim.start()
-                anim.addListener(AnimListener(this))
-//                val p = dragView!!.layoutParams
-//                p.height = fixedHeight.toInt()
-//                dragView!!.layoutParams = p
             }
 
             private fun largeDragedView() {
-                isDragging = false
                 if (null == current || originalHeight == 0) return
+                isDragging = false
                 val anim = ObjectAnimator.ofInt(ObjAnim(current!!) , "animValue" , current!!.layoutParams.height , originalHeight).setDuration(50)
                 anim.start()
-                anim.addListener(AnimListener(this))
                 originalHeight = 0
-//                val p = dragView!!.layoutParams
-//                p.height = originalHeight
-//                dragView!!.layoutParams = p
             }
 
             override fun clampViewPositionHorizontal(child : View? , left : Int , dx : Int) : Int {
@@ -148,96 +127,72 @@ class DragContainer : RelativeLayout {
 
             //before pre this next after
             private fun adjustPosition(thisView : View , dc : DragContainer) {
-                val thisTopMargin = (thisView.layoutParams as LayoutParams).topMargin
-                if (originalPosition == 0) {
-                    if (dc.childCount > 1) {
+                val current = thisView
+                var pre : View? = null
+                var pre2 : View? = null
+                if (originalPosition > 0) {
+                    pre = dc.getChildAt(originalPosition - 1)
+                    if (originalPosition > 1) {
+                        pre2 = dc.getChildAt(originalPosition - 2)
+                    }
+                }
+                var next : View? = null
+                var next2 : View? = null
+                if (originalPosition < dc.childCount - 1) {
+                    next = dc.getChildAt(originalPosition)
+                    if (originalPosition < dc.childCount - 2) {
+                        next2 = dc.getChildAt(originalPosition + 1)
+                    }
+                }
+                if (null != pre) {
+                    if (current.top <= pre.top) {
+                        //up
+                        val clp = current.layoutParams as LayoutParams
+                        clp.addRule(BELOW , pre2?.id ?: 0)
+                        current.layoutParams = clp
+
+                        val plp = pre.layoutParams as LayoutParams
+                        plp.addRule(BELOW , current.id)
+                        pre.layoutParams = plp
+
+                        val nlp = next?.layoutParams as LayoutParams?
+                        nlp?.addRule(BELOW , pre.id)
+                        next?.layoutParams = nlp
+
+                        originalPosition -= 1
+                    } else if (null != next) {
                         //down
-                        val next = dc.getChildAt(0)
-                        if (thisView.top + thisView.height / 2 > next.top + next.height / 2 + (next.layoutParams as LayoutParams).topMargin * 2) {
-                            log("down ------ 1")
-                            var p = thisView.layoutParams as LayoutParams
-                            p.addRule(BELOW , next.id)
-                            thisView.layoutParams = p
+                        if (current.bottom >= next.bottom) {
+                            val clp = current.layoutParams as LayoutParams
+                            clp.addRule(BELOW , next.id)
+                            current.layoutParams = clp
 
-                            p = next.layoutParams as LayoutParams
-                            p.addRule(BELOW , 0)
-                            next.layoutParams = p
+                            val nlp = next.layoutParams as LayoutParams
+                            nlp.addRule(BELOW , pre?.id)
+                            next.layoutParams = nlp
 
-                            if (dc.childCount > 2) {
-                                val after = dc.getChildAt(1)
-                                p = after.layoutParams as LayoutParams
-                                p.addRule(BELOW , thisView.id)
-                                after.layoutParams = p
-                            }
+                            val n2lp = next2?.layoutParams as LayoutParams?
+                            n2lp?.addRule(BELOW , current.id)
+                            next2?.layoutParams = n2lp
+
                             originalPosition += 1
                         }
                     }
-                } else if (originalPosition == dc.childCount - 1) {
-                    val pre = dc.getChildAt(originalPosition - 1)
-                    if (thisView.top + thisView.height / 2 + thisTopMargin * 2 < pre.top + pre.height / 2) {
-                        log("up ------ 2")
-                        var p = pre.layoutParams as LayoutParams
-                        p.addRule(BELOW , thisView.id)
-                        pre.layoutParams = p
-                        p = thisView.layoutParams as LayoutParams
-                        if (dc.childCount > 2) {
-                            val before = dc.getChildAt(originalPosition - 2)
-                            p.addRule(BELOW , before.id)
-                        } else {
-                            p.addRule(BELOW , 0)
-                        }
-                        thisView.layoutParams = p
-                        originalPosition -= 1
-                    }
-                } else {
-                    val pre = dc.getChildAt(originalPosition - 1)
-                    if (thisView.top + thisView.height / 2 + thisTopMargin * 2 < pre.top + pre.height / 2) {
-                        log("up ------ 3")
-                        var beforeId = 0
-                        if (originalPosition - 2 >= 0) {
-                            beforeId = dc.getChildAt(originalPosition - 2).id
-                        }
-                        var p = thisView.layoutParams as LayoutParams
-                        p.addRule(BELOW , beforeId)
-                        thisView.layoutParams = p
+                } else if (null != next && current.bottom >= next.bottom) {
+                    //down
+                    val clp = current.layoutParams as LayoutParams
+                    clp.addRule(BELOW , next.id)
+                    current.layoutParams = clp
 
-                        p = pre.layoutParams as LayoutParams
-                        p.addRule(BELOW , thisView.id)
-                        pre.layoutParams = p
+                    val nlp = next.layoutParams as LayoutParams
+                    nlp.addRule(BELOW , pre?.id ?: 0)
+                    next.layoutParams = nlp
 
-                        if (originalPosition < dc.childCount - 1) {
-                            val next = dc.getChildAt(originalPosition)
-                            p = next.layoutParams as LayoutParams
-                            p.addRule(BELOW , pre.id)
-                        }
-                        originalPosition -= 1
-                    } else {
-                        //down
-                        val next = dc.getChildAt(originalPosition)
-                        if (thisView.top + thisView.height / 2 > next.top + next.height / 2 + (next.layoutParams as LayoutParams).topMargin * 2) {
-                            log("down ------ 4")
-                            log("A=${thisView.top + thisView.height / 2} B=${next.top + next.height / 2}")
-                            var preId = 0
-                            if (originalPosition > 0) {
-                                preId = dc.getChildAt(originalPosition - 1).id
-                            }
-                            var p = thisView.layoutParams as LayoutParams
-                            p.addRule(BELOW , next.id)
-                            thisView.layoutParams = p
+                    val n2lp = next2?.layoutParams as LayoutParams?
+                    n2lp?.addRule(BELOW , current.id)
+                    next2?.layoutParams = n2lp
 
-                            p = next.layoutParams as LayoutParams
-                            p.addRule(BELOW , preId)
-                            next.layoutParams = p
-
-                            if (originalPosition < dc.childCount - 1 && originalPosition + 1 != dc.childCount - 1) {
-                                val after = dc.getChildAt(originalPosition + 1)
-                                p = after.layoutParams as LayoutParams
-                                p.addRule(BELOW , thisView.id)
-                                after.layoutParams = p
-                            }
-                            originalPosition += 1
-                        }
-                    }
+                    originalPosition += 1
                 }
             }
 
@@ -245,17 +200,14 @@ class DragContainer : RelativeLayout {
                 if (null == changedView) return
                 if (sr.get() == null) return
                 val dc = sr.get()!!
-//                log("changedView.top=${changedView.top} === top=$top dy=$dy")
                 dc.onDragChanged(top , changedView.height , dy)
                 adjustPosition(changedView , dc)
-                //on view pulled
             }
 
             override fun onViewReleased(releasedChild : View? , xvel : Float , yvel : Float) {
                 if (null == releasedChild) return
                 if (sr.get() == null) return
                 val dc = sr.get()!!
-//                log("release")
                 largeDragedView()
 
                 dc.removeView(current)
@@ -269,22 +221,6 @@ class DragContainer : RelativeLayout {
                 val p = sr.get()?.layoutParams ?: return
                 p.height = x
                 sr.get()?.layoutParams = p
-            }
-        }
-
-        private class AnimListener(callBack : ViewDragCallback) : Animator.AnimatorListener {
-            private val sr = SoftReference(callBack)
-            override fun onAnimationRepeat(animation : Animator?) {
-            }
-
-            override fun onAnimationEnd(animation : Animator?) {
-                sr.get()?.end()
-            }
-
-            override fun onAnimationCancel(animation : Animator?) {
-            }
-
-            override fun onAnimationStart(animation : Animator?) {
             }
         }
     }

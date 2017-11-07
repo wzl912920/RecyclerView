@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/a"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_50"
@@ -22,7 +22,7 @@
             android:text="AAA"
             android:textColor="@color/white"/>
 
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/b"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_100"
@@ -34,7 +34,7 @@
             android:text="BBB"
             android:textColor="@color/white"/>
 
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/c"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_150"
@@ -46,7 +46,7 @@
             android:text="CCC"
             android:textColor="@color/white"/>
 
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/d"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_200"
@@ -58,7 +58,7 @@
             android:text="DDD"
             android:textColor="@color/color_333333"/>
 
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/e"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_280"
@@ -68,6 +68,78 @@
             android:background="@color/color_54CB63"
             android:gravity="center"
             android:text="EEE"
+            android:textColor="@color/white"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/f"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_280"
+            android:layout_below="@+id/e"
+            android:layout_marginLeft="@dimen/dimen_25"
+            android:layout_marginRight="@dimen/dimen_25"
+            android:background="@color/color_00D99D"
+            android:gravity="center"
+            android:text="FFF"
+            android:textColor="@color/white"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/g"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_280"
+            android:layout_below="@+id/f"
+            android:layout_marginLeft="@dimen/dimen_25"
+            android:layout_marginRight="@dimen/dimen_25"
+            android:background="@color/color_3A7BF7"
+            android:gravity="center"
+            android:text="GGG"
+            android:textColor="@color/white"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/h"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_280"
+            android:layout_below="@+id/g"
+            android:layout_marginLeft="@dimen/dimen_25"
+            android:layout_marginRight="@dimen/dimen_25"
+            android:background="@color/color_4A4A4A"
+            android:gravity="center"
+            android:text="HHH"
+            android:textColor="@color/white"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/i"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_280"
+            android:layout_below="@+id/h"
+            android:layout_marginLeft="@dimen/dimen_25"
+            android:layout_marginRight="@dimen/dimen_25"
+            android:background="@color/color_4F84FA"
+            android:gravity="center"
+            android:text="III"
+            android:textColor="@color/white"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/j"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_280"
+            android:layout_below="@+id/i"
+            android:layout_marginLeft="@dimen/dimen_25"
+            android:layout_marginRight="@dimen/dimen_25"
+            android:background="@color/color_9B9B9B"
+            android:gravity="center"
+            android:text="JJJ"
+            android:textColor="@color/white"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/k"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_280"
+            android:layout_below="@+id/j"
+            android:layout_marginLeft="@dimen/dimen_25"
+            android:layout_marginRight="@dimen/dimen_25"
+            android:background="@color/color_54CB63"
+            android:gravity="center"
+            android:text="KKK"
             android:textColor="@color/white"/>
 
     </com.lynn.simplerecyclerview.drag.DragContainer>

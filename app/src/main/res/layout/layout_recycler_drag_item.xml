@@ -16,6 +16,13 @@
         android:textColor="@color/white"/>
 
     <View
+        android:id="@+id/drag_button"
+        android:layout_width="@dimen/dimen_50"
+        android:layout_height="@dimen/dimen_50"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/svg_success"/>
+
+    <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_1"
         android:layout_centerVertical="true"
