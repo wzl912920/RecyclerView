@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+
+    <com.lynn.simplerecyclerview.drag.TestDragScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dimen_100"
+        android:background="@color/color_59B447">
+
+        <com.lynn.simplerecyclerview.drag.TestDragView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_100"
+                android:background="@color/color_54CB63"
+                android:gravity="center"
+                android:text="1"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/dimen_20"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_100"
+                android:background="@color/color_4F84FA"
+                android:gravity="center"
+                android:text="2"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/dimen_20"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_100"
+                android:background="@color/color_EDEDED"
+                android:gravity="center"
+                android:text="3"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/dimen_20"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_100"
+                android:background="@color/color_54CB63"
+                android:gravity="center"
+                android:text="4"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/dimen_20"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_100"
+                android:background="@color/color_4F84FA"
+                android:gravity="center"
+                android:text="5"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/dimen_20"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_100"
+                android:background="@color/color_EDEDED"
+                android:gravity="center"
+                android:text="6"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/dimen_20"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_100"
+                android:background="@color/color_54CB63"
+                android:gravity="center"
+                android:text="7"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/dimen_20"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_100"
+                android:background="@color/color_4F84FA"
+                android:gravity="center"
+                android:text="8"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/dimen_20"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_100"
+                android:background="@color/color_EDEDED"
+                android:gravity="center"
+                android:text="9"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/dimen_20"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_100"
+                android:background="@color/color_54CB63"
+                android:gravity="center"
+                android:text="10"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/dimen_20"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_100"
+                android:background="@color/color_4F84FA"
+                android:gravity="center"
+                android:text="11"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/dimen_20"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_100"
+                android:background="@color/color_EDEDED"
+                android:gravity="center"
+                android:text="12"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/dimen_20"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_100"
+                android:background="@color/color_54CB63"
+                android:gravity="center"
+                android:text="13"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/dimen_20"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_100"
+                android:background="@color/color_4F84FA"
+                android:gravity="center"
+                android:text="14"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/dimen_20"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_100"
+                android:background="@color/color_EDEDED"
+                android:gravity="center"
+                android:text="15"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/dimen_20"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_100"
+                android:background="@color/color_54CB63"
+                android:gravity="center"
+                android:text="16"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/dimen_20"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_100"
+                android:background="@color/color_4F84FA"
+                android:gravity="center"
+                android:text="17"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/dimen_20"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_100"
+                android:background="@color/color_EDEDED"
+                android:gravity="center"
+                android:text="18"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/dimen_20"/>
+
+        </com.lynn.simplerecyclerview.drag.TestDragView>
+    </com.lynn.simplerecyclerview.drag.TestDragScrollView>
+</FrameLayout>
