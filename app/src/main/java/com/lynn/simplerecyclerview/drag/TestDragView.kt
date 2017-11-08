@@ -3,7 +3,7 @@ package com.lynn.simplerecyclerview.drag
 import android.content.*
 import android.graphics.*
 import android.graphics.drawable.*
-import android.support.v4.view.*
+import android.os.*
 import android.support.v4.widget.*
 import android.support.v7.widget.*
 import android.util.*
@@ -25,50 +25,73 @@ class TestDragView : LinearLayout {
     private var selectedView : View? = null
     private val TAG = "DragView"
     private var downPoint : MotionEvent? = null
-    private var currentPoint : MotionEvent? = null
-    private var originalTop = 0
     private val gd = GestureDetector(context , object : GestureDetector.SimpleOnGestureListener() {
-        override fun onSingleTapConfirmed(e : MotionEvent?) : Boolean {
-            return super.onSingleTapConfirmed(e)
+        override fun onSingleTapUp(e : MotionEvent?) : Boolean {
+            return super.onSingleTapUp(e)
         }
     })
 
+    private var topViewOffset = 0f
+    private var bottomViewOffset = 0f
     override fun onViewAdded(child : View?) {
         super.onViewAdded(child)
-        child?.setOnClickListener { context.showWarning("123") }
         child?.setOnTouchListener { v , ev ->
-            gd.onTouchEvent(ev)
-            if (currentPoint != null) {
-                currentPoint?.recycle()
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//                Log.e(TAG , "TestDragView=${MotionEvent.actionToString(ev.action)}")
             }
-            currentPoint = MotionEvent.obtain(ev)
-            when (ev.action) {
-                MotionEvent.ACTION_DOWN -> {
-                    if (downPoint != null) {
-                        downPoint?.recycle()
+            if (isDragEnabled) {
+                super.onTouchEvent(ev)
+                gd.onTouchEvent(ev)
+                when (ev.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        if (downPoint != null) {
+                            downPoint?.recycle()
+                        }
+                        selectedView = v
+                        downPoint = MotionEvent.obtain(ev)
+                        topViewOffset = ev.y
+                        bottomViewOffset = v.height - topViewOffset
+                        val location = intArrayOf(0 , 0)
+                        (parent as View).getLocationOnScreen(location)
+                        val top = v.top - getParentScrollY() + location[1]
+                        (parent.parent as TestFrame).initStartOffset(MotionEvent.obtain(ev) , top)
+                        floatingView = getFloatView(v)
+                        parent?.requestDisallowInterceptTouchEvent(true)
                     }
-                    downPoint = MotionEvent.obtain(ev)
-                    originalTop = v.top
-                    floatingView = getFloatView(v)
-                    parent?.requestDisallowInterceptTouchEvent(true)
-                }
-                MotionEvent.ACTION_MOVE -> {
-                    if (!isLongPressing()) {
+                    MotionEvent.ACTION_MOVE -> {
+                        if (!isLongPressing()) {
+                            parent?.requestDisallowInterceptTouchEvent(false)
+                        } else {
+                            (parent.parent as TestFrame).setCurrentPosition(MotionEvent.obtain(ev))
+                        }
+                    }
+                    MotionEvent.ACTION_CANCEL ,
+                    MotionEvent.ACTION_UP -> {
+                        destroyFloatView()
+                        downPoint?.recycle()
+                        downPoint = null
                         parent?.requestDisallowInterceptTouchEvent(false)
                     }
+                    else -> {
+                    }
                 }
-                MotionEvent.ACTION_CANCEL ,
-                MotionEvent.ACTION_UP -> {
-                    destroyFloatView()
-                    downPoint?.recycle()
-                    downPoint = null
-                    parent?.requestDisallowInterceptTouchEvent(false)
+                if (isInLongPress()) {
+                    (parent.parent as TestFrame).refresh()
+                    dispatchDrag(ev)
+                    if (selectedView?.visibility != View.INVISIBLE) {
+                        selectedView?.visibility = View.INVISIBLE
+                    }
+                } else if ((MotionEvent.ACTION_UP == ev.action) or (MotionEvent.ACTION_CANCEL == ev.action)) {
+                    (parent.parent as TestFrame).refresh()
+                    dispatchDrag(ev)
+                    if (selectedView?.visibility != View.VISIBLE) {
+                        selectedView?.visibility = View.VISIBLE
+                    }
                 }
-                else -> {
-                }
+                true
+            } else {
+                super.onTouchEvent(ev)
             }
-            invalidate()
-            true
         }
     }
 
@@ -88,21 +111,13 @@ class TestDragView : LinearLayout {
         return result
     }
 
-    override fun dispatchDraw(canvas : Canvas?) {
-        super.dispatchDraw(canvas)
-        if (isInLongPress()) {
-            canvas?.let { dispatchDrag(canvas) }
-        }
-    }
-
-    private fun dispatchDrag(canvas : Canvas) {
+    private fun dispatchDrag(ev : MotionEvent) {
         floatingView?.let {
-            val translateY = originalTop + (currentPoint?.y ?: 0f) - (downPoint?.y ?: 0f)
-            val status = canvas.save()
-            canvas.translate(0f , translateY)
-            floatingView?.draw(canvas)
-            canvas.restoreToCount(status)
-            post { checkPosition(translateY.toInt()) }
+            val y = ev.rawY
+            post {
+                checkMoveIfNeeded(ev)
+                swapIfNeeded(ev)
+            }
         }
     }
 
@@ -110,33 +125,55 @@ class TestDragView : LinearLayout {
         return (parent as NestedScrollView).scrollY
     }
 
-    private val fixedOffset = context.dp2px(40f)
-    private fun checkPosition(viewTop : Int) {
-        val currentView = floatingView ?: return
-        if (currentPoint == null) return
+    private val offset = context.dp2px(40f)
+    private fun checkMoveIfNeeded(ev : MotionEvent) {
         val scrollView = (parent as NestedScrollView?) ?: return
-        val minY = 0
-        val maxY = scrollView.height
-
-        val startY = viewTop
-        val endY = startY + currentView.height
-        val scrollY = getParentScrollY()
-        if (endY + fixedOffset - scrollY > maxY) {
-            Log.e(TAG , ">>>>>>>>>>>>>>")
-            val offset = (Math.abs(endY + fixedOffset - scrollY - maxY)).toInt()
-//            scrollView.smoothScrollBy(0 , offset)
-            scrollView.fling(offset)
-        } else if (startY - fixedOffset < scrollY) {
-            Log.e(TAG , "<<<<<<<<<<<<<<")
-            val offset = (Math.abs(startY - fixedOffset - scrollY)).toInt()
-//            scrollView.smoothScrollBy(0 , -offset)
+        val top = scrollView.top
+        val bottom = top + scrollView.height
+        val y = ev.rawY
+        if (y - topViewOffset - offset < top) {
+            val offset = (Math.abs(y - topViewOffset - offset - top)).toInt()
             scrollView.fling(-offset)
+        } else if (y + bottomViewOffset + offset > bottom) {
+            val offset = (Math.abs(y + bottomViewOffset + offset - bottom)).toInt()
+            scrollView.fling(offset)
         }
-        Log.e(TAG , "minY=$minY maxY=$maxY startY=$startY endY=$endY pointY=${currentPoint?.y} originalY=$viewTop")
+    }
+
+    private fun swapIfNeeded(ev : MotionEvent) {
+        val currentView = selectedView ?: return
+        val position = indexOfChild(currentView)
+
+        val currentCenter = ev.y - topViewOffset + currentView.height / 2
+        val location = intArrayOf(0 , 0)
+        if (position > 0) {
+            val pre = getChildAt(position - 1)
+            pre.getLocationOnScreen(location)
+            val preCenter = location[1] + pre.height / 2
+            if (currentCenter < preCenter) {
+                swap(pre , position , currentView)
+                Log.e(TAG , "swap pre current")
+            }
+        }
+        if (position < childCount - 1) {
+            val next = getChildAt(position + 1)
+            next.getLocationOnScreen(location)
+            val nextCenter = location[1] + next.height / 2
+            if (currentCenter > nextCenter) {
+                swap(currentView , position , next)
+                Log.e(TAG , "swap current next")
+            }
+        }
+    }
+
+    private fun swap(first : View , firstIndex : Int , second : View) {
+        removeView(first)
+        removeView(second)
+        addView(first , firstIndex)
+        addView(second , firstIndex)
     }
 
     private fun getFloatView(view : View) : ImageView {
-        selectedView = view
         view.isDrawingCacheEnabled = true
         val bmp = Bitmap.createBitmap(view.drawingCache)
         view.isDrawingCacheEnabled = false
@@ -147,11 +184,28 @@ class TestDragView : LinearLayout {
         img.layoutParams = ViewGroup.LayoutParams(view.width , view.height)
         img.measure(view.width , view.height)
         img.layout(0 , 0 , view.width , view.height)
+        initParentFloatingView(img)
         return img
     }
 
+    private fun initParentFloatingView(img : ImageView) {
+        (parent.parent as TestFrame).initFloatingView(img)
+    }
+
+
     private fun destroyFloatView() {
-        (floatingView?.drawable as BitmapDrawable?)?.bitmap?.recycle()
+        (parent.parent as TestFrame).destroyFloatingView()
+        val drawable = floatingView?.drawable
+        drawable?.let {
+            if (drawable is BitmapDrawable) {
+                drawable.bitmap.recycle()
+            }
+        }
         floatingView = null
+    }
+
+    private var isDragEnabled = true
+    fun setDragEnabled(enable : Boolean) {
+        isDragEnabled = enable
     }
 }
