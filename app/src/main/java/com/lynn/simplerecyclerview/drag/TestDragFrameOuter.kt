@@ -5,6 +5,7 @@ import android.graphics.*
 import android.graphics.drawable.*
 import android.os.Build
 import android.support.annotation.RequiresApi
+import android.support.v7.widget.*
 import android.util.*
 import android.view.*
 import android.widget.*
@@ -13,7 +14,7 @@ import android.widget.*
  * Created by Lynn.
  */
 
-class TestFrame : FrameLayout {
+class TestDragFrameOuter : FrameLayout {
     constructor(context : Context) : super(context) {}
 
     constructor(context : Context , attrs : AttributeSet?) : super(context , attrs) {}
@@ -25,18 +26,12 @@ class TestFrame : FrameLayout {
     }
 
     private var floatingView : ImageView? = null
-    fun initFloatingView(view : ImageView) {
-        this.floatingView = view
-    }
 
     override fun onViewAdded(child : View?) {
         super.onViewAdded(child)
     }
 
     override fun dispatchTouchEvent(ev : MotionEvent) : Boolean {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//            Log.e("AAAA" , "TestFrame=${MotionEvent.actionToString(ev.action)}")
-        }
         return super.dispatchTouchEvent(ev)
     }
 
@@ -82,5 +77,20 @@ class TestFrame : FrameLayout {
     fun setCurrentPosition(event : MotionEvent?) {
         currentEvent?.let { currentEvent?.recycle() }
         currentEvent = event
+    }
+
+    fun initFloatingView(view : View) {
+        destroyFloatingView()
+        view.isDrawingCacheEnabled = true
+        val bmp = Bitmap.createBitmap(view.drawingCache)
+        view.isDrawingCacheEnabled = false
+        val img = AppCompatImageView(context)
+        img.setBackgroundColor(Color.RED)
+        img.setPadding(0 , 0 , 0 , 0)
+        img.setImageBitmap(bmp)
+        img.layoutParams = ViewGroup.LayoutParams(view.width , view.height)
+        img.measure(view.width , view.height)
+        img.layout(0 , 0 , view.width , view.height)
+        floatingView = img
     }
 }

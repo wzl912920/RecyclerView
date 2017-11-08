@@ -12,7 +12,7 @@ import com.lynn.simplerecyclerview.*
  * Created by Lynn.
  */
 
-class ViewContainer : RelativeLayout {
+class TestDragViewContainer : RelativeLayout {
     constructor(context : Context) : super(context) {}
 
     constructor(context : Context , attrs : AttributeSet) : super(context , attrs) {}
@@ -23,15 +23,23 @@ class ViewContainer : RelativeLayout {
     constructor(context : Context , attrs : AttributeSet , defStyleAttr : Int , defStyleRes : Int) : super(context , attrs , defStyleAttr , defStyleRes) {
     }
 
+    private var isDragEnabled = false
     override fun onInterceptTouchEvent(ev : MotionEvent) : Boolean {
-        val view = findViewById<View>(R.id.drag_button)
-        if (view.visibility == View.VISIBLE) {
-            val flag = eventInView(ev , view)
-            if (flag) {
-                return flag
+        val view = findViewById<View?>(R.id.drag_button)
+        if (null != view && view.visibility == View.VISIBLE) {
+            isDragEnabled = eventInView(ev , view)
+            if (isDragEnabled) {
+                return isDragEnabled
             }
         }
         return super.onInterceptTouchEvent(ev)
+    }
+
+    override fun onTouchEvent(event : MotionEvent?) : Boolean {
+        if (isDragEnabled) {
+            return false
+        }
+        return super.onTouchEvent(event)
     }
 
     private fun eventInView(ev : MotionEvent , view : View) : Boolean {
