@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.lynn.simplerecyclerview.drag.NSScrollView
+<com.lynn.simplerecyclerview.drag.viewdraghelper.NSScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <com.lynn.simplerecyclerview.drag.DragContainer
+    <com.lynn.simplerecyclerview.drag.viewdraghelper.DragContainer
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -142,5 +142,5 @@
             android:text="KKK"
             android:textColor="@color/white"/>
 
-    </com.lynn.simplerecyclerview.drag.DragContainer>
-</com.lynn.simplerecyclerview.drag.NSScrollView>
+    </com.lynn.simplerecyclerview.drag.viewdraghelper.DragContainer>
+</com.lynn.simplerecyclerview.drag.viewdraghelper.NSScrollView>

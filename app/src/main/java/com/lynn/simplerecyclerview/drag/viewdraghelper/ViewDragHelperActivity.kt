@@ -1,4 +1,4 @@
-package com.lynn.simplerecyclerview.drag
+package com.lynn.simplerecyclerview.drag.viewdraghelper
 
 import android.app.*
 import android.content.*

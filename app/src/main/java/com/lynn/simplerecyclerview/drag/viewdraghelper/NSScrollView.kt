@@ -1,10 +1,9 @@
-package com.lynn.simplerecyclerview.drag
+package com.lynn.simplerecyclerview.drag.viewdraghelper
 
 import android.content.Context
 import android.support.v4.widget.NestedScrollView
 import android.util.AttributeSet
 import android.view.*
-import com.lynn.library.util.*
 
 /**
  * Created by Lynn.

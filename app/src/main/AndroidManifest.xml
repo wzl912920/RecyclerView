@@ -27,12 +27,12 @@
         <activity android:name=".photocrop.ChoosePhotoActivity"/>
         <activity android:name=".photocrop.CropImageActivity"/>
         <activity android:name=".loading.LoadingActivity"/>
-        <activity android:name=".drag.ViewDragHelperActivity"/>
+        <activity android:name=".drag.viewdraghelper.ViewDragHelperActivity"/>
         <activity android:name=".drag.DragActivity"/>
         <activity android:name=".theme.ThemeTestActivity"/>
         <activity android:name=".express.ExpressActivity"/>
-        <activity android:name=".drag.RecyclerDragActivity"/>
-        <activity android:name=".drag.TestDragActivity"/>
+        <activity android:name=".drag.recyclerview.RecyclerDragActivity"/>
+        <activity android:name=".drag.justdrag.TestDragActivity"/>
 
         <service android:name=".serviceExample.TestService"/>
         <receiver android:name=".serviceExample.TestBroadCast"/>

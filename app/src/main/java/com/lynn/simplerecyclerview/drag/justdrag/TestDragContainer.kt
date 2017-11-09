@@ -1,6 +1,5 @@
-package com.lynn.simplerecyclerview.drag
+package com.lynn.simplerecyclerview.drag.justdrag
 
-import android.animation.*
 import android.content.*
 import android.support.v4.widget.*
 import android.util.*
@@ -25,40 +24,12 @@ class TestDragContainer : LinearLayout , View.OnTouchListener {
     }
 
     private var selectedView : View? = null
-    private val TAG = "DragView"
     private var downPoint : MotionEvent? = null
     private val gd = GestureDetector(context , GestureDetector.SimpleOnGestureListener())
-    private val offset = context.dp2px(40f)
+    private val offset = context.dp2px(50f)
     private var topViewOffset = 0
     private var bottomViewOffset = 0
     private var isDragEnabled = true
-    override fun onViewAdded(child : View?) {
-        super.onViewAdded(child)
-        child?.setOnClickListener { context.showWarning("haha") }
-    }
-
-    private fun isLongPressing() : Boolean {
-        val method = gd::class.java.getDeclaredField("mAlwaysInTapRegion")
-        method.isAccessible = true
-        val result = method.getBoolean(gd)
-        method.isAccessible = false
-        return result
-    }
-
-    private fun isInLongPress() : Boolean {
-        val method = gd::class.java.getDeclaredField("mInLongPress")
-        method.isAccessible = true
-        val result = method.getBoolean(gd)
-        method.isAccessible = false
-        return result
-    }
-
-    private fun dispatchDrag(ev : MotionEvent) {
-        post {
-            checkMoveIfNeeded(ev)
-            swapIfNeeded(ev)
-        }
-    }
 
     private fun getLocationView(ev : MotionEvent) : View? {
         return (0 until childCount)
@@ -70,9 +41,16 @@ class TestDragContainer : LinearLayout , View.OnTouchListener {
         return (parent as NestedScrollView).scrollY
     }
 
+    override fun onViewAdded(child : View?) {
+        super.onViewAdded(child)
+        child?.setOnClickListener { }
+    }
+
     private fun checkMoveIfNeeded(ev : MotionEvent) {
         val scrollView = (parent as NestedScrollView?) ?: return
-        val top = scrollView.top
+        val location = intArrayOf(0 , 0)
+        scrollView.getLocationOnScreen(location)
+        val top = location[1]
         val bottom = top + scrollView.height
         val y = ev.rawY
         if (y - topViewOffset - offset < top) {
@@ -87,7 +65,7 @@ class TestDragContainer : LinearLayout , View.OnTouchListener {
     private fun swapIfNeeded(ev : MotionEvent) {
         val currentView = selectedView ?: return
         val position = indexOfChild(currentView)
-
+        var isSwapped = false
         val currentCenter = ev.y - topViewOffset + currentView.height / 2
         val location = intArrayOf(0 , 0)
         if (position > 0) {
@@ -95,17 +73,16 @@ class TestDragContainer : LinearLayout , View.OnTouchListener {
             pre.getLocationOnScreen(location)
             val preCenter = location[1] + pre.height / 2
             if (currentCenter < preCenter) {
+                isSwapped = true
                 swap(pre , position - 1 , currentView , false)
-                Log.e(TAG , "swap pre current\nev.y=${ev.y} currentCenter=$currentCenter preCenter=$preCenter\nTVO=$topViewOffset BVO=$bottomViewOffset")
             }
         }
-        if (position < childCount - 1) {
+        if (!isSwapped && position < childCount - 1) {
             val next = getChildAt(position + 1)
             next.getLocationOnScreen(location)
             val nextCenter = location[1] + next.height / 2
             if (currentCenter > nextCenter) {
                 swap(currentView , position , next , true)
-                Log.e(TAG , "swap current next\nev.y=${ev.y}currentCenter=$currentCenter preCenter=$nextCenter\nTVO=$topViewOffset BVO=$bottomViewOffset")
             }
         }
     }
@@ -146,7 +123,8 @@ class TestDragContainer : LinearLayout , View.OnTouchListener {
         val flag = (y in top..bottom && x in left..right)
         if (flag) {
             topViewOffset = y - location[1]
-            bottomViewOffset = view.height - topViewOffset
+            val bvo = minHeight - topViewOffset
+            bottomViewOffset = if (bvo < 0) 0 else bvo
         }
         return flag
     }
@@ -173,7 +151,7 @@ class TestDragContainer : LinearLayout , View.OnTouchListener {
                         val top = selectedView!!.top - getParentScrollY() + location[1]
                         val tf = tf.get()!!
                         tf.initStartOffset(MotionEvent.obtain(ev) , top)
-                        tf.initFloatingView(selectedView!!)
+                        tf.initFloatingView(selectedView!! , minHeight)
                     }
                     parent?.requestDisallowInterceptTouchEvent(true)
                 }
@@ -204,10 +182,8 @@ class TestDragContainer : LinearLayout , View.OnTouchListener {
                     selectedView?.visibility = View.INVISIBLE
                 }
             } else if ((MotionEvent.ACTION_UP == ev.action) or (MotionEvent.ACTION_CANCEL == ev.action)) {
-                forceLargeImage()
-                maxHeight = 0
+                largeImage()
                 tf.get()!!.refresh()
-                dispatchDrag(ev)
                 if (selectedView?.visibility != View.VISIBLE) {
                     selectedView?.visibility = View.VISIBLE
                 }
@@ -218,87 +194,46 @@ class TestDragContainer : LinearLayout , View.OnTouchListener {
         }
     }
 
-    private fun forceLargeImage() {
-        clearSmallAnim()
-        largeImage()
-    }
-
-    private fun clearSmallAnim() {
-        smallAnim?.cancel()
-        smallAnim?.removeAllListeners()
-        smallAnim?.removeAllUpdateListeners()
-    }
-
-    private var isImgSmalling = false
-    private var isImgLarging = false
-    private var minHeight = context.dp2px(50f).toInt()
+    private var minHeight = context.dp2px(80f).toInt()
     private var maxHeight = 0
-    private var smallAnim : ObjectAnimator? = null
-    private var largeAnim : ObjectAnimator? = null
 
     private fun smallImage() {
         if (maxHeight == 0) return
-        smallAnim?.let { clearSmallAnim() }
         val currentView = selectedView ?: return
-        smallAnim = ObjectAnimator.ofInt(ObjAnim(SoftReference(currentView)) , "animValue" , currentView.layoutParams.height , minHeight).setDuration(50)
-        smallAnim!!.addListener(object : Animator.AnimatorListener {
-            override fun onAnimationRepeat(animation : Animator?) {
-            }
-
-            override fun onAnimationEnd(animation : Animator?) {
-                isImgSmalling = false
-            }
-
-            override fun onAnimationCancel(animation : Animator?) {
-                isImgSmalling = false
-            }
-
-            override fun onAnimationStart(animation : Animator?) {
-                isImgSmalling = true
-            }
-        })
-        smallAnim!!.addUpdateListener {
-            if (tf.get() == null) {
-                tf = SoftReference(parent.parent as TestDragFrameOuter)
-            }
-            tf.get()!!.initFloatingView(currentView)
-        }
-        smallAnim!!.start()
+        val lp = currentView.layoutParams
+        lp.height = minHeight
+        currentView.layoutParams = lp
     }
 
     private fun largeImage() {
         if (maxHeight == 0) return
         val currentView = selectedView ?: return
-        largeAnim = ObjectAnimator.ofInt(ObjAnim(SoftReference(currentView)) , "animValue" , currentView.layoutParams.height , maxHeight).setDuration(50)
-        largeAnim!!.addListener(object : Animator.AnimatorListener {
-            override fun onAnimationRepeat(animation : Animator?) {
-            }
-
-            override fun onAnimationEnd(animation : Animator?) {
-                isImgLarging = false
-                if (tf.get() == null) {
-                    tf = SoftReference(parent.parent as TestDragFrameOuter)
-                }
-                tf.get()!!.destroyFloatingView()
-            }
-
-            override fun onAnimationCancel(animation : Animator?) {
-                isImgLarging = false
-            }
-
-            override fun onAnimationStart(animation : Animator?) {
-                isImgLarging = true
-            }
-        })
-        largeAnim!!.start()
+        val lp = currentView.layoutParams
+        lp.height = maxHeight
+        currentView.layoutParams = lp
+        maxHeight = 0
     }
 
-    private class ObjAnim(view : SoftReference<View?>) {
-        private val sr = view
-        fun setAnimValue(x : Int) {
-            val p = sr.get()?.layoutParams ?: return
-            p.height = x
-            sr.get()?.layoutParams = p
+    private fun isLongPressing() : Boolean {
+        val method = gd::class.java.getDeclaredField("mAlwaysInTapRegion")
+        method.isAccessible = true
+        val result = method.getBoolean(gd)
+        method.isAccessible = false
+        return result
+    }
+
+    private fun isInLongPress() : Boolean {
+        val method = gd::class.java.getDeclaredField("mInLongPress")
+        method.isAccessible = true
+        val result = method.getBoolean(gd)
+        method.isAccessible = false
+        return result
+    }
+
+    private fun dispatchDrag(ev : MotionEvent) {
+        post {
+            checkMoveIfNeeded(ev)
+            swapIfNeeded(ev)
         }
     }
 }

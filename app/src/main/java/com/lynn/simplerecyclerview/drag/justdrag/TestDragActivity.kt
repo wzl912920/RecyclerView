@@ -1,4 +1,4 @@
-package com.lynn.simplerecyclerview.drag
+package com.lynn.simplerecyclerview.drag.justdrag
 
 import android.app.*
 import android.content.*
@@ -13,7 +13,7 @@ import com.lynn.simplerecyclerview.base.*
 class TestDragActivity : BaseActivity() {
     override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_test)
+        setContentView(R.layout.activity_test_drag)
     }
 
     companion object {
