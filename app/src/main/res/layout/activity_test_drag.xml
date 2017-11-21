@@ -33,7 +33,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        app:actualImageUri="http://lorempixel.com/400/200"/>
+                        app:actualImageUri="https://source.unsplash.com/random"/>
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/click_event"
@@ -94,7 +94,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        app:actualImageUri="http://lorempixel.com/400/200"/>
+                        app:actualImageUri="https://picsum.photos/200/300/?blur"/>
 
                     <android.support.v7.widget.AppCompatTextView
                         android:layout_width="match_parent"
