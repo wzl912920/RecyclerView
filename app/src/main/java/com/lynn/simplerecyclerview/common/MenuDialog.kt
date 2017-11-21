@@ -31,7 +31,8 @@ class MenuDialog : Dialog {
         val v = LayoutInflater.from(context).inflate(R.layout.widget_menu_dialog , null , false)
         setContentView(v)
         recycle_view.layoutManager = LinearLayoutManager(context)
-        adapter = recycle_view.adapter as BaseRecycledAdapter
+        adapter = BaseRecycledAdapter()
+        recycle_view.adapter = adapter
         adapter.register(R.layout.widget_menu_dialog_list_item , StringItemHolder::class.java)
         adapter.registerGlobalClickEvent(object : ItemClickEvent {
             override fun onItemClick(view : View , position : Int) {
