@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">SimpleRecyclerView</string>
+    <string name="color_picker">颜<b><font color="red">色</font></b>选择器%1$d</string>
+    <string name="delete">删除</string>
+    <string name="cancel">取消</string>
     <declare-styleable name="theme">
         <attr name="themeEnabled" format="boolean"/>
     </declare-styleable>

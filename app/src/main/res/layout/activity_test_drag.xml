@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.lynn.simplerecyclerview.drag.justdrag.TestDragFrameOuter
+<com.lynn.simplerecyclerview.drag.customdrag.FrameOuterContainer
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -10,55 +11,101 @@
         android:layout_height="match_parent"
         android:background="@color/color_59B447">
 
-        <com.lynn.simplerecyclerview.drag.justdrag.TestDragContainer
+        <com.lynn.simplerecyclerview.drag.customdrag.ViewContainer
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white"
             android:orientation="vertical">
 
-            <com.lynn.simplerecyclerview.drag.justdrag.TestDragViewContainer
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_100">
 
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/click_event"
+            <com.lynn.simplerecyclerview.drag.customdrag.ShadowContainer
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:id="@+id/content_container"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/color_59B447"
-                    android:gravity="center"
-                    android:text="1111111111"
-                    android:textSize="@dimen/dimen_20"/>
+                    android:layout_height="@dimen/dimen_100"
+                    android:layout_margin="@dimen/dimen_20">
 
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/drag_button"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_alignParentRight="true"
-                    android:background="@color/color_54CB63"
-                    android:gravity="center"
-                    android:text="拖你"
-                    android:textColor="@color/color_333333"
-                    android:textSize="@dimen/dimen_20"/>
-            </com.lynn.simplerecyclerview.drag.justdrag.TestDragViewContainer>
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        app:actualImageUri="http://lorempixel.com/400/200"/>
 
-            <android.support.v7.widget.AppCompatTextView
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/click_event"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="1111111111"
+                        android:textSize="@dimen/dimen_20"/>
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/drag_button"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_alignParentRight="true"
+                        android:background="@color/color_54CB63"
+                        android:gravity="center"
+                        android:text="拖你"
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/dimen_20"/>
+                </RelativeLayout>
+            </com.lynn.simplerecyclerview.drag.customdrag.ShadowContainer>
+
+            <com.lynn.simplerecyclerview.drag.customdrag.ShadowContainer
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_100"
-                android:background="@color/color_4F84FA"
-                android:gravity="center"
-                android:text="2222222222"
-                android:textColor="@color/color_333333"
-                android:textSize="@dimen/dimen_20"/>
+                android:layout_height="wrap_content">
 
-            <android.support.v7.widget.AppCompatTextView
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_100"
+                    android:layout_margin="@dimen/dimen_20">
+
+                    <android.support.v7.widget.AppCompatImageView
+                        android:id="@+id/image"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dimen_100"
+                        android:scaleType="centerCrop"/>
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dimen_100"
+                        android:gravity="center"
+                        android:text="2222222222"
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/dimen_20"/>
+                </RelativeLayout>
+            </com.lynn.simplerecyclerview.drag.customdrag.ShadowContainer>
+
+            <com.lynn.simplerecyclerview.drag.customdrag.ShadowContainer
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_100"
-                android:background="@color/color_EDEDED"
-                android:gravity="center"
-                android:text="3333333333"
-                android:textColor="@color/color_333333"
-                android:textSize="@dimen/dimen_20"/>
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_100"
+                    android:layout_margin="@dimen/dimen_20">
+
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        app:actualImageUri="http://lorempixel.com/400/200"/>
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dimen_100"
+                        android:gravity="center"
+                        android:text="2222222222"
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/dimen_20"/>
+                </RelativeLayout>
+            </com.lynn.simplerecyclerview.drag.customdrag.ShadowContainer>
+
 
             <android.support.v7.widget.AppCompatTextView
                 android:layout_width="match_parent"
@@ -195,6 +242,6 @@
                 android:textColor="@color/color_333333"
                 android:textSize="@dimen/dimen_20"/>
 
-        </com.lynn.simplerecyclerview.drag.justdrag.TestDragContainer>
+        </com.lynn.simplerecyclerview.drag.customdrag.ViewContainer>
     </android.support.v4.widget.NestedScrollView>
-</com.lynn.simplerecyclerview.drag.justdrag.TestDragFrameOuter>
+</com.lynn.simplerecyclerview.drag.customdrag.FrameOuterContainer>

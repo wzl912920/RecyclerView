@@ -37,7 +37,7 @@ class BaseApplication : Application() {
     }
 
     companion object {
-        var instance : BaseApplication? = null
+        lateinit var instance : BaseApplication
             private set
     }
 }

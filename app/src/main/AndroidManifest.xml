@@ -32,7 +32,7 @@
         <activity android:name=".theme.ThemeTestActivity"/>
         <activity android:name=".express.ExpressActivity"/>
         <activity android:name=".drag.recyclerview.RecyclerDragActivity"/>
-        <activity android:name=".drag.justdrag.TestDragActivity"/>
+        <activity android:name=".drag.customdrag.TestDragActivity"/>
 
         <service android:name=".serviceExample.TestService"/>
         <receiver android:name=".serviceExample.TestBroadCast"/>

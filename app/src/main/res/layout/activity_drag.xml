@@ -33,4 +33,15 @@
         android:textColor="@color/color_333333"
         android:textSize="@dimen/dimen_20"/>
 
+    <com.lynn.simplerecyclerview.drag.customdrag.ShadowContainer
+        android:layout_width="@dimen/dimen_200"
+        android:layout_height="@dimen/dimen_200"
+        android:layout_gravity="center_horizontal">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="20dp"
+            android:background="@android:color/holo_blue_bright"/>
+    </com.lynn.simplerecyclerview.drag.customdrag.ShadowContainer>
 </LinearLayout>

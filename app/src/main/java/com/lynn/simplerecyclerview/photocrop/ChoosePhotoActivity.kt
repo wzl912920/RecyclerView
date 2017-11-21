@@ -45,8 +45,7 @@ class ChoosePhotoActivity : BaseActivity() , MenuDialog.Companion.IOnItemClickLi
     private fun initDialog() {
         chooseDialog = MenuDialog(this)
         val list = arrayListOf("拍照" , "相册" , "取消")
-        chooseDialog.setData(list)
-        chooseDialog.setOnItemClickListener(this)
+        chooseDialog.setData(list , this)
     }
 
     private fun openAlbum() {

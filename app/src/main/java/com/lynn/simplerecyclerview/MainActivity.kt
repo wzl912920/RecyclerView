@@ -210,7 +210,9 @@ class MainActivity : BaseActivity() {
                 text_view.text = ""
                 when (adapterPosition) {
                     0 -> {
-                        text_view.text = "颜色选择器"
+                        val ctx = itemView.context
+                        val c : CharSequence = ctx.resources.getText(R.string.color_picker)
+                        text_view.setText(c)
                     }
                     1 -> {
                         text_view.text = "图片裁剪demo"

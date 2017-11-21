@@ -5,7 +5,7 @@ import android.content.*
 import android.os.*
 import com.lynn.simplerecyclerview.*
 import com.lynn.simplerecyclerview.base.*
-import com.lynn.simplerecyclerview.drag.justdrag.*
+import com.lynn.simplerecyclerview.drag.customdrag.*
 import com.lynn.simplerecyclerview.drag.recyclerview.*
 import com.lynn.simplerecyclerview.drag.viewdraghelper.*
 import kotlinx.android.synthetic.main.activity_drag.*

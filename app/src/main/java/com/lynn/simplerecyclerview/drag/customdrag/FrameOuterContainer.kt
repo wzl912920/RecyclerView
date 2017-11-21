@@ -1,4 +1,4 @@
-package com.lynn.simplerecyclerview.drag.justdrag
+package com.lynn.simplerecyclerview.drag.customdrag
 
 import android.content.Context
 import android.graphics.*
@@ -14,7 +14,7 @@ import android.widget.*
  * Created by Lynn.
  */
 
-class TestDragFrameOuter : FrameLayout {
+class FrameOuterContainer : FrameLayout {
     constructor(context : Context) : super(context) {}
 
     constructor(context : Context , attrs : AttributeSet?) : super(context , attrs) {}
@@ -72,7 +72,10 @@ class TestDragFrameOuter : FrameLayout {
     }
 
     private fun destroyPoint() {
-        downPoint?.let { downPoint?.recycle() }
+        downPoint?.recycle()
+        downPoint = null
+        currentEvent?.recycle()
+        currentEvent = null
     }
 
     fun setCurrentPosition(event : MotionEvent?) {
@@ -80,18 +83,17 @@ class TestDragFrameOuter : FrameLayout {
         currentEvent = event
     }
 
-    fun initFloatingView(view : View , minHeight : Int) {
+    fun initFloatingView(view : View) {
         destroyFloatingView()
         view.isDrawingCacheEnabled = true
-        val bmp = Bitmap.createScaledBitmap(view.drawingCache , view.drawingCache.width , minHeight , false)
+        val bmp = doBlur(Bitmap.createBitmap(view.drawingCache) , 20 , false)
         view.isDrawingCacheEnabled = false
         val img = AppCompatImageView(context)
-        img.setBackgroundColor(Color.RED)
-        img.setPadding(0 , 0 , 0 , 0)
-        img.setImageBitmap(doBlur(bmp , 20 , false))
+        img.setBackgroundColor(Color.TRANSPARENT)
+        img.setImageBitmap(bmp)
         img.layoutParams = ViewGroup.LayoutParams(view.width , view.height)
-        img.measure(view.width , minHeight)
-        img.layout(0 , 0 , view.width , minHeight)
+        img.measure(view.width , view.height)
+        img.layout(0 , 0 , view.width , view.height)
         floatingView = img
     }
 
