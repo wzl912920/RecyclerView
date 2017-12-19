@@ -28,7 +28,7 @@ class ShadowContainer : RelativeLayout {
 
     init {
         paint.color = Color.WHITE
-        setLayerType(FrameLayout.LAYER_TYPE_SOFTWARE , null)
+        setLayerType(FrameLayout.LAYER_TYPE_SOFTWARE , null)//have bug when the view's length is too long
         paint.isAntiAlias = (true)
     }
 

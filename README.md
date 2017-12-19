@@ -34,19 +34,15 @@ compile 'com.lynn.library:util-kt:0.0.8'//工具类，该工具类为kotlin代�
 
 ```
 
-#### 2、由于省略了type类型，只需要继承BaseViewHolder实现自己的ViewHolder就可以了
+#### 2、由于省略了type类型，只需要继承BaseViewHolder实现自己的ViewHolder就可以了,支持直接引用layout中布局id，但是请保证多个layout中不存在相同的id，否则会报错，同时请保证只有一个constructor(view)（：可以有多个constructor，但必须有单个view的constructor，因为这里是通过反射构造的viewholder，所以实际你其他的constructor并没有效果）
 ```Java
-      class HolderNormal(itemView : View) : BaseViewHolder<DataNormal>(itemView) {
-            private var tv : TextView
+        class NormalHolderB(containerView : View) : BaseViewHolder<DataNormal>(containerView) {
             init {
                 val lp = itemView.layoutParams
                 lp.height = (itemView.context.screenHeight - itemView.context.statusBarHeight) / 3
-                tv = itemView.findViewById<TextView>(R.id.text_view)
-                itemView.setOnClickListener{  }
             }
-
             override fun bind(data : DataNormal) {
-                tv.text = "111111111111111111111"
+                text_view.text = "BBBBBBBBBBB"
             }
         }
 ```
