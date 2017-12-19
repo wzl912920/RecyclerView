@@ -36,14 +36,13 @@ compile 'com.lynn.library:util-kt:0.0.8'//工具类，该工具类为kotlin代�
 
 #### 2、由于省略了type类型，只需要继承BaseViewHolder实现自己的ViewHolder就可以了
 ```Java
-      class HolderNormal(act:Activity,itemView : View) : BaseViewHolder<DataNormal>(itemView) {
+      class HolderNormal(itemView : View) : BaseViewHolder<DataNormal>(itemView) {
             private var tv : TextView
-            private val sr = SoftReference(act)
             init {
                 val lp = itemView.layoutParams
                 lp.height = (itemView.context.screenHeight - itemView.context.statusBarHeight) / 3
                 tv = itemView.findViewById<TextView>(R.id.text_view)
-                itemView.setOnClickListener{ sr?.get()?.finish() }
+                itemView.setOnClickListener{  }
             }
 
             override fun bind(data : DataNormal) {
