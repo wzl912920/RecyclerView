@@ -36,14 +36,13 @@ compile 'com.lynn.library:util-kt:0.0.8'//a kotlin util, only kotlin project is 
 
 #### 2、extends the BaseViewHolder,and ovveride the bind method to bind you data
 ```Java
-      class HolderNormal(act:Activity,itemView : View) : BaseViewHolder<DataNormal>(itemView) {
+      class HolderNormal(itemView : View) : BaseViewHolder<DataNormal>(itemView) {
             private var tv : TextView
-            private val sr = SoftReference(act)
             init {
                 val lp = itemView.layoutParams
                 lp.height = (itemView.context.screenHeight - itemView.context.statusBarHeight) / 3
                 tv = itemView.findViewById<TextView>(R.id.text_view)
-                itemView.setOnClickListener{ sr?.get()?.finish() }
+                itemView.setOnClickListener{  }
             }
 
             override fun bind(data : DataNormal) {
