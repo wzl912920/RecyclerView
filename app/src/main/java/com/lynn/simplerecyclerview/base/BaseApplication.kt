@@ -12,6 +12,7 @@ import com.facebook.drawee.backends.pipeline.Fresco
 import com.lynn.library.net.*
 import com.lynn.library.theme.*
 import com.lynn.library.util.*
+import com.lynn.simplerecyclerview.util.*
 import com.squareup.leakcanary.*
 
 /**
@@ -26,6 +27,10 @@ class BaseApplication : Application() {
         Fresco.initialize(this)
         LeakCanary.install(this)
         ThemeConfig.getInstance().init(this).setAutoThemeView(true)
+        val path = getString(THEME_PATH , "")
+        if (!path.isEmpty()) {
+            ThemeConfig.getInstance().registerSkinPath(this , path)
+        }
         HttpUtils.init(this , "" , "").setDebugMode(true)
     }
 

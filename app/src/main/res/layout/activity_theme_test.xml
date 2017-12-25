@@ -8,15 +8,14 @@
     android:orientation="vertical">
 
     <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/a"
+        android:id="@+id/load_skin"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_100"
         android:background="@color/color_bg_a"
         android:gravity="center"
-        android:text="点击切换主题"
+        android:text="加载主题"
         android:textColor="@color/color_a"
-        android:textSize="@dimen/dimen_20"
-        theme:themeEnabled="true"/>
+        android:textSize="@dimen/dimen_20"/>
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/b"
