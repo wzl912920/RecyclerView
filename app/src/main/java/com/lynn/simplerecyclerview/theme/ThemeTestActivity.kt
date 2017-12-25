@@ -23,6 +23,7 @@ class ThemeTestActivity : BaseActivity() {
         b.setOnClickListener {
             ThemeConfig.getInstance().registerSkinPath(this , "")
         }
+        b.setTextColor(resources.getColor(R.color.color_b))
     }
 
     companion object {

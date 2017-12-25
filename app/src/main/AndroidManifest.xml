@@ -33,6 +33,7 @@
         <activity android:name=".express.ExpressActivity"/>
         <activity android:name=".drag.recyclerview.RecyclerDragActivity"/>
         <activity android:name=".drag.customdrag.TestDragActivity"/>
+        <activity android:name=".textview.FontMetricsActivity"/>
 
         <service android:name=".serviceExample.TestService"/>
         <receiver android:name=".serviceExample.TestBroadCast"/>

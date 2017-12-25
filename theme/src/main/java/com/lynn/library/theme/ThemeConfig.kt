@@ -68,9 +68,33 @@ class ThemeConfig private constructor() {
         return color
     }
 
+    fun getThemeColor(id : Int) : Int {
+        var color = 0
+        val themeResId = getThemeResId(id)
+        if (themeResId != 0) {
+            try {
+                color = themeRes?.getColor(themeResId) ?: color
+            } catch (e : Exception) {
+            }
+        }
+        return color
+    }
+
     fun getDimen(@DimenRes id : Int) : Float {
         val themeResId = getThemeResId(id)
         var dimen = originalRes?.getDimension(id) ?: 0f
+        if (themeResId != 0) {
+            try {
+                dimen = themeRes?.getDimension(themeResId) ?: dimen
+            } catch (e : Exception) {
+            }
+        }
+        return dimen
+    }
+
+    fun getThemeDimen(id : Int) : Float {
+        var dimen = 0f
+        val themeResId = getThemeResId(id)
         if (themeResId != 0) {
             try {
                 dimen = themeRes?.getDimension(themeResId) ?: dimen
@@ -86,6 +110,18 @@ class ThemeConfig private constructor() {
         if (themeResId != 0) {
             try {
                 drawable = themeRes?.getDrawable(themeResId) ?: null
+            } catch (e : Exception) {
+            }
+        }
+        return drawable
+    }
+
+    fun getThemeDrawable(@DrawableRes id : Int) : Drawable? {
+        var drawable : Drawable? = null
+        val themeResId = getThemeResId(id)
+        if (themeResId != 0) {
+            try {
+                drawable = themeRes?.getDrawable(themeResId) ?: drawable
             } catch (e : Exception) {
             }
         }

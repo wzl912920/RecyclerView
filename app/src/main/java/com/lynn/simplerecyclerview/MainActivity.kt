@@ -17,6 +17,7 @@ import com.lynn.simplerecyclerview.express.*
 import com.lynn.simplerecyclerview.loading.*
 import com.lynn.simplerecyclerview.photocrop.*
 import com.lynn.simplerecyclerview.serviceExample.*
+import com.lynn.simplerecyclerview.textview.*
 import com.lynn.simplerecyclerview.theme.*
 import kotlinx.android.synthetic.main.layout_test_type_img.*
 import java.io.Serializable
@@ -94,7 +95,7 @@ class MainActivity : BaseActivity() {
         test()
     }
 
-    val permissions = arrayOf(
+    private val permissions = arrayOf(
             Manifest.permission.READ_EXTERNAL_STORAGE ,
             Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
@@ -202,6 +203,7 @@ class MainActivity : BaseActivity() {
                         ExpressActivity.startActivity(itemView.context as Activity)
                     }
                     5 -> {
+                        FontMetricsActivity.startActivity(itemView.context as Activity)
                     }
                     else -> {
                     }
@@ -215,7 +217,7 @@ class MainActivity : BaseActivity() {
                     0 -> {
                         val ctx = itemView.context
                         val c : CharSequence = ctx.resources.getText(R.string.color_picker)
-                        text_view.setText(c)
+                        text_view.text = c
                     }
                     1 -> {
                         text_view.text = "图片裁剪demo"
@@ -230,6 +232,7 @@ class MainActivity : BaseActivity() {
                         text_view.text = "快递查询"
                     }
                     5 -> {
+                        text_view.text = "字体相关"
                     }
                     else -> {
                     }

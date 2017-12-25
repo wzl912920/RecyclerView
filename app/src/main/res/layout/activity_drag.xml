@@ -3,7 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:orientation="vertical">
 
     <android.support.v7.widget.AppCompatTextView
@@ -12,7 +11,7 @@
         android:layout_height="@dimen/dimen_100"
         android:gravity="center"
         android:text="ViewDragHelper"
-        android:textColor="@color/color_333333"
+        android:textColor="@color/color_c"
         android:textSize="@dimen/dimen_20"/>
 
     <android.support.v7.widget.AppCompatTextView
@@ -21,7 +20,7 @@
         android:layout_height="@dimen/dimen_100"
         android:gravity="center"
         android:text="RecyclerView"
-        android:textColor="@color/color_333333"
+        android:textColor="@color/color_b"
         android:textSize="@dimen/dimen_20"/>
 
     <android.support.v7.widget.AppCompatTextView
@@ -29,8 +28,9 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_100"
         android:gravity="center"
+        android:paddingBottom="@dimen/dimen_20"
         android:text="Just Drag"
-        android:textColor="@color/color_333333"
+        android:textColor="@color/color_a"
         android:textSize="@dimen/dimen_20"/>
 
     <com.lynn.simplerecyclerview.drag.customdrag.ShadowContainer

@@ -3,6 +3,10 @@ package com.lynn.simplerecyclerview.base
 import android.app.Application
 import android.content.*
 import android.content.res.*
+import android.graphics.drawable.*
+import android.os.*
+import android.support.annotation.*
+import android.util.*
 
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.lynn.library.net.*
@@ -25,19 +29,47 @@ class BaseApplication : Application() {
         HttpUtils.init(this , "" , "").setDebugMode(true)
     }
 
-    override fun getApplicationContext() : Context {
-        val s = super.getApplicationContext()
-        log("----------getApplicationContextCalled----------")
-        return s
-    }
-
     override fun getResources() : Resources {
-        log("----------getResourcesCalled----------")
-        return super.getResources()
+        val r1 = super.getResources()
+        return MRes(r1)
     }
 
     companion object {
         lateinit var instance : BaseApplication
             private set
+
+        class MRes(res : Resources) : Resources(res.assets , res.displayMetrics , res.configuration) {
+            override fun getColor(id : Int , theme : Theme?) : Int {
+                val value = ThemeConfig.getInstance().getThemeColor(id)
+                if (value != 0) {
+                    return value
+                }
+                return super.getColor(id , theme)
+            }
+
+            override fun getColor(id : Int) : Int {
+                return getColor(id , null)
+            }
+
+            override fun getDrawable(id : Int , theme : Theme?) : Drawable {
+                val value = ThemeConfig.getInstance().getThemeDrawable(id)
+                if (null != value) {
+                    return value
+                }
+                return super.getDrawable(id , theme)
+            }
+
+            override fun getDrawable(id : Int) : Drawable {
+                return getDrawable(id , null)
+            }
+
+            override fun getDimension(id : Int) : Float {
+                val value = ThemeConfig.getInstance().getThemeDimen(id)
+                if (value != 0f) {
+                    return value
+                }
+                return super.getDimension(id)
+            }
+        }
     }
 }
