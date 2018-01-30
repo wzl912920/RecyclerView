@@ -6,6 +6,7 @@ import android.content.res.*
 import android.graphics.*
 import android.graphics.drawable.*
 import android.support.annotation.*
+import android.support.graphics.drawable.*
 import android.util.*
 import java.io.*
 
@@ -105,11 +106,17 @@ class ThemeConfig private constructor() {
     }
 
     fun getDrawable(@DrawableRes id : Int) : Drawable? {
+        val originalRes = originalRes ?: return null
+        var drawable = VectorDrawableCompat.create(originalRes , id , null) ?: originalRes.getDrawable(id)
+
         val themeResId = getThemeResId(id)
-        var drawable = originalRes?.getDrawable(id) ?: null
         if (themeResId != 0) {
             try {
-                drawable = themeRes?.getDrawable(themeResId) ?: null
+                val resource = themeRes ?: return drawable
+                var drawable = VectorDrawableCompat.create(resource , id , null)
+                if (drawable == null) {
+                    return resource.getDrawable(themeResId) ?: drawable
+                }
             } catch (e : Exception) {
             }
         }
@@ -118,10 +125,14 @@ class ThemeConfig private constructor() {
 
     fun getThemeDrawable(@DrawableRes id : Int) : Drawable? {
         var drawable : Drawable? = null
+        val themeRes = themeRes ?: return null
         val themeResId = getThemeResId(id)
         if (themeResId != 0) {
             try {
-                drawable = themeRes?.getDrawable(themeResId) ?: drawable
+                var drawable = VectorDrawableCompat.create(themeRes , id , null)
+                if (drawable == null) {
+                    return themeRes.getDrawable(themeResId) ?: drawable
+                }
             } catch (e : Exception) {
             }
         }

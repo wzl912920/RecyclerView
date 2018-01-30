@@ -1,12 +1,9 @@
 package com.lynn.simplerecyclerview.base
 
 import android.app.Application
-import android.content.*
 import android.content.res.*
 import android.graphics.drawable.*
-import android.os.*
-import android.support.annotation.*
-import android.util.*
+import android.support.v4.content.res.*
 
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.lynn.library.net.*
@@ -43,13 +40,13 @@ class BaseApplication : Application() {
         lateinit var instance : BaseApplication
             private set
 
-        class MRes(res : Resources) : Resources(res.assets , res.displayMetrics , res.configuration) {
+        class MRes(val res : Resources) : Resources(res.assets , res.displayMetrics , res.configuration) {
             override fun getColor(id : Int , theme : Theme?) : Int {
                 val value = ThemeConfig.getInstance().getThemeColor(id)
                 if (value != 0) {
                     return value
                 }
-                return super.getColor(id , theme)
+                return ResourcesCompat.getColor(res , id , theme)
             }
 
             override fun getColor(id : Int) : Int {
@@ -61,7 +58,7 @@ class BaseApplication : Application() {
                 if (null != value) {
                     return value
                 }
-                return super.getDrawable(id , theme)
+                return ResourcesCompat.getDrawable(res , id , theme)!!
             }
 
             override fun getDrawable(id : Int) : Drawable {
