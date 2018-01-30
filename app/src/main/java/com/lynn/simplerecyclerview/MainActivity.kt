@@ -21,6 +21,9 @@ import com.lynn.simplerecyclerview.textview.*
 import com.lynn.simplerecyclerview.theme.*
 import kotlinx.android.synthetic.main.layout_test_type_img.*
 import java.io.Serializable
+import android.content.ContextWrapper
+import android.app.Activity
+
 
 class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState : Bundle?) {
@@ -186,26 +189,40 @@ class MainActivity : BaseActivity() {
             }
 
             private fun onItemClick() {
-                when (adapterPosition) {
-                    0 -> {
-                        ChooseColorActivity.startActivity(itemView.context as Activity)
+                var act : Activity? = null
+                kotlin.run {
+                    var context = itemView.context
+                    while (context is ContextWrapper) {
+                        if (context is Activity) {
+                            act = context
+                            return@run
+                        }
+                        context = context.baseContext
                     }
-                    1 -> {
-                        ChoosePhotoActivity.startActivity(itemView.context as Activity)
-                    }
-                    2 -> {
-                        DragActivity.startActivity(itemView.context as Activity)
-                    }
-                    3 -> {
-                        ThemeTestActivity.startActivity(itemView.context as Activity)
-                    }
-                    4 -> {
-                        ExpressActivity.startActivity(itemView.context as Activity)
-                    }
-                    5 -> {
-                        FontMetricsActivity.startActivity(itemView.context as Activity)
-                    }
-                    else -> {
+                }
+                if (act is Activity) {
+                    val act = act ?: return
+                    when (adapterPosition) {
+                        0 -> {
+                            ChooseColorActivity.startActivity(act)
+                        }
+                        1 -> {
+                            ChoosePhotoActivity.startActivity(act)
+                        }
+                        2 -> {
+                            DragActivity.startActivity(act)
+                        }
+                        3 -> {
+                            ThemeTestActivity.startActivity(act)
+                        }
+                        4 -> {
+                            ExpressActivity.startActivity(act)
+                        }
+                        5 -> {
+                            FontMetricsActivity.startActivity(act)
+                        }
+                        else -> {
+                        }
                     }
                 }
             }

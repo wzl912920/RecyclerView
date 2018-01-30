@@ -105,23 +105,23 @@ class DragContainer : RelativeLayout {
                 originalHeight = 0
             }
 
-            override fun clampViewPositionHorizontal(child : View? , left : Int , dx : Int) : Int {
+            override fun clampViewPositionHorizontal(child : View , left : Int , dx : Int) : Int {
                 return child?.left ?: 0
             }
 
-            override fun clampViewPositionVertical(child : View? , top : Int , dy : Int) : Int {
+            override fun clampViewPositionVertical(child : View , top : Int , dy : Int) : Int {
                 return Math.max(0 , top)
             }
 
-            override fun getViewHorizontalDragRange(child : View?) : Int {
+            override fun getViewHorizontalDragRange(child : View) : Int {
                 return 0
             }
 
-            override fun getViewVerticalDragRange(child : View?) : Int {
+            override fun getViewVerticalDragRange(child : View) : Int {
                 return sr.get()?.height ?: 0
             }
 
-            override fun onViewCaptured(capturedChild : View? , activePointerId : Int) {
+            override fun onViewCaptured(capturedChild : View , activePointerId : Int) {
                 //pull Start
             }
 
@@ -196,7 +196,7 @@ class DragContainer : RelativeLayout {
                 }
             }
 
-            override fun onViewPositionChanged(changedView : View? , left : Int , top : Int , dx : Int , dy : Int) {
+            override fun onViewPositionChanged(changedView : View , left : Int , top : Int , dx : Int , dy : Int) {
                 if (null == changedView) return
                 if (sr.get() == null) return
                 val dc = sr.get()!!
@@ -204,7 +204,7 @@ class DragContainer : RelativeLayout {
                 adjustPosition(changedView , dc)
             }
 
-            override fun onViewReleased(releasedChild : View? , xvel : Float , yvel : Float) {
+            override fun onViewReleased(releasedChild : View , xvel : Float , yvel : Float) {
                 if (null == releasedChild) return
                 if (sr.get() == null) return
                 val dc = sr.get()!!

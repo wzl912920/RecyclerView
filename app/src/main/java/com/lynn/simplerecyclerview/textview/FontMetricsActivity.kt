@@ -23,7 +23,7 @@ internal class FontMetricsActivity : BaseActivity() , View.OnClickListener {
         etTextString.setText("abcdefghijklmnopqrstuvwxyz")
         etFontSize.setText("100")
 
-        findViewById(R.id.updateButton).setOnClickListener(this)
+        updateButton.setOnClickListener(this)
 
         cbTop.setOnClickListener(this)
         cbAscent.setOnClickListener(this)

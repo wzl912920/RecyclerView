@@ -6,6 +6,7 @@ buildscript {
     repositories {
         jcenter()
         mavenCentral()
+        google()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.0'
@@ -21,6 +22,7 @@ allprojects {
     repositories {
         jcenter()
         mavenCentral()
+        google()
     }
     tasks.withType(Javadoc) {
         options {
@@ -33,6 +35,6 @@ allprojects {
 tasks.getByPath(":util:bintrayUpload").enabled = false
 tasks.getByPath(":library:bintrayUpload").enabled = false
 tasks.getByPath(":permission:bintrayUpload").enabled = false
-tasks.getByPath(":util:releaseAndroidJavadocs").enabled = false
+tasks.getByPath(":util:releaseAndroidJavadocs").enabled = true
 tasks.getByPath(":library:releaseAndroidJavadocs").enabled = false
 tasks.getByPath(":permission:releaseAndroidJavadocs").enabled = false

@@ -14,6 +14,7 @@ import com.lynn.library.util.*
 import com.lynn.simplerecyclerview.*
 import com.lynn.simplerecyclerview.base.*
 import com.lynn.simplerecyclerview.util.*
+import kotlinx.android.synthetic.main.activity_crop_img.*
 
 
 /**
@@ -35,15 +36,15 @@ class CropImageActivity : BaseActivity() , View.OnClickListener {
     }
 
     private fun init() {
-        findViewById(R.id.complete).setOnClickListener(this)
-        findViewById(R.id.cancel).setOnClickListener(this)
+        complete.setOnClickListener(this)
+        cancel.setOnClickListener(this)
         url = intent.getStringExtra(IMAGE_URL)
         if (TextUtils.isEmpty(url)) {
             finish()
         }
         //        dialog = DialogUtil.getLoadingDialog(this);
 
-        imageView = findViewById(R.id.user_head_img) as CropRoundImageView
+        imageView = user_head_img
 
         name = intent.getStringExtra(PIC_NAME)
         getPageView(url)

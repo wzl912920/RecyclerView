@@ -42,7 +42,7 @@ publish {
     userOrg = 'wzl912920'      // bintray注册的用户名
     groupId = 'com.lynn.library'
     artifactId = 'util-kt'// bintray创建的package
-    publishVersion = '0.1.0'
+    publishVersion = '0.1.1'
     desc = 'this is a kotlin util sample'    //描述
     website = 'https://github.com/wzl912920/simplerecyclerview'
 }

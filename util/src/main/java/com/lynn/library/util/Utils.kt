@@ -22,6 +22,9 @@ import java.lang.ref.*
 import java.math.*
 import java.security.*
 import java.util.regex.*
+import android.content.ContextWrapper
+import android.app.Activity
+
 
 /**
  * Created by Lynn.
@@ -1328,7 +1331,7 @@ private class AppToast(context : Context) : Toast(context) {
         val v : View = LayoutInflater.from(sr.get()).inflate(R.layout.widget_toast , null , false)
         view = v
         imageView = v.findViewById<ImageView>(R.id.image_view) as ImageView
-        textView = v.findViewById<ImageView>(R.id.text_view) as TextView
+        textView = v.findViewById<TextView>(R.id.text_view) as TextView
         bg = v.findViewById(R.id.root_view)
         setGravity(Gravity.FILL_HORIZONTAL or Gravity.TOP , 0 , 0)
     }
@@ -1353,5 +1356,16 @@ private class AppToast(context : Context) : Toast(context) {
 
     fun setImageRes(@DrawableRes id : Int) {
         imageView!!.setImageResource(id)
+    }
+
+    fun View.getActivity() : Activity? {
+        var context = context
+        while (context is ContextWrapper) {
+            if (context is Activity) {
+                return context
+            }
+            context = context.baseContext
+        }
+        return null
     }
 }

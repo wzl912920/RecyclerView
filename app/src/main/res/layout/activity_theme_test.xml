@@ -4,6 +4,7 @@
     xmlns:theme="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/tools"
     android:background="@color/white"
     android:orientation="vertical">
 
@@ -59,9 +60,9 @@
             theme:themeEnabled="true"/>
 
         <android.support.v7.widget.AppCompatImageView
+            app:srcCompat="@drawable/svg_select_user_head_img_default_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/svg_select_user_head_img_default_img"
             theme:themeEnabled="true"/>
     </LinearLayout>
 

@@ -107,7 +107,15 @@ class ThemeConfig private constructor() {
 
     fun getDrawable(@DrawableRes id : Int) : Drawable? {
         val originalRes = originalRes ?: return null
-        var drawable = VectorDrawableCompat.create(originalRes , id , null) ?: originalRes.getDrawable(id)
+        var drawable : Drawable?
+        try {
+            drawable = VectorDrawableCompat.create(originalRes , id , null)
+            if (drawable == null) {
+                drawable = originalRes.getDrawable(id)
+            }
+        } catch (e : Exception) {
+            drawable = originalRes.getDrawable(id)
+        }
 
         val themeResId = getThemeResId(id)
         if (themeResId != 0) {
