@@ -22,9 +22,9 @@
             android:layout_weight="1"/>
 
         <com.lynn.simplerecyclerview.loading.MaterialLoadingBar
+            android:id="@+id/loading"
             android:layout_width="@dimen/dimen_50"
             android:layout_height="@dimen/dimen_50"
-            android:layout_weight="1"
-            android:paddingTop="@dimen/dimen_20"/>
+            android:layout_weight="1"/>
     </LinearLayout>
 </RelativeLayout>
