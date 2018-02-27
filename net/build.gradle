@@ -21,13 +21,13 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile dependencyInfo.appcompat_v7
-    testCompile dependencyInfo.junit
-    compile dependencyInfo.gson
-    compile dependencyInfo.okhttp
-    compile dependencyInfo.okio
+    implementation dependencyInfo.appcompat_v7
+    testImplementation dependencyInfo.junit
+    implementation dependencyInfo.gson
+    implementation dependencyInfo.okhttp
+    implementation dependencyInfo.okio
 }

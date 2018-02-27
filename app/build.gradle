@@ -36,24 +36,24 @@ dependencies {
     debugCompile dependencyInfo.leakdebug
     releaseCompile dependencyInfo.leakrelease
     testCompile dependencyInfo.junit
-    compile dependencyInfo.appcompat_v7
-    compile dependencyInfo.design
-    compile dependencyInfo.kotlin_jre
-    compile dependencyInfo.okhttp
-    compile dependencyInfo.okio
-    compile dependencyInfo.glide
-    compile dependencyInfo.glide_okhttp
-    compile dependencyInfo.comm_lang
-    compile dependencyInfo.permission
-    compile dependencyInfo.recyclerview
-    compile dependencyInfo.util
-//    compile project(':library')
-//        compile project(':permission')
-//        compile project(':util')
-    compile dependencyInfo.conslayout
-    compile dependencyInfo.fresco
-    compile dependencyInfo.pelette
-    compile project(':theme')
-    compile project(':net')
-    compile project(':db_example')
+    implementation dependencyInfo.appcompat_v7
+    implementation dependencyInfo.design
+    implementation dependencyInfo.kotlin_jre
+    implementation dependencyInfo.okhttp
+    implementation dependencyInfo.okio
+    implementation dependencyInfo.glide
+    implementation dependencyInfo.glide_okhttp
+    implementation dependencyInfo.comm_lang
+    implementation dependencyInfo.permission
+    implementation dependencyInfo.recyclerview
+    implementation dependencyInfo.util
+//    implementation project(':library')
+//        implementation project(':permission')
+//        implementation project(':util')
+    implementation dependencyInfo.conslayout
+    implementation dependencyInfo.fresco
+    implementation dependencyInfo.pelette
+    implementation project(':theme')
+    implementation project(':net')
+    implementation project(':db_example')
 }
