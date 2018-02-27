@@ -1358,14 +1358,15 @@ private class AppToast(context : Context) : Toast(context) {
         imageView!!.setImageResource(id)
     }
 
-    fun View.getActivity() : Activity? {
-        var context = context
-        while (context is ContextWrapper) {
-            if (context is Activity) {
-                return context
+    val View.activity : Activity?
+        get() {
+            var context = context
+            while (context is ContextWrapper) {
+                if (context is Activity) {
+                    return context
+                }
+                context = context.baseContext
             }
-            context = context.baseContext
+            return null
         }
-        return null
-    }
 }
