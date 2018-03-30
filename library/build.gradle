@@ -3,14 +3,12 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.novoda.bintray-release'
 android {
-    compileSdkVersion rootProject.versionInfo.compileSdkVersion
-    buildToolsVersion rootProject.versionInfo.buildToolsVersion
-
+    compileSdkVersion 26
+    buildToolsVersion '26.0.2'
     defaultConfig {
-        minSdkVersion rootProject.versionInfo.minSdkVersion
-        targetSdkVersion rootProject.versionInfo.targetSdkVersion
-        versionCode rootProject.versionInfo.versionCode
-        versionName rootProject.versionInfo.versionName
+        minSdkVersion 19
+        targetSdkVersion 26
+        versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -30,18 +28,20 @@ android {
     androidExtensions {
         experimental = true
     }
+    productFlavors {
+    }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    testImplementation dependencyInfo.junit
-    implementation dependencyInfo.design
-    implementation dependencyInfo.appcompat_v7
-    implementation dependencyInfo.kotlin
-    implementation dependencyInfo.kotlin_jre
+    testImplementation 'junit:junit:4.12'
+    implementation 'com.android.support:design:26.0.0'
+    implementation 'com.android.support:appcompat-v7:26.0.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 }
 publish {
     userOrg = 'wzl912920'      // bintray注册的用户名

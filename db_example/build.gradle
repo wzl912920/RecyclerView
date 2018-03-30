@@ -16,9 +16,8 @@ apply plugin: 'org.greenrobot.greendao'
 android {
     compileSdkVersion 26
     buildToolsVersion '26.0.2'
-
     defaultConfig {
-        minSdkVersion 14
+        minSdkVersion 19
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -38,14 +37,16 @@ android {
         schemaVersion db_version
         targetGenDir 'src/main/java'
     }
+    productFlavors {
+    }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    testImplementation dependencyInfo.junit
-    implementation dependencyInfo.appcompat_v7
+    testImplementation 'junit:junit:4.12'
+    implementation 'com.android.support:appcompat-v7:26.0.0'
     implementation "org.greenrobot:greendao:$green_dao_version"
 }
