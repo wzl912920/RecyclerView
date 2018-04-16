@@ -7,14 +7,21 @@ import kotlinx.android.extensions.LayoutContainer
 /**
  * Created by Lynn.
  */
-
+@LayoutId(0)
 abstract class BaseViewHolder<T>(override val containerView : View) : RecyclerView.ViewHolder(containerView) , LayoutContainer {
     private var srClick : ItemClickEvent? = null
     private var srLongClick : ItemLongClickEvent? = null
 
     abstract open fun bind(data : T)
-    open fun bind(data : T , payLoads : MutableList<Any>) {
-        bind(data)
+    open fun onRefreshData(datas : MutableList<Any>) {
+    }
+
+    open fun bindData(data : T , payLoads : MutableList<Any>) {
+        if (payLoads != null) {
+            onRefreshData(payLoads)
+        } else {
+            bind(data)
+        }
     }
 
     open protected fun overrideGlobalClickEvent() : Boolean {
@@ -27,10 +34,10 @@ abstract class BaseViewHolder<T>(override val containerView : View) : RecyclerVi
         }
         srClick = event
         srClick?.let {
-            itemView.setOnClickListener { onItClick(itemView) }
+            itemView.setOnClickListener { onClick(itemView) }
             for (id in ids) {
                 val view = itemView.findViewById<View>(id)
-                view.setOnClickListener { view -> onItClick(view) }
+                view.setOnClickListener { view -> onClick(view) }
             }
         }
     }
@@ -41,19 +48,19 @@ abstract class BaseViewHolder<T>(override val containerView : View) : RecyclerVi
         }
         srLongClick = event
         srLongClick?.let {
-            itemView.setOnLongClickListener { onItLongClick(itemView) }
+            itemView.setOnLongClickListener { onLongClick(itemView) }
             for (id in ids) {
                 val view = itemView.findViewById<View>(id)
-                view.setOnLongClickListener { v -> onItLongClick(v) }
+                view.setOnLongClickListener { v -> onLongClick(v) }
             }
         }
     }
 
-    private fun onItClick(view : View) {
+    private fun onClick(view : View) {
         srClick?.onItemClick(view , adapterPosition)
     }
 
-    private fun onItLongClick(view : View) : Boolean {
+    private fun onLongClick(view : View) : Boolean {
         var flag = false
         if (null != srLongClick) {
             srLongClick?.onItemLongClick(view , adapterPosition)

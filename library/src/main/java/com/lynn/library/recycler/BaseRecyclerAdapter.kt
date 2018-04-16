@@ -35,6 +35,16 @@ class BaseRecyclerAdapter : RecyclerView.Adapter<BaseViewHolder<Any>>() {
         tools.register(layoutId , clazz)
     }
 
+    fun register(clazz : Class<out BaseViewHolder<out Any>>) {
+        tools.register(clazz)
+    }
+
+    override fun onDetachedFromRecyclerView(recyclerView : RecyclerView?) {
+        super.onDetachedFromRecyclerView(recyclerView)
+        tools.clear()
+    }
+
+
     fun multiRegister(typer : MultiTyper<out Any>) {
         tools.multiRegister(typer)
     }
@@ -49,7 +59,7 @@ class BaseRecyclerAdapter : RecyclerView.Adapter<BaseViewHolder<Any>>() {
 
     override fun onBindViewHolder(holder : BaseViewHolder<Any> , position : Int , payloads : MutableList<Any>?) {
         if (payloads?.isEmpty() != true) {
-            holder.bind(list[position] , payloads!!)
+            holder.bindData(list[position] , payloads!!)
         } else {
             onBindViewHolder(holder , position)
         }
