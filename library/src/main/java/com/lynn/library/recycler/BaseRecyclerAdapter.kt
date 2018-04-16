@@ -10,7 +10,7 @@ import java.util.ArrayList
  * Created by Lynn.
  */
 
-class BaseRecycledAdapter : RecyclerView.Adapter<BaseViewHolder<Any>>() {
+class BaseRecyclerAdapter : RecyclerView.Adapter<BaseViewHolder<Any>>() {
     val list = ArrayList<Any>()
     private var tools : Binder = Binder()
 

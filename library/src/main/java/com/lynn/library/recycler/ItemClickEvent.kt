@@ -7,5 +7,5 @@ import android.view.*
  */
 
 interface ItemClickEvent {
-    fun onItemClick(view : View , potision : Int)
+    fun onItemClick(view : View , position : Int)
 }

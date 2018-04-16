@@ -4,7 +4,6 @@ import android.support.annotation.*
 import android.view.*
 import com.lynn.library.recycler.Tools.getSuperClazz
 import com.lynn.library.recycler.Tools.getTypeKey
-import java.lang.ref.*
 import java.lang.reflect.*
 
 
@@ -47,14 +46,16 @@ internal class Binder {
         throw NullPointerException("you havenot register this type")
     }
 
-    @Synchronized internal fun registerClickEvent(event : ItemClickEvent , @IdRes vararg viewId : Int) {
+    @Synchronized
+    internal fun registerClickEvent(event : ItemClickEvent , @IdRes vararg viewId : Int) {
         srClickEvent = event
         for (i in viewId) {
             clickIds.add(i)
         }
     }
 
-    @Synchronized internal fun registerLongClickEvent(event : ItemLongClickEvent , @IdRes vararg viewId : Int) {
+    @Synchronized
+    internal fun registerLongClickEvent(event : ItemLongClickEvent , @IdRes vararg viewId : Int) {
         srLongClickEvent = event
         for (i in viewId) {
             longClickIds.add(i)
@@ -62,29 +63,33 @@ internal class Binder {
     }
 
     internal fun getLayoutId(type : Int) : Int {
-        if (null == type2Layout[type]) {
+        val id = type2Layout[type]
+        if (null == id || id == 0) {
             throw NullPointerException("None layout Registed")
         }
-        return type2Layout[type]!!
+        return id
     }
 
-    @Synchronized internal fun register(@LayoutRes layoutId : Int , holder : Class<out BaseViewHolder<*>>) {
+    @Synchronized
+    internal fun register(@LayoutRes layoutId : Int , holder : Class<out BaseViewHolder<*>>) {
         val superClass = getSuperClazz(holder)
         val typeKey = getTypeKey(layoutId , holder , superClass)
         val type = layoutId + typeKey.hashCode()
-        type2Holder.put(type , holder)
-        type2Layout.put(type , layoutId)
-        class2Type.put(superClass , type)
+        type2Holder[type] = holder
+        type2Layout[type] = layoutId
+        class2Type.put(key = superClass , value = type)
     }
 
-    @Synchronized internal fun multiRegister(typer : MultiTyper<*>) {
-        class2MultiType.put(getSuperClazz(typer::class.java) , typer)
+    @Synchronized
+    internal fun multiRegister(typer : MultiTyper<*>) {
+        class2MultiType[getSuperClazz(typer::class.java)] = typer
     }
 
-    @Synchronized internal fun getDataType(data : Any) : Int {
-        val obj = class2MultiType[data::class.java]
-        if (null != obj && obj is MultiTyper) {
-            val multiTyper = obj as MultiTyper<Any>
+    @Synchronized
+    internal fun getDataType(data : Any) : Int {
+        val multiple = class2MultiType[data::class.java]
+        if (multiple is MultiTyper) {
+            val multiTyper = multiple as MultiTyper<Any>
             if (null != multiTyper) {
                 val holder = multiTyper.getViewHolder(data)
                 val layoutId = multiTyper.getLayoutId(data)
@@ -92,14 +97,15 @@ internal class Binder {
                 val typeKey = getTypeKey(layoutId , holder , superClass)
                 val type = layoutId + typeKey.hashCode()
                 if (type2Holder[type] == null) {
-                    type2Holder.put(type , holder)
+                    type2Holder[type] = holder
                 }
                 if (type2Layout[type] == null) {
-                    type2Layout.put(type , layoutId)
+                    type2Layout[type] = layoutId
                 }
                 return type
             }
         }
-        return class2Type[data::class.java]!!
+        return class2Type[data::class.java]
+                ?: throw NullPointerException("None Data ${data::class.java} Registed")
     }
 }

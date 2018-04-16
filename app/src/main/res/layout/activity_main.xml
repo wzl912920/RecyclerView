@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context="com.lynn.simplerecyclerview.MainActivity">
+    tools:context=".MainActivity">
 
-    <com.lynn.library.recycler.BaseRecycledView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/recycle_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
@@ -21,12 +21,4 @@
         android:layout_marginBottom="@dimen/dimen_50"
         android:layout_marginRight="@dimen/dimen_50"/>
 
-    <com.lynn.simplerecyclerview.loading.MaterialLoadingBar
-        android:id="@+id/loading"
-        android:layout_width="@dimen/dimen_50"
-        android:layout_height="@dimen/dimen_50"
-        android:layout_above="@+id/fab"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="@dimen/dimen_50"
-        android:layout_marginRight="@dimen/dimen_50"/>
 </RelativeLayout>

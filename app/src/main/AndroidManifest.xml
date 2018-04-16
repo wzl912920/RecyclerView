@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.lynn.simplerecyclerview">
+          package="com.lynn.recyclerdemo">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -23,29 +23,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".colorselector.ChooseColorActivity"/>
-        <activity android:name=".photocrop.ChoosePhotoActivity"/>
-        <activity android:name=".photocrop.CropImageActivity"/>
-        <activity android:name=".loading.LoadingActivity"/>
-        <activity android:name=".drag.viewdraghelper.ViewDragHelperActivity"/>
-        <activity android:name=".drag.DragActivity"/>
-        <activity android:name=".theme.ThemeTestActivity"/>
-        <activity android:name=".express.ExpressActivity"/>
-        <activity android:name=".drag.recyclerview.RecyclerDragActivity"/>
-        <activity android:name=".drag.customdrag.TestDragActivity"/>
-        <activity android:name=".textview.FontMetricsActivity"/>
-
-        <service android:name=".serviceExample.TestService"/>
-        <receiver android:name=".serviceExample.TestBroadCast"/>
-        <provider
-            android:name=".provider.FileProviderAndroidN"
-            android:authorities="com.lynn.simplerecyclerview"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_path"/>
-        </provider>
     </application>
 
 </manifest>

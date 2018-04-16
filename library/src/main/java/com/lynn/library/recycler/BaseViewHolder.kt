@@ -11,6 +11,7 @@ import kotlinx.android.extensions.LayoutContainer
 abstract class BaseViewHolder<T>(override val containerView : View) : RecyclerView.ViewHolder(containerView) , LayoutContainer {
     private var srClick : ItemClickEvent? = null
     private var srLongClick : ItemLongClickEvent? = null
+
     abstract open fun bind(data : T)
     open fun bind(data : T , payLoads : MutableList<Any>) {
         bind(data)

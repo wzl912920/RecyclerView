@@ -8,7 +8,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.android.tools.build:gradle:3.1.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.jetbrains.kotlin:kotlin-android-extensions:$kotlin_version"
         classpath 'com.novoda:bintray-release:0.8.0'
@@ -31,9 +31,4 @@ allprojects {
         }
     }
 }
-tasks.getByPath(":util:bintrayUpload").enabled = false
 tasks.getByPath(":library:bintrayUpload").enabled = true
-tasks.getByPath(":permission:bintrayUpload").enabled = false
-tasks.getByPath(":util:releaseAndroidJavadocs").enabled = true
-tasks.getByPath(":library:releaseAndroidJavadocs").enabled = false
-tasks.getByPath(":permission:releaseAndroidJavadocs").enabled = false

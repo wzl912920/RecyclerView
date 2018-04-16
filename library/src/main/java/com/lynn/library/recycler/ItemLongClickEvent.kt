@@ -7,5 +7,5 @@ import android.view.*
  */
 
 interface ItemLongClickEvent {
-    fun onItemLongClick(view : View , potision : Int)
+    fun onItemLongClick(view : View , position : Int)
 }
