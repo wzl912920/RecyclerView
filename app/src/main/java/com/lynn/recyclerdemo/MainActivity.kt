@@ -2,6 +2,7 @@ package com.lynn.recyclerdemo
 
 import android.graphics.*
 import android.os.*
+import android.util.*
 import android.view.*
 
 import com.lynn.recyclerdemo.base.*
@@ -36,6 +37,15 @@ class MainActivity : BaseActivity() {
                 return DemoMultiTwo::class.java
             }
         })
+
+        adapter.registerGlobalClickEvent(object : ItemClickEvent {
+            override fun onItemClick(view : View , position : Int) {
+                when (view.id) {
+                    R.id.button -> log("😜=======button")
+                    else -> log("😆-------")
+                }
+            }
+        } , R.id.button)
         initData(adapter)
     }
 
@@ -77,6 +87,10 @@ class MainActivity : BaseActivity() {
                 demo_text.setTextColor(Color.CYAN)
                 demo_text.text = data.toString()
             }
+        }
+
+        fun log(str : String) {
+            Log.e(MainActivity::class.java.name , str)
         }
     }
 }

@@ -12,7 +12,7 @@ abstract class BaseViewHolder<T>(override val containerView : View) : RecyclerVi
     private var srClick : ItemClickEvent? = null
     private var srLongClick : ItemLongClickEvent? = null
 
-    abstract open fun bind(data : T)
+    abstract fun bind(data : T)
     open fun onRefreshData(datas : MutableList<Any>) {
     }
 

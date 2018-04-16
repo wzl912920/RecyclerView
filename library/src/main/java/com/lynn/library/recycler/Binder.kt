@@ -1,6 +1,7 @@
 package com.lynn.library.recycler
 
 import android.support.annotation.*
+import android.support.v7.util.*
 import android.view.*
 import java.lang.reflect.*
 

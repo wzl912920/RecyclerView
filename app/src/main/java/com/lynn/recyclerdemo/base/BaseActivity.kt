@@ -8,7 +8,7 @@ import android.view.*
  * Created by Lynn.
  */
 
-abstract open class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)

@@ -1,6 +1,9 @@
 package com.lynn.library.recycler
 
+import android.app.*
+import android.content.*
 import android.support.annotation.*
+import android.support.v7.util.*
 import android.view.*
 import java.lang.reflect.*
 
@@ -53,3 +56,15 @@ internal class Tools {
         }
     }
 }
+
+val View.activity : Activity?
+    get() {
+        var context = context
+        while (context is ContextWrapper) {
+            if (context is Activity) {
+                return context
+            }
+            context = context.baseContext
+        }
+        return null
+    }
