@@ -1,10 +1,10 @@
 # RecyclerViewDemo
 	旧版本maven仓库已经全部删除，更新下新版使用方式
 ###
-	该库最大的优点在于简化了adapter使用相关的代码
-	使用时不需要关注viewtype类型，内部回自行判断viewtype
+	首先写这个库的目的在于简化adapter使用相关的代码
+	使用时不需要关注viewtype类型，内部会自行判断viewtype
 	同时也有一个问题就是，由于引入了kotlin的布局使用方式，必须有一个constructor(view)的构造，后续
-	 会拆分单独kotlin的viewholder和java的viewholder
+	会拆分单独kotlin的viewholder和java的viewholder
  
 ### Dependency
 ```gradle
@@ -13,6 +13,7 @@ implementation 'com.lynn.library:recyclerview:0.2.0'
 
 ```Java
     //该库只有一个adapter，其他的可以自由发挥，adapter所有方法保留
+    val adapter = BaseRecyclerAdapter()
     recycler_view.adapter = adapter
     
     //注册方式
