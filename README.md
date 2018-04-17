@@ -5,6 +5,9 @@
 	使用时不需要关注viewtype类型，内部会自行判断viewtype
 	同时也有一个问题就是，由于引入了kotlin的布局使用方式，必须有一个constructor(view)的构造，后续
 	会拆分单独kotlin的viewholder和java的viewholder
+	
+#### 虽然惨不忍睹，还是放一张demo运行效果图
+![demo image](https://github.com/wzl912920/Notes/blob/master/img/device-2018-04-17-165219.png)
  
 ### Dependency
 ```gradle
