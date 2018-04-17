@@ -1,15 +1,36 @@
 # RecyclerViewDemo
-
-		做了新的修改，删掉了大部分模块，只留下了adapter相关的，其他的权限、主题、工具类之类的后续会慢慢拆分成单独模块，暂时不支持maven仓库，以前的版本还可以继续用
+	旧版本maven仓库已经全部删除，更新下新版使用方式
+###
+	该库最大的优点在于简化了adapter使用相关的代码
+	使用时不需要关注viewtype类型，内部回自行判断viewtype
+	同时也有一个问题就是，由于引入了kotlin的布局使用方式，必须有一个constructor(view)的构造，后续
+	 会拆分单独kotlin的viewholder和java的viewholder
+ 
 ### Dependency
-旧版：
 ```gradle
-compile 'com.lynn.library:simple-recyclerview:0.1.1'
+implementation 'com.lynn.library:recyclerview:0.2.0'
 ```
-###更新内容：
-#### 1、注册module时可以直接把布局作为注解和module合并到一起，如下
+
 ```Java
-        adapter.register(Demo2::class.java)
+    //该库只有一个adapter，其他的可以自由发挥，adapter所有方法保留
+    recycler_view.adapter = adapter
+    
+    //注册方式
+    //第一种，1对1注册（1个layout对应一个viewholder）
+    adapter.register(R.layout.layout_demo , Demo1::class.java)
+    /**
+        class Demo1(containerView : View) : BaseViewHolder<String>(containerView) {
+            override fun bind(data : String) {
+                demo_text.setTextColor(Color.BLUE)
+                demo_text.text = data
+            }
+        }
+    */
+    
+    
+    //第二种，同第一种，只不过将layoutid通过@LayoutId注解的方式添加到viewholder上，代码更简洁一些
+    adapter.register(Demo2::class.java)
+    /**
         @LayoutId(R.layout.layout_demo)
         class Demo2(containerView : View) : BaseViewHolder<Boolean>(containerView) {
             override fun bind(data : Boolean) {
@@ -17,86 +38,73 @@ compile 'com.lynn.library:simple-recyclerview:0.1.1'
                 demo_text.text = data.toString()
             }
         }
-```
-#### 2、支持diffutil
-#### 3、局部更新拆分成了单独的方法，
-```Java
-        override fun onRefreshData(datas : MutableList<Any>) {
-            super.onRefreshData(datas)
+    */
+
+
+
+    //第三种多对多,一种布局对应多种viewholder或者一个viewholder对应多种布局，或者多种viewholder对应多种布局 
+    adapter.multiRegister(object : MultiTyper<Int> {
+        override fun getLayoutId(data : Int) : Int {
+            return R.layout.layout_demo
         }
-```
-#### 4、由于直接通将view的context强转为外部activity在不同版本可能会有问题，所以添加了一个工具方法，有可能为空，所以不要忘了非空判断
-kotlin可以直接用view.activity获取
-Java可以通过ToolsKt.getActivity(view)进行获取
 
-
-
-旧版：
-### example
-#### 1、  不再需要关注viewType，使用时仅需将layout和viewholder的class类型注册进adapter即可，对于同一种数据类型有不同布局时，需要实现MultiTyper接口
-如下所示
-```Java
-        //一种数据类型对应一种布局／viewholder
-        adapter.register(layoutId , DataModule::class.java)
-        //一种数据类型对应多种布局／viewholder
-        adapter.multiRegister(object : MultiTyper<DataNormal> {
-            override fun getLayoutId(data : DataNormal) : Int {
-                return R.layout.layout_test_type_normal
+        override fun getViewHolder(data : Int) : Class<out BaseViewHolder<Int>> {
+            if (data == 0) {
+                return DemoMultiOne::class.java
             }
-
-            override fun getViewHolder(data : DataNormal) : Class<out BaseViewHolder<DataNormal>> {
-                if (data.type == 1) {
-                    return NormalHolderA::class.java
-                }
-                return NormalHolderB::class.java
-            }
-
-        })
-
-```
-
-#### 2、由于省略了type类型，只需要继承BaseViewHolder实现自己的ViewHolder就可以了,支持直接引用layout中布局id，但是请保证多个layout中不存在相同的id，否则会报错，同时请保证只有一个constructor(view)（：可以有多个constructor，但必须有单个view的constructor，因为这里是通过反射构造的viewholder，所以实际你其他的constructor并没有效果）
-```Java
-        class NormalHolderB(containerView : View) : BaseViewHolder<DataNormal>(containerView) {
-            init {
-                val lp = itemView.layoutParams
-                lp.height = (itemView.context.screenHeight - itemView.context.statusBarHeight) / 3
-            }
-            override fun bind(data : DataNormal) {
-                text_view.text = "BBBBBBBBBBB"
+            return DemoMultiTwo::class.java
+        }
+    })
+    /**
+        class DemoMultiOne(containerView : View) : BaseViewHolder<Int>(containerView) {
+            override fun bind(data : Int) {
+                demo_text.setTextColor(Color.RED)
+                demo_text.text = data.toString()
             }
         }
-```
-#### 3、添加全局点击事件
-```Java
-//可以传数个你需要绑定的viewId，无论有没有传viewId，该点击事件都会同时注册到item上
-adapter.registerGlobalClickEvent(object : ItemClickEvent {
-            override fun onItemClick(view : View , potision : Int) {
-                if (view.id == R.id.text_view) {
-                    showWarning("✅✅✅✅")
-                } else {
-                    showError("xxxxxxxx")
-                }
+
+        class DemoMultiTwo(containerView : View) : BaseViewHolder<Int>(containerView) {
+            override fun bind(data : Int) {
+                demo_text.setTextColor(Color.CYAN)
+                demo_text.text = data.toString()
             }
-        } , R.id.text_view)
-//长按事件调用registerGlobalLongClickEvent其他一致
 
-//如果你有配置了全局的点击事件，同时还想要某个ViewHolder有自己的一套处理逻辑，可以在viewholder里单独设置点击事件，同时重写overrideGlobalClickEvent方法，返回true即可
-override fun overrideGlobalClickEvent() : Boolean {
-    return true
-}
-```
-#### 0.1.1版本新增了局部刷新-使用方式同Adapter
-```Java
-//调用方式同adapter原生方式，实现移到viewholder中
-        recycle_view.adapter.notifyItemChanged(1 , Temp("xxxx.jpg"))
-//实现BaseViewHolder的如下方法
-        override fun bind(data : DataImg , payLoads : MutableList<Any>) {
-                val t = payLoads[0] as Temp
-                image_view.setImageURI(Uri.parse(t.img))
-                text_view.text = t.s.s
+            override fun onRefreshData(datas : MutableList<Any>) {
+                super.onRefreshData(datas)
+            }
         }
+    */
+    
+    
+
+    //注册全局点击事件，支持传入多个viewid针对view添加点击事件
+    adapter.registerGlobalClickEvent(object : ItemClickEvent {
+        override fun onItemClick(view : View , position : Int) {
+            when (view.id) {
+                R.id.button -> log("😜=======button")
+                else -> log("😆-------")
+            }
+        }
+    } , R.id.button)
+    //长按
+    adapter.registerGlobalLongClickEvent()
+    
+    
+    //如果你某些view有单独的点击事件，可以通过重写viewholder中overrideGlobalClickEvent方法，屏蔽全局的点击事件
+    override fun overrideGlobalClickEvent() : Boolean {
+        return true
+    }
+    
+    //支持局部刷新，见DemoMultiTwo中的onRefreshData
+    
+    //支持diffutil
+    //第一种传入自定义diffutil
+    fun refresh(diffUtil : DiffUtil.Callback) {
+        val diffResult = DiffUtil.calculateDiff(diffUtil)
+        diffResult.dispatchUpdatesTo(this)
+    }
+    //第二种使用默认实现
+    fun refresh(data : MutableList<Any>) {
+        refresh(DiffCallback(data , list))
+    }
 ```
-
-
-
