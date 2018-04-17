@@ -7,7 +7,7 @@
 	会拆分单独kotlin的viewholder和java的viewholder
 	
 #### 虽然惨不忍睹，还是放一张demo运行效果图
-![demo image](https://github.com/wzl912920/Notes/blob/master/img/device-2018-04-17-165219.png)
+<img src="https://github.com/wzl912920/Notes/blob/master/img/device-2018-04-17-165219.png" width=300 />
  
 ### Dependency
 ```gradle
