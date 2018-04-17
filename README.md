@@ -1,17 +1,37 @@
-# simplerecyclerview
-        demo目前包含临时权限申请、主题包切换主题、图片裁剪、拖拽的多种实现、数据库封装、网络库封装、工具类封装以及各种小自定义控件，有需要的可以自行下载编译运行查看具体效果（主题包在app下有个test.skin，可以自行测试）
+# RecyclerViewDemo
 
+		做了新的修改，删掉了大部分模块，只留下了adapter相关的，其他的权限、主题、工具类之类的后续会慢慢拆分成单独模块，暂时不支持maven仓库，以前的版本还可以继续用
 ### Dependency
+旧版：
 ```gradle
 compile 'com.lynn.library:simple-recyclerview:0.1.1'
 ```
-
-同时新增了两个模块
-```gradle
-compile 'com.lynn.library:permission:0.0.7'//主要用于临时权限申请
-compile 'com.lynn.library:util-kt:0.0.8'//工具类，该工具类为kotlin代码，非kotlin代码无法使用
+###更新内容：
+#### 1、注册module时可以直接把布局作为注解和module合并到一起，如下
+```Java
+        adapter.register(Demo2::class.java)
+        @LayoutId(R.layout.layout_demo)
+        class Demo2(containerView : View) : BaseViewHolder<Boolean>(containerView) {
+            override fun bind(data : Boolean) {
+                demo_text.setTextColor(Color.BLACK)
+                demo_text.text = data.toString()
+            }
+        }
 ```
+#### 2、支持diffutil
+#### 3、局部更新拆分成了单独的方法，
+```Java
+        override fun onRefreshData(datas : MutableList<Any>) {
+            super.onRefreshData(datas)
+        }
+```
+#### 4、由于直接通将view的context强转为外部activity在不同版本可能会有问题，所以添加了一个工具方法，有可能为空，所以不要忘了非空判断
+kotlin可以直接用view.activity获取
+Java可以通过ToolsKt.getActivity(view)进行获取
 
+
+
+旧版：
 ### example
 #### 1、  不再需要关注viewType，使用时仅需将layout和viewholder的class类型注册进adapter即可，对于同一种数据类型有不同布局时，需要实现MultiTyper接口
 如下所示

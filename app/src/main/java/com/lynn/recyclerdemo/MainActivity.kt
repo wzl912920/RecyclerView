@@ -67,13 +67,13 @@ class MainActivity : BaseActivity() {
             }
         }
 
-        @LayoutId(R.layout.layout_demo)
-        class Demo2(containerView : View) : BaseViewHolder<Boolean>(containerView) {
-            override fun bind(data : Boolean) {
-                demo_text.setTextColor(Color.BLACK)
-                demo_text.text = data.toString()
+            @LayoutId(R.layout.layout_demo)
+            class Demo2(containerView : View) : BaseViewHolder<Boolean>(containerView) {
+                override fun bind(data : Boolean) {
+                    demo_text.setTextColor(Color.BLACK)
+                    demo_text.text = data.toString()
+                }
             }
-        }
 
         class DemoMultiOne(containerView : View) : BaseViewHolder<Int>(containerView) {
             override fun bind(data : Int) {
@@ -86,6 +86,10 @@ class MainActivity : BaseActivity() {
             override fun bind(data : Int) {
                 demo_text.setTextColor(Color.CYAN)
                 demo_text.text = data.toString()
+            }
+
+            override fun onRefreshData(datas : MutableList<Any>) {
+                super.onRefreshData(datas)
             }
         }
 

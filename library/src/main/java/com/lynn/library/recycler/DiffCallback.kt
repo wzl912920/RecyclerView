@@ -23,7 +23,9 @@ internal class DiffCallback(val oldData : MutableList<Any> , val newData : Mutab
 
     override fun areContentsTheSame(oldItemPosition : Int , newItemPosition : Int) : Boolean {
         if (oldItemPosition in oldData.indices && newItemPosition in newData.indices) {
-            return oldData[oldItemPosition] == newData[newItemPosition]
+            val oldValue = oldData[oldItemPosition]
+            val newValue = newData[newItemPosition]
+            return oldValue == newValue && oldValue === newValue
         }
         return false
     }
