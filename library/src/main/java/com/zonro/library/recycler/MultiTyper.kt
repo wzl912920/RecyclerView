@@ -1,6 +1,6 @@
-package com.lynn.library.recycler
+package com.zonro.library.recycler
 
-import android.support.annotation.*
+import androidx.annotation.LayoutRes
 
 /**
  * Created by Lynn.

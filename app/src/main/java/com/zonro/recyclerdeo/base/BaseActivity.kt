@@ -1,8 +1,8 @@
-package com.lynn.recyclerdemo.base
+package com.zonro.recyclerdeo.base
 
 import android.os.*
-import android.support.v7.app.*
-import android.view.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 
 /**
  * Created by Lynn.

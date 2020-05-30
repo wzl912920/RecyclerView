@@ -1,11 +1,11 @@
-package com.lynn.recyclerdemo;
+package com.zonro.recyclerdeo;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.View;
 
-import com.lynn.library.recycler.BaseRecyclerAdapter;
+import androidx.annotation.Nullable;
+
+import com.zonro.library.recycler.BaseRecyclerAdapter;
 
 /**
  * Created by Lynn.

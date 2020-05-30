@@ -1,10 +1,10 @@
-package com.lynn.library.recycler
+package com.zonro.library.recycler
 
 import android.app.*
 import android.content.*
-import android.support.annotation.*
-import android.support.v7.util.*
+import android.util.Log
 import android.view.*
+import androidx.annotation.LayoutRes
 import java.lang.reflect.*
 
 /**
@@ -16,7 +16,7 @@ internal class Tools {
         dataClasses.clear()
     }
 
-    internal fun getTypeKey(@LayoutRes layoutId : Int , holder : Class<out BaseViewHolder<*>> , data : Class<*>) : String {
+    internal fun getTypeKey(@LayoutRes layoutId : Int, holder : Class<out BaseViewHolder<*>>, data : Class<*>) : String {
         return "$layoutId-${holder.name}-${data.name}"
     }
 
@@ -28,7 +28,8 @@ internal class Tools {
                 return value
             }
         }
-        throw NullPointerException("annotation layout id not set")
+        Log.e(Tools::class.java.simpleName, "annotation layout id not set")
+        return 0;
     }
 
     internal fun getDataClazz(clazz : Class<*>) : Class<*> {

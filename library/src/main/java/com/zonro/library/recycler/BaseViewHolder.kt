@@ -1,7 +1,7 @@
-package com.lynn.library.recycler
+package com.zonro.library.recycler
 
-import android.support.v7.widget.RecyclerView
 import android.view.View
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.extensions.LayoutContainer
 
 /**
@@ -28,7 +28,7 @@ abstract class BaseViewHolder<T>(override val containerView : View) : RecyclerVi
         return false
     }
 
-    internal fun bindClickEvent(event : ItemClickEvent? , ids : MutableList<Int>) {
+    internal fun bindClickEvent(event : ItemClickEvent?, ids : MutableList<Int>) {
         if (overrideGlobalClickEvent()) {
             return
         }
@@ -42,7 +42,7 @@ abstract class BaseViewHolder<T>(override val containerView : View) : RecyclerVi
         }
     }
 
-    internal fun bindLongClickEvent(event : ItemLongClickEvent? , ids : MutableList<Int>) {
+    internal fun bindLongClickEvent(event : ItemLongClickEvent?, ids : MutableList<Int>) {
         if (overrideGlobalClickEvent()) {
             return
         }

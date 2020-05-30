@@ -1,11 +1,11 @@
-package com.lynn.library.recycler
+package com.zonro.library.recycler
 
-import android.support.v7.util.*
+import androidx.recyclerview.widget.DiffUtil
 
 /**
  * Created by Lynn.
  */
-internal class DiffCallback(val oldData : MutableList<Any> , val newData : MutableList<Any>) : DiffUtil.Callback() {
+internal class DiffCallback(private val oldData : MutableList<Any>, private val newData : MutableList<Any>) : DiffUtil.Callback() {
     override fun areItemsTheSame(oldItemPosition : Int , newItemPosition : Int) : Boolean {
         if (oldItemPosition in oldData.indices && newItemPosition in newData.indices) {
             return oldData[oldItemPosition] === newData[newItemPosition]
@@ -14,11 +14,11 @@ internal class DiffCallback(val oldData : MutableList<Any> , val newData : Mutab
     }
 
     override fun getOldListSize() : Int {
-        return oldData.size
+        return oldData?.size ?: 0
     }
 
     override fun getNewListSize() : Int {
-        return newData.size
+        return newData?.size ?: 0
     }
 
     override fun areContentsTheSame(oldItemPosition : Int , newItemPosition : Int) : Boolean {

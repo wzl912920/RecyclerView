@@ -12,6 +12,8 @@
 ### Dependency
 ```gradle
 implementation 'com.lynn.library:recyclerview:0.2.0'
+//androidx 依赖
+implementation 'com.zonro.library:recyclerviewx:1.0'
 ```
 
 ```Java

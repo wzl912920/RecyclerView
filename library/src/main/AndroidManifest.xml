@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.lynn.library">
+          package="com.zonro.library">
 
     <application
         android:allowBackup="true"

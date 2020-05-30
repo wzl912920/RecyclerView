@@ -1,12 +1,13 @@
-package com.lynn.recyclerdemo
+package com.zonro.recyclerdeo
 
 import android.graphics.*
 import android.os.*
 import android.util.*
 import android.view.*
+import com.lynn.recyclerdemo.R
 
-import com.lynn.recyclerdemo.base.*
-import com.lynn.library.recycler.*
+import com.zonro.recyclerdeo.base.*
+import com.zonro.library.recycler.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_demo.*
 
@@ -21,7 +22,7 @@ class MainActivity : BaseActivity() {
     private fun initAdapter() {
         val adapter = BaseRecyclerAdapter()
         recycler_view.adapter = adapter
-        adapter.register(R.layout.layout_demo , Demo1::class.java)
+        adapter.register(R.layout.layout_demo, Demo1::class.java)
 
         adapter.register(Demo2::class.java)
 

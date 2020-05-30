@@ -4,16 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/dimen_50"
-    tools:context=".MainActivity">
+    tools:context="com.zonro.recyclerdeo.MainActivity">
 
-    <android.support.v7.widget.AppCompatTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/demo_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:textSize="@dimen/dimen_18"/>
 
-    <android.support.v7.widget.AppCompatButton
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button"
         android:layout_width="@dimen/dimen_50"
         android:layout_height="@dimen/dimen_50"

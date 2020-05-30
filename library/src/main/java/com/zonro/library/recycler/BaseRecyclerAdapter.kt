@@ -1,9 +1,10 @@
-package com.lynn.library.recycler
+package com.zonro.library.recycler
 
-import android.support.annotation.*
-import android.support.v7.util.*
-import android.support.v7.widget.RecyclerView
 import android.view.*
+import androidx.annotation.IdRes
+import androidx.annotation.LayoutRes
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
 
 import java.util.ArrayList
 
@@ -15,7 +16,7 @@ class BaseRecyclerAdapter : RecyclerView.Adapter<BaseViewHolder<Any>>() {
     val list = ArrayList<Any>()
     private var tools : Binder = Binder()
 
-    fun register(@LayoutRes layoutId : Int , clazz : Class<out BaseViewHolder<out Any>>) {
+    fun register(@LayoutRes layoutId : Int, clazz : Class<out BaseViewHolder<out Any>>) {
         tools.register(layoutId , clazz)
     }
 
@@ -37,14 +38,14 @@ class BaseRecyclerAdapter : RecyclerView.Adapter<BaseViewHolder<Any>>() {
     }
 
     fun refresh(data : MutableList<Any>) {
-        refresh(DiffCallback(data , list))
+        refresh(DiffCallback(data, list))
     }
 
-    fun registerGlobalClickEvent(event : ItemClickEvent , @IdRes vararg viewIds : Int) {
+    fun registerGlobalClickEvent(event : ItemClickEvent, @IdRes vararg viewIds : Int) {
         tools.registerClickEvent(event , *viewIds)
     }
 
-    fun registerGlobalLongClickEvent(event : ItemLongClickEvent , @IdRes vararg viewIds : Int) {
+    fun registerGlobalLongClickEvent(event : ItemLongClickEvent, @IdRes vararg viewIds : Int) {
         tools.registerLongClickEvent(event , *viewIds)
     }
 
@@ -65,19 +66,20 @@ class BaseRecyclerAdapter : RecyclerView.Adapter<BaseViewHolder<Any>>() {
         return holder
     }
 
-    override fun onBindViewHolder(holder : BaseViewHolder<Any> , position : Int) {
+    override fun onBindViewHolder(holder : BaseViewHolder<Any>, position : Int) {
         holder.bind(list[position])
     }
 
-    override fun onBindViewHolder(holder : BaseViewHolder<Any> , position : Int , payloads : MutableList<Any>?) {
-        if (payloads?.isEmpty() != true) {
+    override fun onBindViewHolder(holder: BaseViewHolder<Any>, position: Int, payloads: MutableList<Any>) {
+        super.onBindViewHolder(holder, position, payloads)
+        if (payloads.isNotEmpty()) {
             holder.bindData(list[position] , payloads!!)
         } else {
             onBindViewHolder(holder , position)
         }
     }
 
-    override fun onDetachedFromRecyclerView(recyclerView : RecyclerView?) {
+    override fun onDetachedFromRecyclerView(recyclerView : RecyclerView) {
         super.onDetachedFromRecyclerView(recyclerView)
         tools.clear()
     }

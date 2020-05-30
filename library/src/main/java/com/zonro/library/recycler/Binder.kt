@@ -1,8 +1,8 @@
-package com.lynn.library.recycler
+package com.zonro.library.recycler
 
-import android.support.annotation.*
-import android.support.v7.util.*
 import android.view.*
+import androidx.annotation.IdRes
+import androidx.annotation.LayoutRes
 import java.lang.reflect.*
 
 
@@ -47,7 +47,7 @@ internal class Binder {
     }
 
     @Synchronized
-    internal fun registerClickEvent(event : ItemClickEvent , @IdRes vararg viewId : Int) {
+    internal fun registerClickEvent(event : ItemClickEvent, @IdRes vararg viewId : Int) {
         srClickEvent = event
         for (i in viewId) {
             clickIds.add(i)
@@ -55,7 +55,7 @@ internal class Binder {
     }
 
     @Synchronized
-    internal fun registerLongClickEvent(event : ItemLongClickEvent , @IdRes vararg viewId : Int) {
+    internal fun registerLongClickEvent(event : ItemLongClickEvent, @IdRes vararg viewId : Int) {
         srLongClickEvent = event
         for (i in viewId) {
             longClickIds.add(i)
@@ -77,7 +77,7 @@ internal class Binder {
     }
 
     @Synchronized
-    internal fun register(@LayoutRes layoutId : Int , holder : Class<out BaseViewHolder<*>>) {
+    internal fun register(@LayoutRes layoutId : Int, holder : Class<out BaseViewHolder<*>>) {
         val superClass = tools.getDataClazz(holder)
         val typeKey = tools.getTypeKey(layoutId , holder , superClass)
         val type = layoutId + typeKey.hashCode()
